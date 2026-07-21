@@ -547,7 +547,7 @@ a:hover{color:#7fe9f7}
       </div>
       <label style="display:block;margin-top:14px"><span style="font-family:'Orbitron',sans-serif;font-size:9.5px;letter-spacing:.14em;color:#2dd7f0;display:block;margin-bottom:6px">{{ copy.cfMessage }} <span style="color:#ff5a6a">*</span></span><textarea ref="{{ setCfMsg }}" onInput="{{ cfValidate }}" rows="4" style="width:100%;box-sizing:border-box;background:rgba(45,215,240,.05);border:1px solid rgba(45,215,240,.3);color:#eaf6f8;font-family:'Chakra Petch',sans-serif;font-size:13px;padding:10px 12px;outline:none;resize:vertical" style-focus="border-color:#2dd7f0;box-shadow:0 0 12px rgba(45,215,240,.35)"></textarea></label>
       <div ref="{{ setCfStatus }}" style="min-height:16px;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.1em;color:#2dd7f0;margin:14px 0 4px"></div>
-      <button ref="{{ setCfSend }}" onClick="{{ submitContact }}" disabled="{{ true }}" style="width:100%;font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.15em;padding:14px;background:#2dd7f0;color:#04070a;font-weight:700;border:0;border-radius:2px;opacity:.4;cursor:not-allowed;transition:opacity .25s,box-shadow .25s">{{ copy.cfSend }}</button>
+      <button ref="{{ setCfSend }}" onClick="{{ submitContact }}" style="width:100%;font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.15em;padding:14px;background:#2dd7f0;color:#04070a;font-weight:700;border:0;border-radius:2px;opacity:.4;cursor:not-allowed;transition:opacity .25s,box-shadow .25s">{{ copy.cfSend }}</button>
       <div style="text-align:center;margin-top:14px;font-family:'Chakra Petch',sans-serif;font-size:12px;color:rgba(234,246,248,.45)">{{ copy.cfOrEmail }} <button onClick="{{ contactMailto }}" style="background:none;border:0;color:#2dd7f0;font-family:'Chakra Petch',sans-serif;font-size:12px;cursor:pointer;text-decoration:underline;padding:0">{{ copy.cfMailLink }}</button></div>
     </div>
     <div ref="{{ setCfDone }}" style="display:none;padding:44px 30px 48px;text-align:center">
@@ -2327,7 +2327,7 @@ class Component extends DCLogic {
       setCfOther: (el) => { this._cfOther = el; },
       setCfMsg: (el) => { this._cfMsg = el; },
       setCfStatus: (el) => { this._cfStatus = el; },
-      setCfSend: (el) => { this._cfSend = el; },
+      setCfSend: (el) => { this._cfSend = el; if (el) el.disabled = true; },
       setCareerPop: (el) => { this._careerPop = el; if (el) this.playCareerPop(el); },
       modalOpen: this.state.modalOpen,
       workPrev: () => this.moveWork(1),
