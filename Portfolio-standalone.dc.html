@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+<meta name="ext-resource-dependency" content="uploads/Port 01_00511.jpg" data-resource-id="proj1" />
+<meta name="ext-resource-dependency" content="uploads/Port 02_00197.jpg" data-resource-id="proj2" />
+<meta name="ext-resource-dependency" content="uploads/Port 03_00253.jpg" data-resource-id="proj3" />
+<meta name="ext-resource-dependency" content="uploads/Port 04_00314.jpg" data-resource-id="proj4" />
+<meta name="ext-resource-dependency" content="uploads/Port 05_00498.jpg" data-resource-id="proj5" />
+<meta name="ext-resource-dependency" content="uploads/Port 06_00973.jpg" data-resource-id="proj6" />
+<meta name="ext-resource-dependency" content="uploads/Port 07_01282.jpg" data-resource-id="proj7" />
+<meta name="ext-resource-dependency" content="uploads/Port 08_01282.jpg" data-resource-id="proj8" />
+<template id="__bundler_thumbnail" data-bg-color="#04070a">
+<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+<rect width="1200" height="800" fill="#04070a"/>
+<circle cx="600" cy="520" r="170" fill="none" stroke="#2dd7f0" stroke-width="6" opacity="0.6"/>
+<circle cx="600" cy="520" r="112" fill="none" stroke="#2dd7f0" stroke-width="3" opacity="0.85"/>
+<path d="M600 250 L636 430 L564 430 Z" fill="#2dd7f0" opacity="0.7"/>
+<text x="600" y="700" font-family="monospace" font-size="44" fill="#2dd7f0" text-anchor="middle" letter-spacing="10">KT</text>
+</svg>
+</template>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Chakra+Petto&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Chakra+Petch:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+@keyframes scanmove{0%{background-position:0 0}100%{background-position:0 40px}}
+@keyframes gridmove{0%{background-position:0 0}100%{background-position:80px 80px}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+@keyframes modalIn{from{opacity:0}to{opacity:1}}
+@keyframes pulseline{0%,100%{opacity:.35}50%{opacity:1}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes spinrev{from{transform:rotate(360deg)}to{transform:rotate(0deg)}}
+@keyframes portalFade{0%{opacity:0}20%{opacity:.85}30%{opacity:.3}45%{opacity:.95}100%{opacity:1}}
+@keyframes holoRise{0%{opacity:0;clip-path:inset(100% 0 0 0);transform:translateY(16%)}12%{opacity:.55}18%{opacity:.15}28%{opacity:.75}38%{opacity:.35}50%{opacity:.9}62%{opacity:.6}100%{opacity:1;clip-path:inset(0 0 0 0);transform:translateY(0)}}
+
+body{margin:0;background:#04070a;font-family:'Chakra Petch',sans-serif;overflow-x:hidden}
+::selection{background:#2dd7f0;color:#04070a}
+a{color:#2dd7f0;text-decoration:none}
+a:hover{color:#7fe9f7}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:#04070a}
+::-webkit-scrollbar-thumb{background:#12707a;border-radius:4px}
+</style>
+</helmet>
+
+<div ref="{{ setRootRef }}" style="position:relative;background:#04070a;color:#eaf6f8;min-height:100vh">
+
+<div style="position: fixed; inset: 0; pointer-events: none; z-index: 1; background-image: linear-gradient(rgba(45,215,240,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(45,215,240,.05) 1px,transparent 1px); background-size: 42px 42px; animation: gridmove 6s linear infinite; opacity: .5"></div>
+<div style="position: fixed; inset: 0; pointer-events: none; z-index: 1; background-image: repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0px,rgba(255,255,255,.025) 1px,transparent 1px,transparent 3px); animation: scanmove .35s linear infinite; left: 0px; top: -4px"></div>
+
+<nav style="position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 18px clamp(20px,4vw,56px); background: linear-gradient(180deg,rgba(4,7,10,.92),rgba(4,7,10,0)); backdrop-filter: blur(2px)">
+  <div style="display:flex;align-items:center;gap:10px">
+    <div style="width:10px;height:10px;border-radius:50%;background:#2dd7f0;box-shadow:0 0 10px 2px #2dd7f0;animation:blink 2s ease-in-out infinite"></div>
+    <div style="font-family:'Orbitron',sans-serif;font-weight:700;letter-spacing:.12em;font-size:16px;color:#eaf6f8">KHAI<span style="color:#2dd7f0">.</span>TRAN</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:clamp(14px,2.4vw,34px)">
+    <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+      <a href="{{ item.href }}" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.15em;color:rgba(234,246,248,.75);padding:6px 2px;border-bottom:2px solid transparent">{{ item.label }}</a>
+    </sc-for>
+    <button onClick="{{ toggleLang }}" style-hover="box-shadow:0 0 16px rgba(45,215,240,.55)" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.1em;background:rgba(45,215,240,.08);border:1px solid rgba(45,215,240,.4);color:#2dd7f0;transition:box-shadow .2s;padding:6px 12px;border-radius:2px;cursor:pointer">{{ langLabel }}</button>
+  </div>
+</nav>
+
+<div id="hero-pin" style="height: 210vh" data-om-label="Hero section">
+<section id="hero" ref="{{ setHeroRef }}" style="position: sticky; top: 0; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; border-bottom: 1px solid rgba(45,215,240,.15)" data-om-label="sub Hero section">
+  
+  <div ref="{{ setHeroGrid }}" style="position: absolute; inset: -10%; background-image: radial-gradient(circle at 50% 40%,rgba(45,215,240,.12),transparent 60%); z-index: 0" data-om-label="Big glow"></div>
+
+  <div style="position:absolute;top:50%;left:50%;width:min(78vw,900px);height:min(78vw,900px);transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(45,215,240,.18);z-index:1" data-om-label="big circle"></div>
+  <div style="position:absolute;top:50%;left:50%;width:min(60vw,700px);height:min(60vw,700px);transform:translate(-50%,-50%);border-radius:50%;border:1px dashed rgba(45,215,240,.15);animation:spin 40s linear infinite;z-index:1" data-om-label="Circle of the dot"></div>
+  <div style="position: absolute; top: 50%; left: 50%; width: min(60vw,700px); height: min(60vw,700px); transform: translate(-50%,-50%); z-index: 1; animation: spinrev 60s linear infinite" data-om-label="cyan dot path">
+    <div style="position: absolute; top: -6px; left: 50%; width: 10px; height: 10px; background: #2dd7f0; border-radius: 50%; box-shadow: 0 0 8px #2dd7f0" data-om-label="dot"></div>
+  </div>
+
+  <div ref="{{ setHeroSlogan }}" style="position: absolute; inset: 0; z-index: 2; pointer-events: none" data-om-label="Slogan">
+    <div style="position:absolute;left:clamp(20px,11vw,180px);top:96px;display:flex;flex-direction:column;align-items:center;font-family:'Orbitron',sans-serif;font-weight:900;font-size:clamp(16px,4.4vh,44px);line-height:1.12;letter-spacing:.02em;color:transparent;-webkit-text-stroke:1px rgba(45,215,240,.35)" data-om-label="L"><sc-for list="{{ sloganChars1 }}" as="c" hint-placeholder-count="8"><span data-ch="{{ c.k }}" style="display:block;min-height:.55em;will-change:transform,opacity">{{ c.ch }}</span></sc-for></div>
+    <div style="position:absolute;right:clamp(20px,11vw,180px);top:96px;display:flex;flex-direction:column;align-items:center;font-family:'Orbitron',sans-serif;font-weight:900;font-size:clamp(16px,4.4vh,44px);line-height:1.12;letter-spacing:.02em;color:transparent;-webkit-text-stroke:1px rgba(45,215,240,.35)" data-om-label="R"><sc-for list="{{ sloganChars2 }}" as="c" hint-placeholder-count="8"><span data-ch="{{ c.k }}" style="display:block;min-height:.55em;will-change:transform,opacity">{{ c.ch }}</span></sc-for></div>
+  </div>
+
+  <div ref="{{ setHeroPortrait }}" style="position: relative; z-index: 3; height: calc(100vh - 84px); align-self: flex-end; margin: 84px auto 0; display: flex; align-items: flex-end; justify-content: center; overflow: visible" data-om-label="Portray">
+    <div style="position:relative;z-index:1;height:100%;display:flex;align-items:flex-end">
+      <div ref="{{ setPortraitWrapRef }}" style="position:relative;height:calc(100% - 30vh);max-height:620px;margin-bottom:26vh;overflow:hidden;transform:scale(1.3)">
+        <img ref="{{ setPortraitImgRef }}" crossorigin="anonymous" src="uploads/Hologram_BG remove04.png" alt="Khai Tran portrait" style="height:100%;width:auto;object-fit:contain;object-position:bottom;-webkit-mask-image:linear-gradient(to bottom,black 88%,transparent 100%);mask-image:linear-gradient(to bottom,black 88%,transparent 100%)">
+      </div>
+    </div>
+  </div>
+
+  <div style="position: absolute; left: clamp(16px,4vw,56px); top: 50%; transform: translateY(-50%); z-index: 4; display: flex; flex-direction: column; gap: 10px" data-om-label="Hero_L_Text">
+    <div style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.2em;color:#2dd7f0;writing-mode:vertical-rl">Tech in vein</div>
+    <div style="width:1px;height:70px;background:linear-gradient(#2dd7f0,transparent);margin:0 auto"></div>
+  </div>
+  <div style="position: absolute; right: clamp(16px,4vw,56px); top: 50%; transform: translateY(-50%); z-index: 4; display: flex; flex-direction: column; gap: 10px; align-items: center" data-om-label="Hero_R_Text">
+    <div style="width:1px;height:70px;background:linear-gradient(transparent,#2dd7f0)"></div>
+    <div style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.2em;color:#2dd7f0;writing-mode:vertical-rl">Motion in breath</div>
+  </div><video ref="{{ setPortalVideo }}" src="uploads/Digital Circular Stage_R2.mp4" autoplay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="position: absolute; z-index: -10; bottom: -4vh; left: 50%; transform: translateX(-50%); width: 1104px; mix-blend-mode: multiply; pointer-events: none; -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 55%,black 55%,transparent 78%); mask-image: radial-gradient(ellipse 50% 50% at 50% 55%,black 55%,transparent 78%); top: 748px; height: 579px; opacity: 0"></video>
+
+  <div style="position: absolute; bottom: 254px; left: 0; right: 0; z-index: 5; display: flex; flex-direction: column; align-items: center; gap: 18px" data-om-label="Title">
+    <div ref="{{ setHeroRoleRef }}" style="font-family: 'Orbitron',sans-serif; font-size: calc(20px * 0.9); letter-spacing: .25em; color: #EAF6F800; text-align: center; padding: 0 20px; font-weight: 800; display: inline"><sc-for list="{{ heroRoleWords }}" as="w" hint-placeholder-count="6"><span style="display:inline-block;white-space:nowrap;margin-right:.32em"><sc-for list="{{ w.chars }}" as="c" hint-placeholder-count="4"><span class="tchar" style="display:inline-block;opacity:0;filter:blur(6px)">{{ c.ch }}</span></sc-for></span></sc-for><span class="hud-caret" style="display:inline-block;width:3px;height:.85em;margin-left:3px;background:#2dd7f0;box-shadow:0 0 10px #2dd7f0;vertical-align:-.1em;opacity:0"></span></div>
+    
+    <div ref="{{ setHeroCtaRef }}" style="display: none; gap: 14px; opacity: 0; transform: translateY(-14px)">
+      <a href="#reel" style-hover="box-shadow:0 0 24px rgba(45,215,240,.65);transform:translateY(-1px)" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.15em;padding:12px 22px;background:#2dd7f0;color:#04070a;border-radius:2px;font-weight:700;transition:box-shadow .2s,transform .2s">{{ copy.ctaReel }}</a>
+      <a href="#contact" style-hover="box-shadow:0 0 18px rgba(45,215,240,.45);transform:translateY(-1px)" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.15em;padding:12px 22px;border:1px solid rgba(45,215,240,.5);color:#2dd7f0;border-radius:2px;transition:box-shadow .2s,transform .2s">{{ copy.ctaContact }}</a>
+    </div>
+  </div>
+</section>
+</div>
+
+<section id="reel" ref="{{ setReelRef }}" style="position:relative;padding:min(12vw,120px) clamp(20px,6vw,80px);border-bottom:1px solid rgba(45,215,240,.12);display:flex;flex-direction:column;align-items:center">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:26px">
+    <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.25em;color:#eaf6f8;background:rgba(45,215,240,.12);border:1px solid rgba(45,215,240,.4);padding:6px 14px;border-radius:2px">{{ copy.reelBadge }}</div>
+  </div>
+  <h2 ref="{{ setReelTitleRef }}" style="font-family:'Orbitron',sans-serif;font-size:calc(clamp(26px,3.4vw,42px) * var(--type-scale,1));margin:0 0 36px;color:#eaf6f8;text-align:center"><sc-for list="{{ reelTitleWords }}" as="w" hint-placeholder-count="6"><span style="display:inline-block;white-space:nowrap;margin-right:.32em"><sc-for list="{{ w.chars }}" as="c" hint-placeholder-count="4"><span class="tchar" style="display:inline-block;opacity:0;filter:blur(6px)">{{ c.ch }}</span></sc-for></span></sc-for><span class="hud-caret" style="display:inline-block;width:3px;height:.85em;margin-left:3px;background:#2dd7f0;box-shadow:0 0 10px #2dd7f0;vertical-align:-.1em;opacity:0"></span></h2>
+  <div style="position:relative;width:100%;max-width:980px">
+    <div style="position:absolute;top:-1px;left:-1px;width:26px;height:26px;border-top:2px solid #2dd7f0;border-left:2px solid #2dd7f0;z-index:2;pointer-events:none"></div>
+    <div style="position:absolute;top:-1px;right:-1px;width:26px;height:26px;border-top:2px solid #2dd7f0;border-right:2px solid #2dd7f0;z-index:2;pointer-events:none"></div>
+    <div style="position:absolute;bottom:-1px;left:-1px;width:26px;height:26px;border-bottom:2px solid #2dd7f0;border-left:2px solid #2dd7f0;z-index:2;pointer-events:none"></div>
+    <div style="position:absolute;bottom:-1px;right:-1px;width:26px;height:26px;border-bottom:2px solid #2dd7f0;border-right:2px solid #2dd7f0;z-index:2;pointer-events:none"></div>
+    <div style="position:absolute;top:-26px;left:10px;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.1em;color:rgba(45,215,240,.7);z-index:2">SHOWREEL_2026</div>
+    <div style="position:absolute;top:-26px;right:10px;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.1em;color:#35e08a;z-index:2">● REC</div>
+    <iframe src="https://www.youtube-nocookie.com/embed/dIxOcOyNn5Q" title="Khai Tran — Showreel" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="{{ true }}" style="width:100%;display:block;background:#000;border:1px solid rgba(45,215,240,.35);aspect-ratio:16/9"></iframe>
+  </div>
+</section>
+
+<section id="about" ref="{{ setAboutRef }}" style="position: relative; padding: min(14vw,140px) clamp(20px,6vw,80px); display: flex; flex-wrap: wrap; gap: 60px; align-items: center; justify-content: center; border-bottom: 1px solid rgba(45,215,240,.12)">
+  <div style="flex:1 1 340px;max-width:420px">
+    <div style="border:1px solid rgba(45,215,240,.35);background:rgba(45,215,240,.04);border-radius:2px;overflow:hidden">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:rgba(45,215,240,.1);border-bottom:1px solid rgba(45,215,240,.3)">
+        <span style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.2em;color:#2dd7f0">{{ copy.profileLabel }}</span>
+        <span style="width:6px;height:6px;border-radius:50%;background:#35e08a;animation:blink 1.6s ease-in-out infinite"></span>
+      </div>
+      <div style="padding:18px;display:flex;gap:16px;align-items:center">
+        <img src="uploads/BG removed.png" alt="Khai Tran" style="width:90px;height:90px;object-fit:cover;object-position:top;border:1px solid rgba(45,215,240,.4);filter:grayscale(.1) contrast(1.05)">
+        <div>
+          <div style="font-family:'Orbitron',sans-serif;font-size:13px;letter-spacing:.05em;color:#eaf6f8">NAME: KHAI TRAN</div>
+          <div style="font-size:12px;color:rgba(234,246,248,.6);margin-top:6px;line-height:1.5">{{ copy.heroRole }}</div>
+        </div>
+      </div>
+      <div style="padding:0 18px 18px;font-size:13.5px;line-height:1.8;color:rgba(234,246,248,.75)">{{ copy.aboutBody }}</div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap">
+      <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+        <div style="flex:1 1 90px;border:1px solid rgba(45,215,240,.25);padding:12px 10px;text-align:center;background:rgba(45,215,240,.03)">
+          <div style="font-family:'Orbitron',sans-serif;font-size:22px;color:#2dd7f0;font-weight:700">{{ s.value }}</div>
+          <div style="font-size:9.5px;letter-spacing:.12em;color:rgba(234,246,248,.55);margin-top:4px">{{ s.label }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  <div style="flex:1 1 380px;max-width:520px">
+    <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.25em;color:#2dd7f0;margin-bottom:14px">// {{ copy.aboutLabel }}</div>
+    <h2 ref="{{ setAboutTitleRef }}" style="font-family:'Orbitron',sans-serif;font-size:calc(clamp(26px,3.4vw,42px) * var(--type-scale,1));line-height:1.2;margin:0 0 18px;color:#eaf6f8"><sc-for list="{{ aboutTitleWords }}" as="w" hint-placeholder-count="6"><span style="display:inline-block;white-space:nowrap;margin-right:.32em"><sc-for list="{{ w.chars }}" as="c" hint-placeholder-count="4"><span class="tchar" style="display:inline-block;opacity:0;filter:blur(6px)">{{ c.ch }}</span></sc-for></span></sc-for><span class="hud-caret" style="display:inline-block;width:3px;height:.85em;margin-left:3px;background:#2dd7f0;box-shadow:0 0 10px #2dd7f0;vertical-align:-.1em;opacity:0"></span></h2>
+    <p style="font-size:calc(15.5px * var(--type-scale,1));line-height:1.9;color:rgba(234,246,248,.7);margin:0 0 16px;text-wrap:pretty">{{ copy.aboutP1 }}</p>
+    <sc-if value="{{ showDetail }}" hint-placeholder-val="{{ true }}">
+    <p style="font-size:calc(15.5px * var(--type-scale,1));line-height:1.9;color:rgba(234,246,248,.7);margin:0;text-wrap:pretty">{{ copy.aboutP2 }}</p>
+    </sc-if>
+  </div>
+</section>
+
+<section id="services" ref="{{ setServicesRef }}" style="position:relative;padding:min(12vw,120px) clamp(20px,6vw,80px);border-bottom:1px solid rgba(45,215,240,.12)">
+  <div style="text-align:center;margin-bottom:56px">
+    <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.25em;color:#2dd7f0;margin-bottom:10px">// {{ copy.servicesLabel }}</div>
+    <h2 ref="{{ setServicesTitleRef }}" style="font-family:'Orbitron',sans-serif;font-size:calc(clamp(26px,3.4vw,42px) * var(--type-scale,1));margin:0;color:#eaf6f8"><sc-for list="{{ servicesTitleWords }}" as="w" hint-placeholder-count="6"><span style="display:inline-block;white-space:nowrap;margin-right:.32em"><sc-for list="{{ w.chars }}" as="c" hint-placeholder-count="4"><span class="tchar" style="display:inline-block;opacity:0;filter:blur(6px)">{{ c.ch }}</span></sc-for></span></sc-for><span class="hud-caret" style="display:inline-block;width:3px;height:.85em;margin-left:3px;background:#2dd7f0;box-shadow:0 0 10px #2dd7f0;vertical-align:-.1em;opacity:0"></span></h2>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:22px;justify-content:center">
+    <sc-for list="{{ services }}" as="svc" hint-placeholder-count="4">
+      <div style="flex:1 1 240px;max-width:280px;position:relative;padding:26px 20px;border:1px solid rgba(45,215,240,.25);background:linear-gradient(160deg,rgba(45,215,240,.06),rgba(45,215,240,.01))">
+        <div style="position:absolute;top:-1px;left:-1px;width:16px;height:16px;border-top:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+        <div style="position:absolute;bottom:-1px;right:-1px;width:16px;height:16px;border-bottom:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+        <div style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.15em;color:rgba(45,215,240,.6);margin-bottom:14px">0{{ svc.idx }}</div>
+        <div style="font-family:'Orbitron',sans-serif;font-size:calc(17px * var(--type-scale,1));letter-spacing:.06em;color:#eaf6f8;margin-bottom:12px">{{ svc.title }}</div>
+        <sc-if value="{{ showDetail }}" hint-placeholder-val="{{ true }}">
+        <div style="font-size:calc(13.5px * var(--type-scale,1));line-height:1.7;color:rgba(234,246,248,.65)">{{ svc.desc }}</div>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section id="work" ref="{{ setWorkRef }}" onMouseMove="{{ onWorkMove }}" onMouseEnter="{{ onWorkEnter }}" onMouseLeave="{{ onWorkLeave }}" style="position:relative;padding:min(10vw,96px) clamp(20px,6vw,80px) min(9vw,80px);border-bottom:1px solid rgba(45,215,240,.12);overflow:hidden">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="heatDistort" x="-30%" y="-30%" width="160%" height="160%"><feTurbulence type="fractalNoise" baseFrequency="0.013 0.05" numOctaves="2" seed="7" result="noise"><animate attributeName="baseFrequency" dur="6s" values="0.013 0.05;0.02 0.075;0.013 0.05" repeatCount="indefinite"></animate></feTurbulence><feDisplacementMap in="SourceGraphic" in2="noise" scale="22" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap></filter></defs></svg>
+
+  <div style="text-align:center;margin-bottom:34px;position:relative;z-index:4">
+    <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.25em;color:#2dd7f0;margin-bottom:10px">// {{ copy.workLabel }}</div>
+    <h2 ref="{{ setWorkTitleRef }}" style="font-family:'Orbitron',sans-serif;font-size:calc(clamp(26px,3.4vw,42px) * var(--type-scale,1));margin:0;color:#eaf6f8"><sc-for list="{{ workTitleWords }}" as="w" hint-placeholder-count="6"><span style="display:inline-block;white-space:nowrap;margin-right:.32em"><sc-for list="{{ w.chars }}" as="c" hint-placeholder-count="4"><span class="tchar" style="display:inline-block;opacity:0;filter:blur(6px)">{{ c.ch }}</span></sc-for></span></sc-for><span class="hud-caret" style="display:inline-block;width:3px;height:.85em;margin-left:3px;background:#2dd7f0;box-shadow:0 0 10px #2dd7f0;vertical-align:-.1em;opacity:0"></span></h2>
+  </div>
+
+  <div style="position:relative;height:clamp(340px,46vw,520px);perspective:1400px;perspective-origin:50% 42%;z-index:2">
+    <div ref="{{ setStage }}" style="position:absolute;left:0;right:0;top:50%;height:0;transform-style:preserve-3d">
+      <sc-for list="{{ workItems }}" as="it" hint-placeholder-count="6">
+        <div ref="{{ it.setSlide }}" onClick="{{ it.select }}" style="position:absolute;left:50%;top:0;width:clamp(230px,30vw,360px);aspect-ratio:16/9;margin:calc(clamp(230px,30vw,360px) * -0.281) 0 0 calc(clamp(230px,30vw,360px) * -0.5);border:1px solid rgba(45,215,240,.3);background:#070d11;overflow:hidden;box-shadow:0 0 0 1px rgba(45,215,240,.08),0 18px 46px rgba(0,0,0,.55);cursor:pointer">
+          <img ref="{{ it.setImg }}" alt="{{ it.title }}" style="width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.9) contrast(1.05)">
+          <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(4,7,10,.85),rgba(4,7,10,0) 45%)"></div>
+          <div style="position:absolute;top:12px;left:12px;font-family:'Orbitron',sans-serif;font-size:9.5px;letter-spacing:.12em;color:rgba(45,215,240,.85);border:1px solid rgba(45,215,240,.45);padding:3px 9px;background:rgba(4,7,10,.5)">{{ it.tag }}</div>
+          <div ref="{{ it.setPlay }}" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(.9);width:60px;height:60px;border-radius:50%;border:1px solid rgba(45,215,240,.7);background:rgba(4,7,10,.35);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .4s,transform .4s;box-shadow:0 0 24px rgba(45,215,240,.4)"><div style="width:0;height:0;border-left:15px solid #2dd7f0;border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:4px"></div></div>
+          <div style="position:absolute;left:14px;right:14px;bottom:12px">
+            <div style="font-family:'Orbitron',sans-serif;font-size:14px;letter-spacing:.04em;color:#eaf6f8">{{ it.title }}</div>
+            <div style="font-size:11px;color:rgba(234,246,248,.6);margin-top:3px">{{ it.role }}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="position:absolute;left:0;right:0;top:50%;height:0;perspective:1400px;perspective-origin:50% 42%;pointer-events:none;z-index:0;transform:translateY(clamp(8px,1.4vw,20px)) scaleY(-1);opacity:.42;filter:blur(3px)">
+      <div ref="{{ setStageR }}" style="position:absolute;left:0;right:0;top:0;height:0;transform-style:preserve-3d">
+        <sc-for list="{{ workItems }}" as="it" hint-placeholder-count="6">
+          <div ref="{{ it.setSlideR }}" style="position:absolute;left:50%;top:0;width:clamp(230px,30vw,360px);aspect-ratio:16/9;margin:calc(clamp(230px,30vw,360px) * -0.281) 0 0 calc(clamp(230px,30vw,360px) * -0.5);overflow:hidden;border:1px solid rgba(45,215,240,.16)">
+            <img ref="{{ it.setImgR }}" alt="" aria-hidden="true" style="width:100%;height:100%;object-fit:cover;display:block">
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="position:absolute;left:0;right:0;top:calc(50% + clamp(4px,0.7vw,10px));bottom:0;background:linear-gradient(to bottom,rgba(4,7,10,0),rgba(4,7,10,.72) 55%,#04070a 88%);pointer-events:none;z-index:3"></div>
+    <div style="position:absolute;left:50%;top:calc(50% + clamp(6px,1vw,16px));width:clamp(300px,40vw,540px);height:2px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,rgba(45,215,240,.35),transparent);filter:blur(1px);pointer-events:none;z-index:4"></div>
+  </div>
+
+  <div style="display:flex;justify-content:center;margin-top:12px;position:relative;z-index:4">
+    <div style="display:flex;align-items:center;gap:14px;padding:9px 12px;border:1px solid rgba(45,215,240,.28);background:rgba(7,13,17,.72);backdrop-filter:blur(10px);border-radius:6px;box-shadow:0 12px 40px rgba(0,0,0,.5)">
+      <div ref="{{ setPillTitle }}" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.12em;color:#eaf6f8;min-width:150px;text-align:center;white-space:nowrap">—</div>
+      <div style="display:flex;gap:6px">
+        <button onClick="{{ workPrev }}" aria-label="Previous" style-hover="box-shadow:0 0 16px rgba(45,215,240,.55);background:rgba(45,215,240,.14)" style="width:38px;height:34px;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.05);color:#2dd7f0;font-size:15px;border-radius:3px;transition:box-shadow .2s,background .2s;display:flex;align-items:center;justify-content:center;cursor:pointer">←</button>
+        <button onClick="{{ workNext }}" aria-label="Next" style-hover="box-shadow:0 0 16px rgba(45,215,240,.55);background:rgba(45,215,240,.14)" style="width:38px;height:34px;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.05);color:#2dd7f0;font-size:15px;border-radius:3px;transition:box-shadow .2s,background .2s;display:flex;align-items:center;justify-content:center;cursor:pointer">→</button>
+      </div>
+      <div style="width:54px;height:54px;border-radius:50%;border:1px solid rgba(45,215,240,.35);position:relative;overflow:hidden;flex:0 0 auto;background:radial-gradient(circle,rgba(45,215,240,.1),transparent 70%);perspective:90px;perspective-origin:50% 50%">
+        <div ref="{{ setMiniDisc }}" style="position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d">
+          <sc-for list="{{ workItems }}" as="it" hint-placeholder-count="6">
+            <div ref="{{ it.setMini }}" style="position:absolute;left:50%;top:50%;width:31px;height:20px;margin:-10px 0 0 -15.5px;border-radius:2px;overflow:hidden;border:1px solid rgba(45,215,240,.4)"><img ref="{{ it.setImgM }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+          </sc-for>
+        </div>
+        <div style="position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 0 16px rgba(4,7,10,.95);pointer-events:none"></div>
+      </div>
+    </div>
+  </div>
+
+  <div ref="{{ setCursorHeat }}" style="position:absolute;top:0;left:0;width:190px;height:190px;border-radius:50%;transform:translate(-50%,-50%);backdrop-filter:url(#heatDistort);-webkit-backdrop-filter:url(#heatDistort);background:radial-gradient(circle,rgba(45,215,240,.10),transparent 68%);pointer-events:none;z-index:9;opacity:0;transition:opacity .3s;mix-blend-mode:screen"></div>
+  <div ref="{{ setCursorDot }}" style="position:absolute;top:0;left:0;width:12px;height:12px;border-radius:50%;transform:translate(-50%,-50%);background:#2dd7f0;box-shadow:0 0 14px rgba(45,215,240,.9),0 0 30px rgba(45,215,240,.5);pointer-events:none;z-index:10;opacity:0;transition:opacity .3s,width .2s,height .2s"></div>
+</section>
+
+<sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ closeModal }}" style="position:fixed;inset:0;z-index:120;background:rgba(4,7,10,.86);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:24px;animation:modalIn .3s ease">
+  <div onClick="{{ stop }}" style="position:relative;width:min(92vw,1040px);border:1px solid rgba(45,215,240,.35);background:#070d11;box-shadow:0 0 0 1px rgba(45,215,240,.1),0 40px 120px rgba(0,0,0,.7)">
+    <div style="position:absolute;top:-1px;left:-1px;width:22px;height:22px;border-top:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+    <div style="position:absolute;top:-1px;right:-1px;width:22px;height:22px;border-top:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+    <div style="position:absolute;bottom:-1px;left:-1px;width:22px;height:22px;border-bottom:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+    <div style="position:absolute;bottom:-1px;right:-1px;width:22px;height:22px;border-bottom:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid rgba(45,215,240,.2)">
+      <div ref="{{ setModalTitle }}" style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.14em;color:#eaf6f8">—</div>
+      <button onClick="{{ closeModal }}" aria-label="Close" style-hover="box-shadow:0 0 14px rgba(45,215,240,.6)" style="width:30px;height:30px;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.06);color:#2dd7f0;border-radius:3px;font-size:14px;cursor:pointer;transition:box-shadow .2s">✕</button>
+    </div>
+    <div style="position:relative;width:100%;aspect-ratio:16/9;background:#000">
+      <iframe ref="{{ setModalFrame }}" title="Video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen="{{ true }}" style="width:100%;height:100%;border:0;display:block"></iframe>
+      <div ref="{{ setModalMock }}" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;pointer-events:none;color:rgba(234,246,248,.5);font-family:'Orbitron',sans-serif;letter-spacing:.15em;font-size:12px"><div style="width:56px;height:56px;border-radius:50%;border:1px solid rgba(45,215,240,.5);display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(45,215,240,.35)"><div style="width:0;height:0;border-left:14px solid #2dd7f0;border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:4px"></div></div>VIDEO EMBED — MOCKUP</div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<section id="skills" ref="{{ setSkillsRef }}" style="position: relative; padding: min(12vw,120px) clamp(20px,6vw,80px); border-bottom: 1px solid rgba(45,215,240,.12)">
+  <div style="text-align:center;margin-bottom:44px">
+    <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.25em;color:#2dd7f0;margin-bottom:10px">// {{ copy.skillsLabel }}</div>
+    <h2 ref="{{ setSkillsTitleRef }}" style="font-family:'Orbitron',sans-serif;font-size:calc(clamp(26px,3.4vw,42px) * var(--type-scale,1));margin:0;color:#eaf6f8"><sc-for list="{{ skillsTitleWords }}" as="w" hint-placeholder-count="6"><span style="display:inline-block;white-space:nowrap;margin-right:.32em"><sc-for list="{{ w.chars }}" as="c" hint-placeholder-count="4"><span class="tchar" style="display:inline-block;opacity:0;filter:blur(6px)">{{ c.ch }}</span></sc-for></span></sc-for><span class="hud-caret" style="display:inline-block;width:3px;height:.85em;margin-left:3px;background:#2dd7f0;box-shadow:0 0 10px #2dd7f0;vertical-align:-.1em;opacity:0"></span></h2>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;max-width:900px;margin:0 auto">
+    <sc-for list="{{ tools }}" as="t" hint-placeholder-count="8">
+      <div style="padding:10px 18px;border:1px solid rgba(45,215,240,.3);font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.08em;color:#eaf6f8;background:rgba(45,215,240,.04)">{{ t.name }}</div>
+    </sc-for>
+  </div>
+</section>
+
+<section id="contact" ref="{{ setContactRef }}" style="position: relative; padding: min(14vw,140px) clamp(20px,6vw,80px) 60px; display: flex; flex-direction: column; align-items: center; text-align: center">
+  <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.25em;color:#2dd7f0;margin-bottom:14px">// {{ copy.contactLabel }}</div>
+  <h2 ref="{{ setContactTitleRef }}" style="font-family:'Orbitron',sans-serif;font-size:calc(clamp(28px,4vw,52px) * var(--type-scale,1));margin:0 0 20px;color:#eaf6f8;max-width:760px"><sc-for list="{{ contactTitleWords }}" as="w" hint-placeholder-count="6"><span style="display:inline-block;white-space:nowrap;margin-right:.32em"><sc-for list="{{ w.chars }}" as="c" hint-placeholder-count="4"><span class="tchar" style="display:inline-block;opacity:0;filter:blur(6px)">{{ c.ch }}</span></sc-for></span></sc-for><span class="hud-caret" style="display:inline-block;width:3px;height:.85em;margin-left:3px;background:#2dd7f0;box-shadow:0 0 10px #2dd7f0;vertical-align:-.1em;opacity:0"></span></h2>
+  <sc-if value="{{ showDetail }}" hint-placeholder-val="{{ true }}">
+  <p style="max-width:520px;font-size:calc(15px * var(--type-scale,1));line-height:1.8;color:rgba(234,246,248,.65);margin:0 0 30px">{{ copy.contactSub }}</p>
+  </sc-if>
+  <a href="mailto:daniel.biz0395@gmail.com" style-hover="box-shadow:0 0 30px rgba(45,215,240,.7);transform:translateY(-1px)" style="font-family:'Orbitron',sans-serif;font-size:13px;letter-spacing:.15em;padding:16px 34px;background:#2dd7f0;color:#04070a;font-weight:700;transition:box-shadow .2s,transform .2s;border-radius:2px;margin-bottom:36px">{{ copy.contactCta }}</a>
+  <div style="display:flex;gap:26px;margin-bottom:50px">
+    <sc-for list="{{ socials }}" as="soc" hint-placeholder-count="3">
+      <a href="{{ soc.href }}" style-hover="box-shadow:0 4px 14px rgba(45,215,240,.4)" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.1em;color:rgba(234,246,248,.6);border-bottom:1px solid rgba(45,215,240,.3);padding-bottom:2px;transition:box-shadow .2s">{{ soc.label }}</a>
+    </sc-for>
+  </div>
+  <div style="width:100%;max-width:1100px;border-top:1px solid rgba(45,215,240,.15);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px">
+    <span style="font-size:11px;color:rgba(234,246,248,.4);letter-spacing:.05em">© 2026 KHAI TRAN — MOTION SYSTEMS</span>
+    <span style="font-size:11px;color:rgba(234,246,248,.4);letter-spacing:.05em;font-family:'Orbitron',sans-serif">STATUS: ONLINE</span>
+  </div>
+</section>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;typeScale&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.9,&quot;min&quot;:0.85,&quot;max&quot;:1.35,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Feel&quot;},&quot;motionDepth&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0.3,&quot;max&quot;:2,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Feel&quot;},&quot;contentDensity&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;full&quot;,&quot;options&quot;:[&quot;full&quot;,&quot;minimal&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Feel&quot;}}">
+const EN = {
+  heroRole: 'MOTION DESIGNER // VIDEO ENGINEER // STUDIO LEAD',
+  heroSub: 'Khai Tran — motion designer who builds the system behind the videos, not just the videos.',
+  ctaReel: 'VIEW REEL',
+  ctaContact: 'CONTACT',
+  profileLabel: 'PROFILE',
+  aboutLabel: 'ABOUT',
+  aboutTitle: 'I don\'t just make the video. I build the studio that makes it.',
+  aboutP1: 'Five years across an international production house and an in-house startup studio. At Shuttlerock (NZ): short-form ads at volume — brand guidelines, platform specs, tight turnarounds, every aspect ratio. At The Umdenken (AU): founding creative hire. No studio, no pipeline, no process. I built post-production end to end, wrote it into the company\'s official SOP, and grew it into a four-person team I led.',
+  aboutP2: 'That\'s the combination — the craft to make the work, and the systems thinking to make it repeatable after I\'ve made it once. Sci-fi and HUD is where I\'m most at home: every frame treated like an interface, precise grids, intentional glow, motion that reads as data made cinematic.',
+  aboutBody: 'Motion designer and video engineer. Founding creative hire at an Australian Edtech startup — built the post-production studio from zero, then led it.',
+  servicesLabel: 'SERVICES',
+  servicesTitle: 'What I build',
+  reelBadge: 'ACCESS GRANTED — IDENTITY VERIFIED',
+  reelTitle: 'Showreel 2026',
+  workLabel: 'SELECTED WORK',
+  workTitle: 'Project archive',
+  skillsLabel: 'TOOLSET',
+  skillsTitle: 'Software & pipeline',
+  contactLabel: 'CONTACT',
+  contactTitle: 'Let\'s build the next visual system together.',
+  contactSub: 'Open to full-time motion design and video engineering roles — remote or Ho Chi Minh City. Freelance briefs welcome too.',
+  contactCta: 'TRANSMIT MESSAGE',
+};
+const VI = {
+  heroRole: 'MOTION DESIGNER // VIDEO ENGINEER // STUDIO LEAD',
+  heroSub: 'Khai Tran — motion designer xây dựng cả hệ thống đằng sau những video, không chỉ video.',
+  ctaReel: 'XEM SHOWREEL',
+  ctaContact: 'LIÊN HỆ',
+  profileLabel: 'HỒ SƠ',
+  aboutLabel: 'GIỚI THIỆU',
+  aboutTitle: 'Tôi không chỉ làm video. Tôi dựng cái studio làm ra nó.',
+  aboutP1: 'Năm năm qua hai môi trường: một production house quốc tế và một studio in-house của startup. Ở Shuttlerock (New Zealand): short-form ads chạy số lượng lớn — brand guideline, platform spec, deadline gắt, đủ mọi tỉ lệ khung hình. Ở The Umdenken (Úc): nhân sự sáng tạo đầu tiên. Không studio, không pipeline, không quy trình. Tôi dựng toàn bộ hậu kỳ, viết nó thành SOP chính thức của công ty, rồi phát triển thành team 4 người do tôi dẫn dắt.',
+  aboutP2: 'Đó là sự kết hợp — tay nghề để làm ra sản phẩm, và tư duy hệ thống để nó lặp lại được sau khi tôi làm lần đầu. Sci-fi và HUD là nơi tôi thoải mái nhất: mỗi khung hình được xử lý như một giao diện — lưới chính xác, ánh sáng có chủ đích, chuyển động mang cảm giác dữ liệu được điện ảnh hóa.',
+  aboutBody: 'Motion designer và video engineer. Nhân sự sáng tạo đầu tiên của một startup Edtech Úc — dựng studio hậu kỳ từ con số 0, rồi dẫn dắt nó.',
+  servicesLabel: 'DỊCH VỤ',
+  servicesTitle: 'Những gì tôi làm',
+  reelBadge: 'ĐÃ XÁC THỰC — QUYỀN TRUY CẬP',
+  reelTitle: 'Showreel 2026',
+  workLabel: 'DỰ ÁN NỔI BẬT',
+  workTitle: 'Kho dự án',
+  skillsLabel: 'CÔNG CỤ',
+  skillsTitle: 'Phần mềm & quy trình',
+  contactLabel: 'LIÊN HỆ',
+  contactTitle: 'Cùng xây dựng hệ thống hình ảnh tiếp theo.',
+  contactSub: 'Sẵn sàng cho vị trí full-time motion design / video engineering — remote hoặc TP.HCM. Freelance brief cũng luôn được chào đón.',
+  contactCta: 'GỬI TIN NHẮN',
+};
+
+class Component extends DCLogic {
+  state = { lang: 'en', modalOpen: false, modalItem: 0 };
+  _slides = [];
+  _reflects = [];
+  _minis = [];
+  _plays = [];
+  workIndex = 0;
+  _workRot = 0;
+
+  componentDidMount() {
+    this._raf = null;
+    this._workAngle = 26;
+    this._workRadius = 0;
+    requestAnimationFrame(() => this.layoutCarousel(false));
+    this._onKey = (e) => { if (e.key === 'Escape' && this.state.modalOpen) this.closeModal(); };
+    window.addEventListener('keydown', this._onKey);
+    this._sections = [this.aboutEl, this.servicesEl, this.reelEl, this.workEl, this.skillsEl, this.contactEl].filter(Boolean);
+    this._onScroll = () => {
+      if (this._raf) return;
+      this._raf = requestAnimationFrame(() => {
+        this._raf = null;
+        this.tick();
+      });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    this._onResize = () => { this.measureChars(); this.layoutCarousel(false); };
+    window.addEventListener('resize', this._onResize);
+    requestAnimationFrame(() => { this.measureChars(); this.tick(); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { this.measureChars(); this.tick(); });
+    this._introTimer = setTimeout(() => { this.measureChars(); this.tick(); }, 3300);
+    this.applyTypeScale();
+    this._titleObserver = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) this.typeTitle(e.target); });
+    }, { threshold: 0, rootMargin: '0px 0px -5% 0px' });
+    [this.aboutTitleEl, this.servicesTitleEl, this.reelTitleEl, this.workTitleEl, this.skillsTitleEl, this.contactTitleEl]
+      .forEach((el) => { if (el) this._titleObserver.observe(el); });
+    setTimeout(() => {
+      this.typeTitle(this.heroRoleEl, () => {
+        if (this.heroCtaEl) {
+          this.heroCtaEl.style.transition = 'opacity .6s ease, transform .6s cubic-bezier(.2,.8,.25,1)';
+          this.heroCtaEl.style.opacity = '1';
+          this.heroCtaEl.style.transform = 'translateY(0)';
+        }
+      });
+    }, 1500);
+    const v = this._portalVideo;
+    if (v) {
+      v.muted = true;
+      const tryPlay = () => v.play().catch(() => {});
+      tryPlay();
+      window.addEventListener('pointerdown', tryPlay, { once: true });
+    }
+  }
+
+  componentDidUpdate() {
+    this.applyTypeScale();
+    this.applyModal();
+  }
+
+  layoutCarousel(animate) {
+    const n = this._slides.length || (this._workDefs ? this._workDefs.length : 0);
+    if (!n) return;
+    const step = 360 / n;
+    const stageW = this._stage ? this._stage.offsetWidth : 900;
+    const slideW = Math.max(230, Math.min(360, stageW * 0.30));
+    const radius = (slideW / 2) / Math.tan(Math.PI / n) * 1.18;
+    this._workRadius = radius;
+    const trans = animate ? 'transform .8s cubic-bezier(.33,.72,.2,1),filter .6s' : 'none';
+    const dimOf = (i) => { let off = i - this.workIndex; off = ((off % n) + n) % n; if (off > n / 2) off -= n; return Math.abs(off); };
+    for (let i = 0; i < this._slides.length; i++) {
+      const el = this._slides[i]; if (!el) continue;
+      el.style.transform = `rotateY(${i * step}deg) translateZ(${radius}px)`;
+      const dist = dimOf(i);
+      el.style.transition = trans;
+      el.style.filter = `saturate(.9) contrast(1.05) brightness(${Math.max(0.32, 1 - dist * 0.34)})`;
+      el.style.zIndex = String(200 - Math.round(dist * 10));
+      if (this._plays[i]) {
+        this._plays[i].style.opacity = dist < 0.5 ? '1' : '0';
+        this._plays[i].style.transform = dist < 0.5 ? 'translate(-50%,-50%) scale(1)' : 'translate(-50%,-50%) scale(.9)';
+      }
+    }
+    for (let i = 0; i < this._reflects.length; i++) {
+      const el = this._reflects[i]; if (!el) continue;
+      el.style.transform = `rotateY(${i * step}deg) translateZ(${radius}px)`;
+      el.style.transition = trans;
+      el.style.filter = `saturate(.8) contrast(1) brightness(${Math.max(0.28, 1 - dimOf(i) * 0.34)})`;
+    }
+    const stageT = `translateZ(${-radius}px) rotateX(7deg) rotateY(${-this._workRot * step}deg)`;
+    if (this._stage) {
+      this._stage.style.transition = animate ? 'transform .8s cubic-bezier(.33,.72,.2,1)' : 'none';
+      this._stage.style.transform = stageT;
+    }
+    if (this._stageR) {
+      this._stageR.style.transition = animate ? 'transform .8s cubic-bezier(.33,.72,.2,1)' : 'none';
+      this._stageR.style.transform = stageT;
+    }
+    const miniStep = 360 / n;
+    const miniR = 28;
+    for (let i = 0; i < this._minis.length; i++) {
+      const el = this._minis[i]; if (!el) continue;
+      el.style.transform = `rotateY(${i * miniStep}deg) translateZ(${miniR}px)`;
+      el.style.filter = `brightness(${Math.max(0.3, 1 - dimOf(i) * 0.32)})`;
+    }
+    if (this._miniDisc) {
+      this._miniDisc.style.transition = animate ? 'transform .8s cubic-bezier(.33,.72,.2,1)' : 'none';
+      this._miniDisc.style.transform = `translateZ(${-miniR}px) rotateY(${-this._workRot * miniStep}deg)`;
+    }
+    this.updatePill();
+  }
+
+  updatePill() {
+    const d = this._workDefs && this._workDefs[this.workIndex];
+    if (!d) return;
+    if (this._pillTitle) this._pillTitle.textContent = d.title;
+  }
+
+  moveWork(dir) {
+    const n = this._slides.length; if (!n) return;
+    this._workRot += dir;
+    this.workIndex = ((this._workRot % n) + n) % n;
+    this.layoutCarousel(true);
+  }
+
+  selectWork(i) {
+    if (i === this.workIndex) { this.openModal(i); return; }
+    const n = this._slides.length; if (!n) return;
+    let delta = i - this.workIndex;
+    delta = ((delta % n) + n) % n; if (delta > n / 2) delta -= n;
+    this._workRot += delta;
+    this.workIndex = ((this._workRot % n) + n) % n;
+    this.layoutCarousel(true);
+  }
+
+  openModal(i) { this.setState({ modalOpen: true, modalItem: i }); }
+  closeModal() {
+    if (this._modalFrame) this._modalFrame.src = 'about:blank';
+    this.setState({ modalOpen: false });
+  }
+  applyModal() {
+    if (!this.state.modalOpen) return;
+    const d = this._workDefs && this._workDefs[this.state.modalItem];
+    if (this._modalTitleEl && d) this._modalTitleEl.textContent = d.title;
+    if (this._modalFrame && this._modalMock) {
+      if (d && d.yt) {
+        this._modalFrame.src = 'https://www.youtube-nocookie.com/embed/' + d.yt + '?autoplay=1&rel=0';
+        this._modalMock.style.display = 'none';
+      } else {
+        this._modalFrame.src = 'about:blank';
+        this._modalMock.style.display = 'flex';
+      }
+    }
+  }
+
+  onWorkMove(e) {
+    const r = this.workEl.getBoundingClientRect();
+    const x = e.clientX - r.left, y = e.clientY - r.top;
+    if (this._cursorDot) this._cursorDot.style.transform = `translate(${x}px,${y}px) translate(-50%,-50%)`;
+    if (this._cursorHeat) this._cursorHeat.style.transform = `translate(${x}px,${y}px) translate(-50%,-50%)`;
+  }
+  onWorkEnter() {
+    if (this._cursorDot) this._cursorDot.style.opacity = '1';
+    if (this._cursorHeat) this._cursorHeat.style.opacity = '1';
+  }
+  onWorkLeave() {
+    if (this._cursorDot) this._cursorDot.style.opacity = '0';
+    if (this._cursorHeat) this._cursorHeat.style.opacity = '0';
+  }
+
+  applyTypeScale() {
+    if (this.rootEl) this.rootEl.style.setProperty('--type-scale', String(this.props.typeScale ?? 1));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+    if (this._onResize) window.removeEventListener('resize', this._onResize);
+    if (this._raf) cancelAnimationFrame(this._raf);
+    if (this._introTimer) clearTimeout(this._introTimer);
+    if (this._titleObserver) this._titleObserver.disconnect();
+    if (this._onKey) window.removeEventListener('keydown', this._onKey);
+  }
+
+  tick() {
+    const vh = window.innerHeight;
+    const sy = window.scrollY;
+
+    const depth = this.props.motionDepth ?? 1;
+    const pinP = Math.min(1, sy / (vh * 1.05));
+    if (this.heroGridEl) this.heroGridEl.style.transform = `translateY(${pinP * vh * 0.12 * depth}px)`;
+    if (this.heroSloganEl && this._charMeta && this._charEls) {
+      const p = pinP;
+      for (let i = 0; i < this._charEls.length; i++) {
+        const el = this._charEls[i], m = this._charMeta[i];
+        if (!el || !m) continue;
+        let q = Math.max(0, Math.min(1, (p - m.delay) / 0.65));
+        const moveQ = Math.min(1, q / 0.85);
+        const e = moveQ * moveQ * (3 - 2 * moveQ);
+        const dx = (m.tx - m.x) * e;
+        const dy = (m.ty - m.y) * e;
+        const flashQ = Math.max(0, Math.min(1, (q - 0.8) / 0.14));
+        const glow = q >= 0.8 && q < 0.94 ? Math.sin(flashQ * Math.PI) : 0;
+        const op = q < 0.94 ? 1 : 0;
+        el.style.transform = `translate(${dx * depth}px, ${dy * depth}px) scale(${1 - e * 0.62}) rotate(${e * m.rot * depth}deg)`;
+        el.style.opacity = String(op);
+        el.style.color = glow > 0 ? `rgba(255,255,255,${Math.min(1, glow * 1.3)})` : 'transparent';
+        el.style.textShadow = glow > 0 ? `0 0 ${14 + glow * 40}px rgba(45,215,240,${glow}), 0 0 ${6 + glow * 16}px rgba(255,255,255,${glow * 0.95})` : 'none';
+      }
+      const impact = Math.max(0, Math.min(1, (p - 0.45) / 0.45)) * Math.max(0, 1 - Math.max(0, (p - 0.92) / 0.08));
+      if (this._portraitImg) this._portraitImg.style.filter = `drop-shadow(0 0 ${32 + impact * 44}px rgba(45,215,240,${0.25 + impact * 0.5})) brightness(${1 + impact * 0.18})`;
+    }
+    if (this.heroPortraitEl) {
+      this.heroPortraitEl.style.transform = `scale(${1 - pinP * 0.04 * depth})`;
+    }
+
+    this._sections.forEach((el) => {
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const center = r.top + r.height / 2;
+      const dist = center - vh / 2;
+      const norm = Math.max(-1, Math.min(1, dist / (vh * 0.75)));
+      const progress = 1 - Math.abs(norm);
+      const rotX = norm * 6 * depth;
+      const ty = norm * 40 * depth;
+      const scale = 0.96 + progress * 0.04 * depth;
+      el.style.transform = `perspective(1400px) rotateX(${rotX}deg) translateY(${ty}px) scale(${scale})`;
+      el.style.opacity = String(0.35 + progress * 0.65);
+    });
+  }
+
+  buildSilhouette(img) {
+    try {
+      const c = document.createElement('canvas');
+      c.width = img.naturalWidth; c.height = img.naturalHeight;
+      this._silCtx = c.getContext('2d');
+      this._silCtx.drawImage(img, 0, 0);
+      this._silReady = true;
+    } catch (e) { this._silReady = false; }
+  }
+
+  silhouetteEdge(imgRect, img, rowY, fromLeft) {
+    if (!this._silReady || !this._silCtx || !img.naturalHeight) return null;
+    const scale = imgRect.height / img.naturalHeight;
+    const rowImg = Math.round((rowY - imgRect.top) / scale);
+    if (rowImg < 0 || rowImg >= img.naturalHeight) return null;
+    const w = img.naturalWidth;
+    let data;
+    try { data = this._silCtx.getImageData(0, rowImg, w, 1).data; } catch (e) { return null; }
+    const thresh = 24;
+    if (fromLeft) {
+      for (let x = 0; x < w; x++) { if (data[x * 4 + 3] > thresh) return imgRect.left + x * scale; }
+    } else {
+      for (let x = w - 1; x >= 0; x--) { if (data[x * 4 + 3] > thresh) return imgRect.left + (x + 1) * scale; }
+    }
+    return null;
+  }
+
+  typeTitle(el, onDone) {
+    if (!el || el._typed) return;
+    el._typed = true;
+    const spans = Array.from(el.querySelectorAll('.tchar'));
+    const caret = el.querySelector('.hud-caret');
+    if (caret) { caret.style.opacity = '1'; caret.style.position = 'relative'; }
+    let i = 0;
+    const placeCaretAfter = (s) => { if (caret && s && s.parentNode) s.parentNode.insertBefore(caret, s.nextSibling); };
+    if (caret && spans[0]) placeCaretAfter(null), spans[0].parentNode.insertBefore(caret, spans[0]);
+    const step = () => {
+      if (i >= spans.length) {
+        if (caret) { caret.style.animation = 'blink .9s steps(1) infinite'; setTimeout(() => { caret.style.opacity = '0'; caret.style.transition = 'opacity .4s'; }, 500); }
+        if (onDone) setTimeout(onDone, 480);
+        return;
+      }
+      const s = spans[i];
+      if (s.textContent.trim() === '') { s.style.opacity = '1'; i++; placeCaretAfter(s); step(); return; }
+      s.style.transition = 'opacity .05s linear, filter .09s linear';
+      s.style.opacity = '1';
+      s.style.filter = 'blur(0)';
+      s.style.color = '#eaf6f8';
+      s.style.textShadow = '0 0 14px rgba(45,215,240,.95), 0 0 4px rgba(255,255,255,.85)';
+      const cur = s;
+      setTimeout(() => { cur.style.textShadow = 'none'; }, 110);
+      i++;
+      placeCaretAfter(s);
+      setTimeout(step, 22 + Math.random() * 55);
+    };
+    step();
+  }
+
+  onPortraitLoad(img) {
+    this.buildSilhouette(img);
+    this.measureChars();
+  }
+
+  measureChars() {
+    if (!this.heroSloganEl || !this.heroPortraitEl) return;
+    const els = Array.from(this.heroSloganEl.querySelectorAll('[data-ch]'));
+    if (!els.length) return;
+    const img = this.heroPortraitEl.querySelector('img');
+    const savedPortrait = this.heroPortraitEl.style.transform;
+    this.heroPortraitEl.style.transform = 'none';
+    const saved = els.map((el) => el.style.transform);
+    els.forEach((el) => { el.style.transform = 'none'; });
+    const pr = (img || this.heroPortraitEl).getBoundingClientRect();
+    const cols = Array.from(this.heroSloganEl.children);
+    this._charMeta = els.map((el, i) => {
+      const r = el.getBoundingClientRect();
+      const col = cols.findIndex((c) => c.contains(el));
+      const onRight = col === 1;
+      const rowY = r.top + r.height / 2;
+      const edge = img ? this.silhouetteEdge(pr, img, rowY, !onRight) : null;
+      return {
+        x: r.left + r.width / 2,
+        y: rowY,
+        tx: edge != null ? edge : (onRight ? pr.right : pr.left),
+        ty: rowY,
+        delay: ((i * 7919) % 13) / 13 * 0.3,
+        rot: ((i * 104729) % 21) - 10,
+      };
+    });
+    els.forEach((el, i) => { el.style.transform = saved[i]; });
+    this.heroPortraitEl.style.transform = savedPortrait;
+    this._charEls = els;
+    this._portraitImg = img;
+  }
+
+  toggleLang() {
+    [this.aboutTitleEl, this.servicesTitleEl, this.reelTitleEl, this.workTitleEl, this.skillsTitleEl, this.contactTitleEl]
+      .forEach((el) => { if (el) el._typed = false; });
+    this.setState((s) => ({ lang: s.lang === 'en' ? 'vi' : 'en' }), () => {
+      requestAnimationFrame(() => {
+        [this.aboutTitleEl, this.servicesTitleEl, this.reelTitleEl, this.workTitleEl, this.skillsTitleEl, this.contactTitleEl]
+          .forEach((el) => { if (el) this.typeTitle(el); });
+        this.measureChars();
+      });
+    });
+  }
+
+  renderVals() {
+    const lang = this.state.lang;
+    const copy = lang === 'en' ? EN : VI;
+
+    const navItems = lang === 'en'
+      ? [{ label: 'ABOUT', href: '#about' }, { label: 'SERVICES', href: '#services' }, { label: 'REEL', href: '#reel' }, { label: 'WORK', href: '#work' }, { label: 'CONTACT', href: '#contact' }]
+      : [{ label: 'GIỚI THIỆU', href: '#about' }, { label: 'DỊCH VỤ', href: '#services' }, { label: 'REEL', href: '#reel' }, { label: 'DỰ ÁN', href: '#work' }, { label: 'LIÊN HỆ', href: '#contact' }];
+
+    const stats = [
+      { value: '5+', label: lang === 'en' ? 'YEARS' : 'NĂM' },
+      { value: '0→1', label: lang === 'en' ? 'STUDIO BUILT' : 'STUDIO TỰ DỰNG' },
+      { value: '4', label: lang === 'en' ? 'TEAM LED' : 'THÀNH VIÊN TEAM' },
+    ];
+
+    const services = lang === 'en' ? [
+      { idx: 1, title: 'GRAPHICS', desc: 'Brand systems, key art & static campaigns built for impact.' },
+      { idx: 2, title: 'VIDEOS', desc: 'Commercials, explainers and broadcast edits with cinematic pacing.' },
+      { idx: 3, title: 'BANNERS', desc: 'Motion banners & digital ad systems across every format.' },
+      { idx: 4, title: '3D MODELING', desc: 'Product visualization and 3D assets rendered photoreal.' },
+    ] : [
+      { idx: 1, title: 'GRAPHICS', desc: 'Hệ thống thương hiệu, key art và chiến dịch tĩnh giàu tác động.' },
+      { idx: 2, title: 'VIDEOS', desc: 'TVC, video giải thích và edit truyền hình với nhịp điện ảnh.' },
+      { idx: 3, title: 'BANNERS', desc: 'Banner động và hệ thống quảng cáo số trên mọi định dạng.' },
+      { idx: 4, title: '3D MODELING', desc: 'Trực hình hóa sản phẩm và asset 3D render chân thực.' },
+    ];
+
+    const workDefs = [
+      { img: (window.__resources&&window.__resources.proj1)||'uploads/Port 01_00511.jpg', title: 'MOËT HENNESSY', role: lang === 'en' ? 'Graphic Design — Advertising' : 'Thiết kế đồ họa — Quảng cáo', tag: 'BANNER', yt: '' },
+      { img: (window.__resources&&window.__resources.proj2)||'uploads/Port 02_00197.jpg', title: 'PROJECT_02', role: 'Motion Design', tag: 'VIDEO', yt: '' },
+      { img: (window.__resources&&window.__resources.proj3)||'uploads/Port 03_00253.jpg', title: 'PROJECT_03', role: 'Motion Design', tag: 'VIDEO', yt: '' },
+      { img: (window.__resources&&window.__resources.proj4)||'uploads/Port 04_00314.jpg', title: 'PROJECT_04', role: '3D Modeling', tag: '3D', yt: '' },
+      { img: (window.__resources&&window.__resources.proj5)||'uploads/Port 05_00498.jpg', title: 'PROJECT_05', role: lang === 'en' ? 'Graphic Design' : 'Thiết kế đồ họa', tag: 'GRAPHIC', yt: '' },
+      { img: (window.__resources&&window.__resources.proj6)||'uploads/Port 06_00973.jpg', title: 'PROJECT_06', role: 'Motion Design', tag: 'VIDEO', yt: '' },
+      { img: (window.__resources&&window.__resources.proj7)||'uploads/Port 07_01282.jpg', title: 'PROJECT_07', role: lang === 'en' ? 'Banner Design' : 'Thiết kế Banner', tag: 'BANNER', yt: '' },
+      { img: (window.__resources&&window.__resources.proj8)||'uploads/Port 08_01282.jpg', title: 'PROJECT_08', role: '3D Modeling', tag: '3D', yt: '' },
+    ];
+    this._workDefs = workDefs;
+    const setSrc = (el, src) => { if (el && el.getAttribute('src') !== src) el.setAttribute('src', src); };
+    const mN = workDefs.length;
+    const workItems = workDefs.map((d, i) => ({
+      ...d, idx: i,
+      setImg: (el) => setSrc(el, d.img),
+      setImgR: (el) => setSrc(el, d.img),
+      setImgM: (el) => setSrc(el, d.img),
+      setSlideR: (el) => { this._reflects[i] = el; },
+      setSlide: (el) => { this._slides[i] = el; if (el) requestAnimationFrame(() => this.layoutCarousel(false)); },
+      setPlay: (el) => { this._plays[i] = el; },
+      setMini: (el) => { this._minis[i] = el; if (el) requestAnimationFrame(() => this.layoutCarousel(false)); },
+      select: () => this.selectWork(i),
+    }));
+
+    const withImg = (p) => ({ ...p, setImg: (el) => { if (el && el.getAttribute('src') !== p.img) el.setAttribute('src', p.img); } });
+    const projects = [
+      { img: (window.__resources&&window.__resources.proj1)||'uploads/Port 01_00511.jpg', title: 'MOËT HENNESSY', role: lang === 'en' ? 'Graphic Design — Advertising' : 'Thiết kế đồ họa — Quảng cáo', tag: 'BANNER' },
+      { img: (window.__resources&&window.__resources.proj2)||'uploads/Port 02_00197.jpg', title: 'PROJECT_02', role: lang === 'en' ? 'Motion Design' : 'Motion Design', tag: 'VIDEO' },
+      { img: (window.__resources&&window.__resources.proj3)||'uploads/Port 03_00253.jpg', title: 'PROJECT_03', role: lang === 'en' ? 'Motion Design' : 'Motion Design', tag: 'VIDEO' },
+      { img: (window.__resources&&window.__resources.proj4)||'uploads/Port 04_00314.jpg', title: 'PROJECT_04', role: lang === 'en' ? '3D Modeling' : '3D Modeling', tag: '3D' },
+      { img: (window.__resources&&window.__resources.proj5)||'uploads/Port 05_00498.jpg', title: 'PROJECT_05', role: lang === 'en' ? 'Graphic Design' : 'Thiết kế đồ họa', tag: 'GRAPHIC' },
+      { img: (window.__resources&&window.__resources.proj6)||'uploads/Port 06_00973.jpg', title: 'PROJECT_06', role: lang === 'en' ? 'Motion Design' : 'Motion Design', tag: 'VIDEO' },
+      { img: (window.__resources&&window.__resources.proj7)||'uploads/Port 07_01282.jpg', title: 'PROJECT_07', role: lang === 'en' ? 'Banner Design' : 'Thiết kế Banner', tag: 'BANNER' },
+      { img: (window.__resources&&window.__resources.proj8)||'uploads/Port 08_01282.jpg', title: 'PROJECT_08', role: lang === 'en' ? '3D Modeling' : '3D Modeling', tag: '3D' },
+    ].map(withImg);
+
+    const tools = ['AFTER EFFECTS', 'PREMIERE PRO', 'ILLUSTRATOR', 'PHOTOSHOP', 'CAPCUT', 'BLENDER', 'VEO 3', 'CLAUDE', 'GEMINI', 'ELEVENLABS'].map((name) => ({ name }));
+
+    const socials = [
+      { label: 'LINKEDIN', href: 'https://www.linkedin.com/in/khaitran095/' },
+      { label: 'EMAIL', href: 'mailto:daniel.biz0395@gmail.com' },
+    ];
+
+    const toChars = (s) => s.split('').map((ch, k) => ({ ch: ch === ' ' ? '\u00A0' : ch, k }));
+    const toWords = (s) => s.split(' ').map((word, wi) => ({ wi, chars: word.split('').map((ch, k) => ({ ch, k })) }));
+    const showDetail = (this.props.contentDensity ?? 'full') !== 'minimal';
+    return {
+      copy, navItems, stats, services, projects, tools, socials, showDetail, workItems,
+      modalOpen: this.state.modalOpen,
+      workPrev: () => this.moveWork(-1),
+      workNext: () => this.moveWork(1),
+      closeModal: () => this.closeModal(),
+      stop: (e) => e.stopPropagation(),
+      onWorkMove: (e) => this.onWorkMove(e),
+      onWorkEnter: () => this.onWorkEnter(),
+      onWorkLeave: () => this.onWorkLeave(),
+      setStage: (el) => { this._stage = el; if (el) requestAnimationFrame(() => this.layoutCarousel(false)); },
+      setStageR: (el) => { this._stageR = el; if (el) requestAnimationFrame(() => this.layoutCarousel(false)); },
+      setMiniDisc: (el) => { this._miniDisc = el; },
+      setPillTitle: (el) => { this._pillTitle = el; if (el) requestAnimationFrame(() => this.updatePill()); },
+      setCursorDot: (el) => { this._cursorDot = el; },
+      setCursorHeat: (el) => { this._cursorHeat = el; },
+      setModalFrame: (el) => { this._modalFrame = el; if (el) requestAnimationFrame(() => this.applyModal()); },
+      setModalMock: (el) => { this._modalMock = el; },
+      setModalTitle: (el) => { this._modalTitleEl = el; if (el) requestAnimationFrame(() => this.applyModal()); },
+      setRootRef: (el) => { this.rootEl = el; if (el) this.applyTypeScale(); },
+      sloganChars1: toChars('WHERE TECH MEETS'),
+      sloganChars2: toChars('CREATIVE MOTION'),
+      setPortraitImgRef: (el) => {
+        if (!el || el._loadBound) return;
+        el._loadBound = true;
+        if (el.complete && el.naturalWidth) this.onPortraitLoad(el);
+        else el.addEventListener('load', () => this.onPortraitLoad(el), { once: true });
+      },
+      setPortraitWrapRef: (el) => { this._portraitWrap = el; },
+      heroRoleWords: toWords(copy.heroRole),
+      setHeroRoleRef: (el) => { this.heroRoleEl = el; },
+      setHeroCtaRef: (el) => { this.heroCtaEl = el; },
+      aboutTitleWords: toWords(copy.aboutTitle),
+      servicesTitleWords: toWords(copy.servicesTitle),
+      reelTitleWords: toWords(copy.reelTitle),
+      workTitleWords: toWords(copy.workTitle),
+      skillsTitleWords: toWords(copy.skillsTitle),
+      contactTitleWords: toWords(copy.contactTitle),
+      setAboutTitleRef: (el) => { this.aboutTitleEl = el; },
+      setServicesTitleRef: (el) => { this.servicesTitleEl = el; },
+      setReelTitleRef: (el) => { this.reelTitleEl = el; },
+      setWorkTitleRef: (el) => { this.workTitleEl = el; },
+      setSkillsTitleRef: (el) => { this.skillsTitleEl = el; },
+      setContactTitleRef: (el) => { this.contactTitleEl = el; },
+      langLabel: lang === 'en' ? 'VI' : 'EN',
+      toggleLang: () => this.toggleLang(),
+      setHeroRef: (el) => { this.heroEl = el; },
+      setHeroGrid: (el) => { this.heroGridEl = el; },
+      setHeroSlogan: (el) => { this.heroSloganEl = el; },
+      setHeroPortrait: (el) => { this.heroPortraitEl = el; },
+      setPortalVideo: (el) => {
+        this._portalVideo = el;
+        if (el) { el.muted = true; el.play().catch(() => {}); }
+      },
+      setAboutRef: (el) => { this.aboutEl = el; },
+      setServicesRef: (el) => { this.servicesEl = el; },
+      setReelRef: (el) => { this.reelEl = el; },
+      setWorkRef: (el) => { this.workEl = el; },
+      setSkillsRef: (el) => { this.skillsEl = el; },
+      setContactRef: (el) => { this.contactEl = el; },
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,2395 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Chakra+Petto&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Chakra+Petch:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+@keyframes scanmove{0%{background-position:0 0}100%{background-position:0 40px}}
+@keyframes gridmove{0%{background-position:0 0}100%{background-position:80px 80px}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+@keyframes cardfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+@keyframes modalIn{from{opacity:0}to{opacity:1}}
+@keyframes pulseline{0%,100%{opacity:.35}50%{opacity:1}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes spinrev{from{transform:rotate(360deg)}to{transform:rotate(0deg)}}
+@keyframes portalFade{0%{opacity:0}20%{opacity:.85}30%{opacity:.3}45%{opacity:.95}100%{opacity:1}}
+@keyframes holoRise{0%{opacity:0;clip-path:inset(100% 0 0 0);transform:translateY(16%)}12%{opacity:.55}18%{opacity:.15}28%{opacity:.75}38%{opacity:.35}50%{opacity:.9}62%{opacity:.6}100%{opacity:1;clip-path:inset(0 0 0 0);transform:translateY(0)}}
+@keyframes hudPulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+@keyframes statGlitch{0%{opacity:0;transform:translate(0,0);clip-path:inset(0 0 0 0)}8%{opacity:1;transform:translate(-5px,0);clip-path:inset(22% 0 48% 0)}20%{transform:translate(6px,0);clip-path:inset(58% 0 8% 0)}32%{transform:translate(-4px,0);clip-path:inset(8% 0 66% 0)}46%{transform:translate(3px,0);clip-path:inset(38% 0 30% 0)}62%{transform:translate(-2px,0);clip-path:inset(0 0 0 0)}100%{opacity:1;transform:translate(0,0);clip-path:inset(0 0 0 0)}}
+
+body{margin:0;background:#04070a;font-family:'Chakra Petch',sans-serif;overflow-x:clip}
+::selection{background:#2dd7f0;color:#04070a}
+a{color:#2dd7f0;text-decoration:none}
+a:hover{color:#7fe9f7}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:#04070a}
+::-webkit-scrollbar-thumb{background:#12707a;border-radius:4px}
+
+/* ---- Mobile / phone responsive overrides ---- */
+@media (max-width:1024px){
+  /* Tablet/phone: soften the 3D-carousel reflection and let it fade smoothly top→bottom
+     instead of reading as a hard dark block on the taller portrait layout. */
+  #work [data-om-label="Carousel Shadow"]{opacity:.21 !important}
+  #work [data-om-label="Shadow fade"]{display:none !important}
+  #work [data-om-label="Shadow fade mobile"]{display:block !important}
+  /* Banners header: stack title+close on top, tabs on their own row with breathing room */
+  [data-om-label="Banner header"]{grid-template-columns:1fr auto !important;grid-template-areas:"info close" "tabs tabs" !important;align-items:start !important;row-gap:18px !important}
+  [data-om-label="Banner header"] > div:nth-child(1){grid-area:info}
+  [data-om-label="Banner header"] > div:nth-child(2){grid-area:tabs;justify-self:start !important;flex-wrap:wrap !important}
+  [data-om-label="Banner header"] > button{grid-area:close}
+}
+@media (max-width:768px){
+  html,body{overflow-x:clip}
+  nav{padding:13px 18px !important}
+  nav > div:last-child{gap:14px !important}
+  nav a{display:none !important}
+  /* hero title sits lower & tighter so it clears the portrait */
+  #hero [data-om-label="Title"]{bottom:118px !important;gap:12px !important}
+  #hero [data-om-label="Title"] > div:first-child{font-size:13px !important;letter-spacing:.18em !important}
+  /* pull the vertical side labels in tight to the edges */
+  #hero [data-om-label="Hero_L_Text"]{left:8px !important}
+  #hero [data-om-label="Hero_R_Text"]{right:8px !important}
+  /* carousel control pill: let it breathe / wrap on narrow screens */
+  #work [data-om-label="Control pill"] > div{flex-wrap:wrap !important;justify-content:center !important;gap:10px !important;padding:9px 12px !important}
+  #work [data-om-label="Control pill"] div[style*="min-width: 150px"]{min-width:0 !important;flex:1 1 100% !important;order:-1 !important}
+  /* contact footer meta stacks */
+  #contact [style*="justify-content:space-between"]{justify-content:center !important;text-align:center !important}
+}
+@media (max-width:480px){
+  /* shrink the 1.3x portrait a touch so it never bleeds past the side labels */
+  #hero [data-om-label="Portray"] > div > div{transform:scale(1.12) !important}
+  #hero [data-om-label="Title"]{bottom:104px !important}
+  #hero [data-om-label="Slogan"] > div{top:82px !important}
+}
+/* Tablet range: pull the hero slogans in and ease the portrait scale */
+@media (min-width:769px) and (max-width:1024px){
+  #hero [data-om-label="Portray"] > div > div{transform:scale(1.14) !important}
+  #hero [data-om-label="Slogan"] > div{font-size:clamp(15px,3.4vh,30px) !important}
+}
+/* Contact form: stack fields into one column on narrow screens */
+@media (max-width:600px){
+  [data-cf-grid]{grid-template-columns:1fr !important}
+}
+</style>
+</helmet>
+
+<div ref="{{ setRootRef }}" style="position:relative;background:#04070a;color:#eaf6f8;min-height:100vh">
+
+<div style="position: fixed; inset: 0; pointer-events: none; z-index: 1; background-image: linear-gradient(rgba(45,215,240,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(45,215,240,.05) 1px,transparent 1px); background-size: 42px 42px; animation: gridmove 6s linear infinite; opacity: .5"></div>
+<nav style="position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 18px clamp(20px,4vw,56px); background: linear-gradient(180deg,rgba(4,7,10,.92),rgba(4,7,10,0)); backdrop-filter: blur(2px)">
+  <div style="display:flex;align-items:center;gap:10px">
+    <div style="width:10px;height:10px;border-radius:50%;background:#2dd7f0;box-shadow:0 0 10px 2px #2dd7f0;animation:blink 2s ease-in-out infinite"></div>
+    <div style="font-family:'Orbitron',sans-serif;font-weight:700;letter-spacing:.12em;font-size:16px;color:#eaf6f8">Khai (Daniel)<span style="color:#2dd7f0">.</span> Tran</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:clamp(14px,2.4vw,34px)">
+    <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+      <a href="{{ item.href }}" onClick="{{ onNavClick }}" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.15em;color:rgba(234,246,248,.75);padding:6px 2px;border-bottom:2px solid transparent">{{ item.label }}</a>
+    </sc-for>
+    <button onClick="{{ toggleLang }}" style-hover="box-shadow:0 0 16px rgba(45,215,240,.55)" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.1em;background:rgba(45,215,240,.08);border:1px solid rgba(45,215,240,.4);color:#2dd7f0;transition:box-shadow .2s;padding:6px 12px;border-radius:2px;cursor:pointer">{{ langLabel }}</button>
+  </div>
+</nav>
+
+<div id="hero-pin" style="height: 100vh" data-om-label="Hero section">
+<section id="hero" ref="{{ setHeroRef }}" style="position: sticky; top: 0; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; border-bottom: 1px solid rgba(45,215,240,.15)" data-om-label="sub Hero section">
+  
+  <div ref="{{ setHeroGrid }}" style="position: absolute; inset: -10%; background-image: radial-gradient(circle at 50% 40%,rgba(45,215,240,.12),transparent 60%); z-index: 0" data-om-label="Big glow"></div>
+
+  <div style="position:absolute;top:50%;left:50%;width:min(78vw,900px);height:min(78vw,900px);transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(45,215,240,.18);z-index:1" data-om-label="big circle"></div>
+  <div style="position:absolute;top:50%;left:50%;width:min(60vw,700px);height:min(60vw,700px);transform:translate(-50%,-50%);border-radius:50%;border:1px dashed rgba(45,215,240,.15);animation:spin 40s linear infinite;z-index:1" data-om-label="Circle of the dot"></div>
+  <div style="position: absolute; top: 50%; left: 50%; width: min(60vw,700px); height: min(60vw,700px); transform: translate(-50%,-50%); z-index: 1; animation: spinrev 60s linear infinite" data-om-label="cyan dot path">
+    <div style="position: absolute; top: -6px; left: 50%; width: 10px; height: 10px; background: #2dd7f0; border-radius: 50%; box-shadow: 0 0 8px #2dd7f0" data-om-label="dot"></div>
+  </div>
+
+  <div ref="{{ setHeroSlogan }}" style="position: absolute; inset: 0; z-index: 2; pointer-events: none" data-om-label="Slogan">
+    <div style="position:absolute;left:clamp(20px,11vw,180px);top:96px;display:flex;flex-direction:column;align-items:center;font-family:'Orbitron',sans-serif;font-weight:900;font-size:clamp(16px,4.4vh,44px);line-height:1.12;letter-spacing:.02em;color:transparent;-webkit-text-stroke:1px rgba(45,215,240,.35)" data-om-label="L"><sc-for list="{{ sloganChars1 }}" as="c" hint-placeholder-count="8"><span data-ch="{{ c.k }}" style="display:block;min-height:.55em;will-change:transform,opacity">{{ c.ch }}</span></sc-for></div>
+    <div style="position:absolute;right:clamp(20px,11vw,180px);top:96px;display:flex;flex-direction:column;align-items:center;font-family:'Orbitron',sans-serif;font-weight:900;font-size:clamp(16px,4.4vh,44px);line-height:1.12;letter-spacing:.02em;color:transparent;-webkit-text-stroke:1px rgba(45,215,240,.35)" data-om-label="R"><sc-for list="{{ sloganChars2 }}" as="c" hint-placeholder-count="8"><span data-ch="{{ c.k }}" style="display:block;min-height:.55em;will-change:transform,opacity">{{ c.ch }}</span></sc-for></div>
+  </div>
+
+  <div ref="{{ setHeroPortrait }}" style="position: relative; z-index: 3; height: calc(100vh - 84px); align-self: flex-end; margin: 84px auto 0; display: flex; align-items: flex-end; justify-content: center; overflow: visible" data-om-label="Portray">
+    <div style="position:relative;z-index:1;height:100%;display:flex;align-items:flex-end">
+      <div ref="{{ setPortraitWrapRef }}" style="position:relative;height:calc(100% - 30vh);max-height:620px;margin-bottom:26vh;overflow:hidden;transform:scale(1.3)">
+        <img ref="{{ setPortraitImgRef }}" crossorigin="anonymous" src="uploads/Hologram_BG remove04.png" alt="Khai Tran portrait" style="height:100%;width:auto;object-fit:contain;object-position:bottom;-webkit-mask-image:linear-gradient(to bottom,black 88%,transparent 100%);mask-image:linear-gradient(to bottom,black 88%,transparent 100%)">
+      </div>
+    </div>
+  </div>
+
+  <div style="position: absolute; left: clamp(16px,4vw,56px); top: 50%; transform: translateY(-50%); z-index: 4; display: flex; flex-direction: column; gap: 10px" data-om-label="Hero_L_Text">
+    <div ref="{{ setTechText }}" style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.2em;color:#2dd7f0;writing-mode:vertical-rl;will-change:transform,opacity;-webkit-mask-image:linear-gradient(to bottom,black 50%,transparent 50%);mask-image:linear-gradient(to bottom,black 50%,transparent 50%);-webkit-mask-size:100% 200%;mask-size:100% 200%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:0% 0%;mask-position:0% 0%">Tech in vein</div>
+    <div ref="{{ setTechBar }}" style="width:1px;height:70px;background:linear-gradient(#2dd7f0,transparent);margin:0 auto;will-change:transform,opacity"></div>
+  </div>
+  <div style="position: absolute; right: clamp(16px,4vw,56px); top: 50%; transform: translateY(-50%); z-index: 4; display: flex; flex-direction: column; gap: 10px; align-items: center" data-om-label="Hero_R_Text">
+    <div ref="{{ setMotionBar }}" style="width:1px;height:70px;background:linear-gradient(transparent,#2dd7f0);will-change:transform,opacity"></div>
+    <div ref="{{ setMotionText }}" style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.2em;color:#2dd7f0;writing-mode:vertical-rl;will-change:transform,opacity;-webkit-mask-image:linear-gradient(to bottom,transparent 50%,black 50%);mask-image:linear-gradient(to bottom,transparent 50%,black 50%);-webkit-mask-size:100% 200%;mask-size:100% 200%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:0% 100%;mask-position:0% 100%">Motion in breath</div>
+  </div><video ref="{{ setPortalVideo }}" src="uploads/Digital Circular Stage_R2.mp4" autoplay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="position: absolute; z-index: -10; bottom: -4vh; left: 50%; transform: translateX(-50%); width: 1104px; mix-blend-mode: multiply; pointer-events: none; -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 55%,black 55%,transparent 78%); mask-image: radial-gradient(ellipse 50% 50% at 50% 55%,black 55%,transparent 78%); top: 748px; height: 579px; opacity: 0"></video>
+
+  <div style="position: absolute; bottom: 254px; left: 0; right: 0; z-index: 5; display: flex; flex-direction: column; align-items: center; gap: 18px" data-om-label="Title">
+    <div ref="{{ setHeroRoleRef }}" style="font-family: 'Orbitron',sans-serif; font-size: calc(20px * 0.9); letter-spacing: .25em; color: #EAF6F800; text-align: center; padding: 0 20px; font-weight: 800; display: inline"><sc-for list="{{ heroRoleWords }}" as="w" hint-placeholder-count="6"><span style="display:inline-block;white-space:nowrap;margin-right:.32em"><sc-for list="{{ w.chars }}" as="c" hint-placeholder-count="4"><span class="tchar" style="display:inline-block;opacity:0;filter:blur(6px)">{{ c.ch }}</span></sc-for></span></sc-for><span class="hud-caret" style="display:inline-block;width:3px;height:.85em;margin-left:3px;background:#2dd7f0;box-shadow:0 0 10px #2dd7f0;vertical-align:-.1em;opacity:0"></span></div>
+    
+    <div ref="{{ setHeroCtaRef }}" style="display: none; gap: 14px; opacity: 0; transform: translateY(-14px)">
+      <a href="#reel" style-hover="box-shadow:0 0 24px rgba(45,215,240,.65);transform:translateY(-1px)" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.15em;padding:12px 22px;background:#2dd7f0;color:#04070a;border-radius:2px;font-weight:700;transition:box-shadow .2s,transform .2s">{{ copy.ctaReel }}</a>
+      <a href="#contact" style-hover="box-shadow:0 0 18px rgba(45,215,240,.45);transform:translateY(-1px)" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.15em;padding:12px 22px;border:1px solid rgba(45,215,240,.5);color:#2dd7f0;border-radius:2px;transition:box-shadow .2s,transform .2s">{{ copy.ctaContact }}</a>
+    </div>
+  </div>
+</section>
+</div>
+
+<section id="work" ref="{{ setWorkRef }}" onMouseMove="{{ onWorkMove }}" onMouseEnter="{{ onWorkEnter }}" onMouseLeave="{{ onWorkLeave }}" style="position: relative; padding: min(10vw,96px) clamp(20px,6vw,80px) min(9vw,80px); border-bottom: 1px solid rgba(45,215,240,.12); overflow: hidden" data-om-label="Selected Work">
+
+  <div style="text-align:center;margin-bottom:34px;position:relative;z-index:4" data-om-label="Headline">
+    <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.25em;color:#2dd7f0;margin-bottom:10px">// {{ copy.workLabel }}</div>
+    <h2 ref="{{ setWorkTitleRef }}" style="font-family:'Orbitron',sans-serif;font-size:calc(clamp(26px,3.4vw,42px) * var(--type-scale,1));margin:0;color:#eaf6f8"><sc-for list="{{ workTitleWords }}" as="w" hint-placeholder-count="6"><span style="display:inline-block;white-space:nowrap;margin-right:.32em"><sc-for list="{{ w.chars }}" as="c" hint-placeholder-count="4"><span class="tchar" style="display:inline-block;opacity:0;filter:blur(6px)">{{ c.ch }}</span></sc-for></span></sc-for><span class="hud-caret" style="display:inline-block;width:3px;height:.85em;margin-left:3px;background:#2dd7f0;box-shadow:0 0 10px #2dd7f0;vertical-align:-.1em;opacity:0"></span></h2>
+  </div>
+
+  <div ref="{{ setWorkStageWrap }}" onClick="{{ onWorkClick }}" style="position: relative; height: clamp(340px,46vw,520px); perspective: 1400px; perspective-origin: 50% 42%; z-index: 2; transform: scale(0); transform-origin: 50% 42%" data-om-label="Carousel">
+    <div ref="{{ setStage }}" style="position: absolute; left: 0; right: 0; top: 50%; height: 0; transform-style: preserve-3d" data-om-label="Main Carousel">
+      <sc-for list="{{ workItems }}" as="it" hint-placeholder-count="6">
+        <div ref="{{ it.setSlide }}" style="position:absolute;left:50%;top:0;width:clamp(230px,30vw,360px);aspect-ratio:16/9;margin:calc(clamp(230px,30vw,360px) * -0.281) 0 0 calc(clamp(230px,30vw,360px) * -0.5);pointer-events:none">
+          <div ref="{{ it.setFloat }}" style="position:absolute;inset:0;border:1px solid rgba(45,215,240,.3);background:#070d11;overflow:hidden;box-shadow:0 0 0 1px rgba(45,215,240,.08),0 18px 46px rgba(0,0,0,.55);will-change:transform">
+          <img ref="{{ it.setImg }}" alt="{{ it.title }}" style="width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.9) contrast(1.05)">
+          <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(4,7,10,.85),rgba(4,7,10,0) 45%)"></div>
+          <div style="position:absolute;top:12px;left:12px;font-family:'Orbitron',sans-serif;font-size:9.5px;letter-spacing:.12em;color:rgba(45,215,240,.85);border:1px solid rgba(45,215,240,.45);padding:3px 9px;background:rgba(4,7,10,.5)">{{ it.tag }}</div>
+          <div ref="{{ it.setPlay }}" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(.9);width:60px;height:60px;border-radius:50%;border:1px solid rgba(45,215,240,.7);background:rgba(4,7,10,.35);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .4s,transform .4s;box-shadow:0 0 24px rgba(45,215,240,.4)"><div style="width:0;height:0;border-left:15px solid #2dd7f0;border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:4px"></div></div>
+          <div style="position:absolute;left:14px;right:14px;bottom:12px">
+            <div style="font-family:'Orbitron',sans-serif;font-size:14px;letter-spacing:.04em;color:#eaf6f8">{{ it.title }}</div>
+            <div style="font-size:11px;color:rgba(234,246,248,.6);margin-top:3px">{{ it.role }}</div>
+          </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div data-om-label="Carousel Shadow" style="position: absolute; left: 0; right: 0; top: 80%; height: 0; perspective: 1400px; perspective-origin: 50% 42%; pointer-events: none; z-index: 0; transform: translateY(clamp(8px,1.4vw,20px)) scaleY(-1); opacity: 0.2; filter: blur(3px)">
+      <div ref="{{ setStageR }}" style="position: absolute; left: 0; right: 0; top: -40px; height: 0; transform-style: preserve-3d">
+        <sc-for list="{{ workItems }}" as="it" hint-placeholder-count="6">
+          <div ref="{{ it.setSlideR }}" style="position:absolute;left:50%;top:0;width:clamp(230px,30vw,360px);aspect-ratio:16/9;margin:calc(clamp(230px,30vw,360px) * -0.281) 0 0 calc(clamp(230px,30vw,360px) * -0.5)">
+            <div ref="{{ it.setFloatR }}" style="position:absolute;inset:0;overflow:hidden;border:1px solid rgba(45,215,240,.16);will-change:transform">
+            <img ref="{{ it.setImgR }}" alt="" aria-hidden="true" style="width:100%;height:100%;object-fit:cover;display:block">
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div data-om-label="Shadow fade" style="position: absolute; left: -90px; right: 0; top: 75%; bottom: 0%; background: linear-gradient(180deg, #00000000, #04070a 88%); pointer-events: none; z-index: 3; height: 287px; width: 2500px"></div>
+    <div style="position:absolute;left:50%;top:calc(50% + clamp(6px,1vw,16px));width:clamp(300px,40vw,540px);height:2px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,rgba(45,215,240,.35),transparent);filter:blur(1px);pointer-events:none;z-index:4"></div>
+  </div>
+
+  <div data-om-label="Shadow fade mobile" style="position: absolute; left: 50%; bottom: 0; z-index: 3; pointer-events: none; transform: translateX(-50%); width: 100%; height: 40%; background: linear-gradient(180deg, #00000000, #010101)"></div>
+
+  <div style="display: flex; justify-content: center; margin-top: 12px; position: relative; z-index: 4" data-om-label="Control pill">
+    <div style="display:flex;align-items:center;gap:14px;padding:9px 12px;border:1px solid rgba(45,215,240,.28);background:rgba(7,13,17,.72);backdrop-filter:blur(10px);border-radius:6px;box-shadow:0 12px 40px rgba(0,0,0,.5)">
+      <div ref="{{ setPillTitle }}" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.12em;color:#eaf6f8;min-width:150px;text-align:center;white-space:nowrap">—</div>
+      <div style="display:flex;gap:6px">
+        <button onClick="{{ workPrev }}" aria-label="Previous" style-hover="box-shadow:0 0 16px rgba(45,215,240,.55);background:rgba(45,215,240,.14)" style="width:38px;height:34px;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.05);color:#2dd7f0;font-size:15px;border-radius:3px;transition:box-shadow .2s,background .2s;display:flex;align-items:center;justify-content:center;cursor:pointer">←</button>
+        <button onClick="{{ workNext }}" aria-label="Next" style-hover="box-shadow:0 0 16px rgba(45,215,240,.55);background:rgba(45,215,240,.14)" style="width:38px;height:34px;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.05);color:#2dd7f0;font-size:15px;border-radius:3px;transition:box-shadow .2s,background .2s;display:flex;align-items:center;justify-content:center;cursor:pointer">→</button>
+      </div>
+      <div style="width:54px;height:54px;border-radius:50%;border:1px solid rgba(45,215,240,.35);position:relative;overflow:hidden;flex:0 0 auto;background:radial-gradient(circle,rgba(45,215,240,.1),transparent 70%);perspective:90px;perspective-origin:50% 50%">
+        <div ref="{{ setMiniDisc }}" style="position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d">
+          <sc-for list="{{ workItems }}" as="it" hint-placeholder-count="6">
+            <div ref="{{ it.setMini }}" style="position:absolute;left:50%;top:50%;width:31px;height:20px;margin:-10px 0 0 -15.5px;border-radius:2px;overflow:hidden;border:1px solid rgba(45,215,240,.4)"><img ref="{{ it.setImgM }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+          </sc-for>
+        </div>
+        <div style="position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 0 16px rgba(4,7,10,.95);pointer-events:none"></div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<section id="reel" ref="{{ setReelRef }}" style="position: relative; padding: min(12vw,120px) clamp(20px,6vw,80px); border-bottom: 1px solid rgba(45,215,240,.12); display: flex; flex-direction: column; align-items: center" data-om-label="Showreel section">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:26px">
+    <div ref="{{ setReelBadge }}" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.25em;color:#eaf6f8;background:rgba(45,215,240,.12);border:1px solid rgba(45,215,240,.4);padding:6px 14px;border-radius:2px;transform:scaleX(0);transform-origin:center;white-space:nowrap"><sc-for list="{{ reelBadgeChars }}" as="c" hint-placeholder-count="30"><span data-bch="" style="display:inline-block;opacity:0;will-change:opacity">{{ c.ch }}</span></sc-for></div>
+  </div>
+  <h2 ref="{{ setReelTitleRef }}" style="font-family:'Orbitron',sans-serif;font-size:calc(clamp(26px,3.4vw,42px) * var(--type-scale,1));margin:0 0 36px;color:#eaf6f8;text-align:center"><sc-for list="{{ reelTitleWords }}" as="w" hint-placeholder-count="6"><span style="display:inline-block;white-space:nowrap;margin-right:.32em"><sc-for list="{{ w.chars }}" as="c" hint-placeholder-count="4"><span class="tchar" style="display:inline-block;opacity:0;filter:blur(6px)">{{ c.ch }}</span></sc-for></span></sc-for><span class="hud-caret" style="display:inline-block;width:3px;height:.85em;margin-left:3px;background:#2dd7f0;box-shadow:0 0 10px #2dd7f0;vertical-align:-.1em;opacity:0"></span></h2>
+  <div ref="{{ setReelBox }}" style="position: relative; width: 100%; max-width: 980px" data-om-label="VIdeo">
+    <div ref="{{ setReelCorner }}" style="position:absolute;top:-1px;left:-1px;width:26px;height:26px;border-top:2px solid #2dd7f0;border-left:2px solid #2dd7f0;z-index:4;pointer-events:none"></div>
+    <div ref="{{ setReelCorner }}" style="position:absolute;top:-1px;right:-1px;width:26px;height:26px;border-top:2px solid #2dd7f0;border-right:2px solid #2dd7f0;z-index:4;pointer-events:none"></div>
+    <div ref="{{ setReelCorner }}" style="position:absolute;bottom:-1px;left:-1px;width:26px;height:26px;border-bottom:2px solid #2dd7f0;border-left:2px solid #2dd7f0;z-index:4;pointer-events:none"></div>
+    <div ref="{{ setReelCorner }}" style="position:absolute;bottom:-1px;right:-1px;width:26px;height:26px;border-bottom:2px solid #2dd7f0;border-right:2px solid #2dd7f0;z-index:4;pointer-events:none"></div>
+    <div ref="{{ setHudLabel }}" style="position:absolute;top:-26px;left:10px;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.1em;color:rgba(45,215,240,.7);z-index:2;opacity:0;will-change:opacity">{Scifi}_#HUD</div>
+    <div ref="{{ setRecLabel }}" style="position:absolute;top:-26px;right:10px;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.1em;color:#35e08a;z-index:2;opacity:0;will-change:opacity"><span ref="{{ setRecDot }}" style="display:inline-block">●</span> REC</div>
+    <iframe ref="{{ setReelIframe }}" src="https://www.youtube-nocookie.com/embed/dIxOcOyNn5Q?enablejsapi=1&amp;rel=0&amp;playsinline=1" title="Khai Tran — Showreel" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="{{ true }}" style="width:100%;display:block;background:#000;border:1px solid rgba(45,215,240,.35);aspect-ratio:16/9;transform-origin:center center"></iframe>
+    <img ref="{{ setReelPoster }}" alt="Showreel thumbnail" style="position:absolute;top:0;left:0;width:100%;aspect-ratio:16/9;object-fit:cover;z-index:3;pointer-events:none;border:1px solid rgba(45,215,240,.35);transition:opacity .5s ease">
+    <div ref="{{ setReelPlayBtn }}" style="position:absolute;top:0;left:0;width:100%;height:calc(100% - 46px);display:flex;align-items:center;justify-content:center;z-index:4;pointer-events:none">
+      <div style="position:relative;width:clamp(74px,9vw,108px);height:clamp(74px,9vw,108px);display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 0 14px rgba(45,215,240,.5))">
+        <div style="position:absolute;inset:0;border-radius:50%;border:1px solid rgba(45,215,240,.55);border-top-color:transparent;border-bottom-color:transparent;animation:spin 5s linear infinite"></div>
+        <div style="position:absolute;inset:6px;border-radius:50%;border:1px dashed rgba(45,215,240,.45);animation:spinrev 9s linear infinite"></div>
+        <div style="position:absolute;inset:14px;border-radius:50%;border:1px solid rgba(45,215,240,.85);background:radial-gradient(circle,rgba(45,215,240,.14),rgba(4,7,10,.55));animation:pulseline 2.2s ease-in-out infinite"></div>
+        <div style="position:absolute;top:-2px;left:50%;transform:translateX(-50%);width:2px;height:8px;background:#2dd7f0"></div>
+        <div style="position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);width:2px;height:8px;background:#2dd7f0"></div>
+        <div style="position:absolute;left:-2px;top:50%;transform:translateY(-50%);width:8px;height:2px;background:#2dd7f0"></div>
+        <div style="position:absolute;right:-2px;top:50%;transform:translateY(-50%);width:8px;height:2px;background:#2dd7f0"></div>
+        <div style="position:relative;margin-left:16%;width:0;height:0;border-left:clamp(16px,1.9vw,22px) solid #eaf6f8;border-top:clamp(10px,1.2vw,14px) solid transparent;border-bottom:clamp(10px,1.2vw,14px) solid transparent;filter:drop-shadow(0 0 6px rgba(45,215,240,.9))"></div>
+      </div>
+    </div>
+    <div ref="{{ setReelOverlay }}" onClick="{{ playReelVideo }}" style="position: absolute; top: 0; left: 0; right: 0; bottom: 46px; z-index: 5; cursor: pointer"></div>
+  </div>
+</section>
+
+<section id="about" ref="{{ setAboutRef }}" style="position: relative; padding: min(14vw,140px) clamp(20px,6vw,80px); display: flex; flex-wrap: wrap; gap: 60px; align-items: center; justify-content: center; border-bottom: 1px solid rgba(45,215,240,.12)">
+  <div style="flex:1 1 340px;max-width:420px">
+    <div ref="{{ setCareerPanel }}" style="border:1px solid rgba(45,215,240,.35);background:rgba(45,215,240,.04);border-radius:2px;overflow:hidden;transform:scaleY(0);transform-origin:top center">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:rgba(45,215,240,.1);border-bottom:1px solid rgba(45,215,240,.3)">
+        <span style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.2em;color:#2dd7f0"><sc-for list="{{ careerLabelChars }}" as="c" hint-placeholder-count="10"><span data-cl-ch="" style="display:inline-block;opacity:0;filter:blur(5px)">{{ c.ch }}</span></sc-for></span>
+        <span style="width:6px;height:6px;border-radius:50%;background:#35e08a;animation:blink 1.6s ease-in-out infinite"></span>
+      </div>
+      <div style="padding:22px 20px 22px 16px">
+        <div style="position:relative;padding-left:24px;display:flex;flex-direction:column;gap:20px">
+          <div ref="{{ setCareerLine }}" style="position:absolute;left:4px;top:6px;bottom:6px;width:1px;background:linear-gradient(rgba(45,215,240,.6),rgba(45,215,240,.08));transform:scaleY(0);transform-origin:top"></div>
+          <sc-for list="{{ careerEntries }}" as="e" hint-placeholder-count="4">
+          <div onClick="{{ e.open }}" role="button" tabindex="0" style="position:relative;cursor:pointer;border-radius:3px;transition:background .2s" style-hover="background:rgba(45,215,240,.07)">
+            <div data-cl-dot="" style="position:absolute;left:-24px;top:2px;width:9px;height:9px;border-radius:50%;background:{{ e.accent }};box-shadow:0 0 8px {{ e.accent }};opacity:0"></div>
+            <div data-cl-text="" style="opacity:0;clip-path:inset(0 100% 0 0)">
+              <div style="display:flex;align-items:center;gap:8px">
+                <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.12em;color:{{ e.accent }}">{{ e.year }}</div>
+                <div style="flex:1;height:1px;background:rgba(45,215,240,.14)"></div>
+                <div style="font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:.1em;color:rgba(45,215,240,.55)">{{ e.detailsLabel }}</div>
+              </div>
+              <div style="font-size:12.5px;color:{{ e.headColor }};margin-top:4px;line-height:1.5">{{ e.head }}<sc-if value="{{ e.sub }}" hint-placeholder-val="{{ false }}"><span style="color:rgba(234,246,248,.55)"> {{ e.sub }}</span></sc-if></div>
+            </div>
+          </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    <div ref="{{ setStatsRow }}" style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap">
+      <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+        <div data-cl-stat="" style="flex:1 1 90px;border:1px solid rgba(45,215,240,.25);padding:12px 10px;text-align:center;background:rgba(45,215,240,.03);opacity:0">
+          <div style="font-family:'Orbitron',sans-serif;font-size:22px;color:#2dd7f0;font-weight:700">{{ s.value }}</div>
+          <div style="font-size:9.5px;letter-spacing:.12em;color:rgba(234,246,248,.55);margin-top:4px">{{ s.label }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  <div ref="{{ setAboutTextCol }}" style="flex:1 1 380px;max-width:520px">
+    <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.25em;color:#2dd7f0;margin-bottom:14px">// {{ copy.aboutLabel }}</div>
+    <h2 ref="{{ setAboutTitleRef }}" style="font-family:'Orbitron',sans-serif;font-size:calc(clamp(26px,3.4vw,42px) * var(--type-scale,1));line-height:1.2;margin:0 0 18px;color:#eaf6f8"><sc-for list="{{ aboutTitleWords }}" as="w" hint-placeholder-count="6"><span style="display:inline-block;white-space:nowrap;margin-right:.32em"><sc-for list="{{ w.chars }}" as="c" hint-placeholder-count="4"><span class="tchar" style="display:inline-block;opacity:0;filter:blur(6px)">{{ c.ch }}</span></sc-for></span></sc-for><span class="hud-caret" style="display:inline-block;width:3px;height:.85em;margin-left:3px;background:#2dd7f0;box-shadow:0 0 10px #2dd7f0;vertical-align:-.1em;opacity:0"></span></h2>
+    <p data-about-p="" style="opacity:0;transform:translateY(-18px);font-size:calc(15.5px * var(--type-scale,1));line-height:1.9;color:rgba(234,246,248,.7);margin:0 0 16px;text-wrap:pretty">{{ copy.aboutP1 }}</p>
+    <sc-if value="{{ showDetail }}" hint-placeholder-val="{{ true }}">
+    <p data-about-p="" style="opacity:0;transform:translateY(-18px);font-size:calc(15.5px * var(--type-scale,1));line-height:1.9;color:rgba(234,246,248,.7);margin:0;text-wrap:pretty">{{ copy.aboutP2 }}</p>
+    </sc-if>
+  </div>
+</section>
+
+<section id="services" ref="{{ setServicesRef }}" style="position:relative;padding:min(12vw,120px) clamp(20px,6vw,80px);border-bottom:1px solid rgba(45,215,240,.12)">
+  <div style="text-align:center;margin-bottom:56px">
+    <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.25em;color:#2dd7f0;margin-bottom:10px">// {{ copy.servicesLabel }}</div>
+    <h2 ref="{{ setServicesTitleRef }}" style="font-family:'Orbitron',sans-serif;font-size:calc(clamp(26px,3.4vw,42px) * var(--type-scale,1));margin:0;color:#eaf6f8"><sc-for list="{{ servicesTitleWords }}" as="w" hint-placeholder-count="6"><span style="display:inline-block;white-space:nowrap;margin-right:.32em"><sc-for list="{{ w.chars }}" as="c" hint-placeholder-count="4"><span class="tchar" style="display:inline-block;opacity:0;filter:blur(6px)">{{ c.ch }}</span></sc-for></span></sc-for><span class="hud-caret" style="display:inline-block;width:3px;height:.85em;margin-left:3px;background:#2dd7f0;box-shadow:0 0 10px #2dd7f0;vertical-align:-.1em;opacity:0"></span></h2>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:22px;justify-content:center">
+    <sc-for list="{{ services }}" as="svc" hint-placeholder-count="4">
+      <div data-svc-card="" onClick="{{ svc.open }}" style-hover="border-color:rgba(45,215,240,.6);box-shadow:0 0 26px rgba(45,215,240,.18)" style="flex:1 1 240px;max-width:280px;position:relative;padding:26px 20px;border:1px solid rgba(45,215,240,.25);background:linear-gradient(160deg,rgba(45,215,240,.06),rgba(45,215,240,.01));opacity:0;transform:scale(0);cursor:pointer;transition:border-color .25s,box-shadow .25s">
+        <div data-svc-corner="" style="position:absolute;top:-1px;left:-1px;width:16px;height:16px;border-top:2px solid #2dd7f0;border-left:2px solid #2dd7f0;opacity:0"></div>
+        <div data-svc-corner="" style="position:absolute;bottom:-1px;right:-1px;width:16px;height:16px;border-bottom:2px solid #2dd7f0;border-right:2px solid #2dd7f0;opacity:0"></div>
+        <div data-svc-num="" style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.15em;color:rgba(45,215,240,.6);margin-bottom:14px;opacity:0">0{{ svc.idx }}</div>
+        <div data-svc-title="" style="font-family:'Orbitron',sans-serif;font-size:calc(17px * var(--type-scale,1));letter-spacing:.06em;color:#eaf6f8;margin-bottom:12px;opacity:0">{{ svc.title }}</div>
+        <sc-if value="{{ showDetail }}" hint-placeholder-val="{{ true }}">
+        <div data-svc-desc="" style="font-size:calc(13.5px * var(--type-scale,1));line-height:1.7;color:rgba(234,246,248,.65);opacity:0">{{ svc.desc }}</div>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ closeModal }}" style="position:fixed;inset:0;z-index:120;background:rgba(4,7,10,.86);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:24px;animation:modalIn .3s ease">
+  <div onClick="{{ stop }}" style="position:relative;width:min(92vw,1040px);border:1px solid rgba(45,215,240,.35);background:#070d11;box-shadow:0 0 0 1px rgba(45,215,240,.1),0 40px 120px rgba(0,0,0,.7)">
+    <div style="position:absolute;top:-1px;left:-1px;width:22px;height:22px;border-top:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+    <div style="position:absolute;top:-1px;right:-1px;width:22px;height:22px;border-top:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+    <div style="position:absolute;bottom:-1px;left:-1px;width:22px;height:22px;border-bottom:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+    <div style="position:absolute;bottom:-1px;right:-1px;width:22px;height:22px;border-bottom:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid rgba(45,215,240,.2)">
+      <div ref="{{ setModalTitle }}" style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.14em;color:#eaf6f8">—</div>
+      <button onClick="{{ closeModal }}" aria-label="Close" style-hover="box-shadow:0 0 14px rgba(45,215,240,.6)" style="width:30px;height:30px;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.06);color:#2dd7f0;border-radius:3px;font-size:14px;cursor:pointer;transition:box-shadow .2s">✕</button>
+    </div>
+    <div style="position:relative;width:100%;aspect-ratio:16/9;background:#000">
+      <iframe ref="{{ setModalFrame }}" title="Video" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="{{ true }}" style="width:100%;height:100%;border:0;display:block"></iframe>
+      <div ref="{{ setModalMock }}" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;pointer-events:none;color:rgba(234,246,248,.5);font-family:'Orbitron',sans-serif;letter-spacing:.15em;font-size:12px"><div style="width:56px;height:56px;border-radius:50%;border:1px solid rgba(45,215,240,.5);display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(45,215,240,.35)"><div style="width:0;height:0;border-left:14px solid #2dd7f0;border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:4px"></div></div>VIDEO EMBED — MOCKUP</div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ careerOpen }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ closeCareer }}" style="position:fixed;inset:0;z-index:130;background:rgba(4,7,10,.86);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:24px;animation:modalIn .28s ease">
+  <div onClick="{{ stop }}" ref="{{ setCareerPop }}" style="position:relative;width:min(92vw,540px);border:1px solid rgba(45,215,240,.35);background:#070d11;box-shadow:0 0 0 1px rgba(45,215,240,.1),0 40px 120px rgba(0,0,0,.7)">
+    <div data-cp-corner="" style="position:absolute;top:-1px;left:-1px;width:22px;height:22px;border-top:2px solid {{ careerSel.accent }};border-left:2px solid {{ careerSel.accent }};opacity:0"></div>
+    <div data-cp-corner="" style="position:absolute;top:-1px;right:-1px;width:22px;height:22px;border-top:2px solid {{ careerSel.accent }};border-right:2px solid {{ careerSel.accent }};opacity:0"></div>
+    <div data-cp-corner="" style="position:absolute;bottom:-1px;left:-1px;width:22px;height:22px;border-bottom:2px solid {{ careerSel.accent }};border-left:2px solid {{ careerSel.accent }};opacity:0"></div>
+    <div data-cp-corner="" style="position:absolute;bottom:-1px;right:-1px;width:22px;height:22px;border-bottom:2px solid {{ careerSel.accent }};border-right:2px solid {{ careerSel.accent }};opacity:0"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid rgba(45,215,240,.2);background:rgba(45,215,240,.06)">
+      <div data-cp-num="" style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.14em;color:{{ careerSel.accent }};opacity:0">{{ careerSel.org }}</div>
+      <button onClick="{{ closeCareer }}" aria-label="Close" style-hover="box-shadow:0 0 14px rgba(45,215,240,.6)" style="width:28px;height:28px;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.06);color:#eaf6f8;font-size:15px;line-height:1;cursor:pointer;flex-shrink:0">✕</button>
+    </div>
+    <div style="padding:22px 22px 24px">
+      <div data-cp-num="" style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.12em;color:{{ careerSel.accent }};margin-bottom:8px;opacity:0">{{ careerSel.year }}</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:calc(18px * var(--type-scale,1));line-height:1.3;color:#eaf6f8;margin-bottom:14px"><span data-cp-title="" style="opacity:0">{{ careerSel.head }}</span><sc-if value="{{ careerSel.sub }}" hint-placeholder-val="{{ false }}"><span data-cp-sub="" style="font-size:12px;color:rgba(234,246,248,.5);opacity:0"> {{ careerSel.sub }}</span></sc-if></div>
+      <p data-cp-desc="" style="font-size:calc(13.5px * var(--type-scale,1));line-height:1.8;color:rgba(234,246,248,.72);margin:0 0 18px;text-wrap:pretty;opacity:0">{{ careerSel.body }}</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{ careerSel.tags }}" as="t" hint-placeholder-count="3">
+          <span data-cp-tag="" style="font-family:'Orbitron',sans-serif;font-size:9.5px;letter-spacing:.1em;color:rgba(45,215,240,.85);padding:5px 10px;border:1px solid rgba(45,215,240,.3);background:rgba(45,215,240,.04);opacity:0">{{ t.v }}</span>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ graphicsOpen }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ closeGraphics }}" style="position:fixed;inset:0;z-index:140;background:rgba(4,7,10,.92);backdrop-filter:blur(8px);display:flex;flex-direction:column;padding:clamp(14px,3.5vw,38px);animation:modalIn .3s ease">
+  <div onClick="{{ stop }}" style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-shrink:0;margin-bottom:6px">
+    <div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.26em;color:#2dd7f0;margin-bottom:6px">// GRAPHICS — KEY VISUALS</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:clamp(15px,2.2vw,22px);letter-spacing:.04em;color:#eaf6f8">Static campaigns &amp; key art</div>
+    </div>
+    <button onClick="{{ closeGraphics }}" aria-label="Close" style-hover="box-shadow:0 0 14px rgba(45,215,240,.6)" style="width:34px;height:34px;flex-shrink:0;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.06);color:#eaf6f8;font-size:16px;line-height:1;cursor:pointer;border-radius:3px">✕</button>
+  </div>
+
+  <div ref="{{ setGfxStage }}" onClick="{{ closeGraphics }}" style="position:relative;flex:1;min-height:0;overflow:hidden">
+    <sc-for list="{{ gfxSlides }}" as="s">
+      <div ref="{{ s.setEl }}" onClick="{{ s.onClick }}" style="position:absolute;left:50%;top:50%;opacity:0;cursor:pointer;transform:translate(-50%,-50%) scale(.5);will-change:transform,opacity,filter;transition:transform .55s cubic-bezier(.22,1,.36,1),opacity .5s ease,filter .5s ease">
+        <sc-if value="{{ s.single }}" hint-placeholder-val="{{ true }}">
+          <div style="position:relative;height:min(60vh,600px);border:1px solid rgba(45,215,240,.4);background:#05090c;box-shadow:0 0 0 1px rgba(45,215,240,.08),0 30px 90px rgba(0,0,0,.7)">
+            <img ref="{{ s.setImg }}" alt="{{ s.title }}" style="display:block;height:100%;width:auto;max-width:82vw;object-fit:contain">
+            <div style="position:absolute;top:-1px;left:-1px;width:18px;height:18px;border-top:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+            <div style="position:absolute;top:-1px;right:-1px;width:18px;height:18px;border-top:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+            <div style="position:absolute;bottom:-1px;left:-1px;width:18px;height:18px;border-bottom:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+            <div style="position:absolute;bottom:-1px;right:-1px;width:18px;height:18px;border-bottom:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ s.dual }}" hint-placeholder-val="{{ false }}">
+          <div style="height:min(60vh,600px);display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:center">
+            <div style="position:relative;height:calc(52% - 6px);border:1px solid rgba(45,215,240,.4);background:#05090c;box-shadow:0 20px 50px rgba(0,0,0,.6)">
+              <img ref="{{ s.setImg }}" alt="{{ s.title }} 1:1" style="display:block;height:100%;width:auto;max-width:82vw;object-fit:contain">
+              <div style="position:absolute;top:6px;left:6px;font-family:'Orbitron',sans-serif;font-size:8.5px;letter-spacing:.14em;color:#2dd7f0;background:rgba(4,7,10,.7);padding:2px 6px;border:1px solid rgba(45,215,240,.3)">1:1</div>
+            </div>
+            <div style="position:relative;height:calc(48% - 6px);border:1px solid rgba(45,215,240,.4);background:#05090c;box-shadow:0 20px 50px rgba(0,0,0,.6)">
+              <img ref="{{ s.setImg2 }}" alt="{{ s.title }} 16:9" style="display:block;height:100%;width:auto;max-width:82vw;object-fit:contain">
+              <div style="position:absolute;top:6px;left:6px;font-family:'Orbitron',sans-serif;font-size:8.5px;letter-spacing:.14em;color:#2dd7f0;background:rgba(4,7,10,.7);padding:2px 6px;border:1px solid rgba(45,215,240,.3)">16:9</div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+
+  <div onClick="{{ stop }}" style="flex-shrink:0;display:flex;align-items:center;justify-content:center;gap:clamp(16px,4vw,44px);margin-top:16px">
+    <button onClick="{{ gfxPrev }}" aria-label="Previous" style-hover="box-shadow:0 0 16px rgba(45,215,240,.5);color:#2dd7f0" style="width:44px;height:44px;flex-shrink:0;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.06);color:#eaf6f8;font-size:20px;line-height:1;cursor:pointer;border-radius:3px;transition:box-shadow .2s,color .2s">‹</button>
+    <div style="text-align:center;min-width:min(70vw,420px)">
+      <div style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.2em;color:#2dd7f0;margin-bottom:5px">{{ gfxActive.brand }}</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:clamp(15px,2vw,20px);color:#eaf6f8;letter-spacing:.03em;margin-bottom:8px">{{ gfxActive.title }}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-bottom:8px">
+        <sc-for list="{{ gfxActive.tags }}" as="t" hint-placeholder-count="3">
+          <span style="font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:.1em;color:rgba(45,215,240,.85);padding:4px 9px;border:1px solid rgba(45,215,240,.3);background:rgba(45,215,240,.04)">{{ t.v }}</span>
+        </sc-for>
+      </div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:9.5px;letter-spacing:.14em;color:rgba(234,246,248,.45)">{{ gfxActive.meta }} &nbsp;·&nbsp; {{ gfxNum }} / {{ gfxTotal }}</div>
+    </div>
+    <button onClick="{{ gfxNext }}" aria-label="Next" style-hover="box-shadow:0 0 16px rgba(45,215,240,.5);color:#2dd7f0" style="width:44px;height:44px;flex-shrink:0;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.06);color:#eaf6f8;font-size:20px;line-height:1;cursor:pointer;border-radius:3px;transition:box-shadow .2s,color .2s">›</button>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ bannersOpen }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ closeBanners }}" style="position:fixed;inset:0;z-index:140;background:rgba(4,7,10,.92);backdrop-filter:blur(8px);display:flex;flex-direction:column;padding:clamp(14px,3.5vw,38px);animation:modalIn .3s ease">
+  <div onClick="{{ stop }}" data-om-label="Banner header" style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;flex-shrink:0;margin-bottom:14px">
+    <div style="min-width:0">
+      <div style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.26em;color:#2dd7f0;margin-bottom:6px;white-space:nowrap">// BANNERS — MOTION AD SYSTEM</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:clamp(15px,2.2vw,22px);letter-spacing:.04em;color:#eaf6f8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ bannerTitle }} &nbsp;·&nbsp; <span style="color:rgba(45,215,240,.85)">{{ bannerMeta }}</span></div>
+    </div>
+    <div style="display:flex;gap:6px;justify-self:center">
+      <sc-for list="{{ bannerTabs }}" as="tab">
+        <button onClick="{{ tab.onClick }}" style-hover="border-color:rgba(45,215,240,.6)" style="display:flex;align-items:center;gap:7px;padding:8px 14px;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.1em;cursor:pointer;background:rgba(45,215,240,.04);color:{{ tab.color }};border:1px solid {{ tab.border }};border-bottom:2px solid {{ tab.border }};transition:border-color .2s"><span style="opacity:.55;font-size:8.5px">{{ tab.num }}</span>{{ tab.label }}</button>
+      </sc-for>
+    </div>
+    <button onClick="{{ closeBanners }}" aria-label="Close" style-hover="box-shadow:0 0 14px rgba(45,215,240,.6)" style="justify-self:end;width:34px;height:34px;flex-shrink:0;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.06);color:#eaf6f8;font-size:16px;line-height:1;cursor:pointer;border-radius:3px">✕</button>
+  </div>
+
+  <button onClick="{{ bannerPrev }}" aria-label="Previous project" style-hover="box-shadow:0 0 16px rgba(45,215,240,.6);border-color:rgba(45,215,240,.7)" style="position:absolute;left:clamp(6px,1.6vw,20px);top:50%;transform:translateY(-50%);z-index:2;width:clamp(38px,4vw,52px);height:clamp(38px,4vw,52px);display:flex;align-items:center;justify-content:center;border:1px solid rgba(45,215,240,.4);background:rgba(4,7,10,.7);color:#eaf6f8;font-size:20px;line-height:1;cursor:pointer;border-radius:3px;transition:box-shadow .2s,border-color .2s">‹</button>
+  <button onClick="{{ bannerNext }}" aria-label="Next project" style-hover="box-shadow:0 0 16px rgba(45,215,240,.6);border-color:rgba(45,215,240,.7)" style="position:absolute;right:clamp(6px,1.6vw,20px);top:50%;transform:translateY(-50%);z-index:2;width:clamp(38px,4vw,52px);height:clamp(38px,4vw,52px);display:flex;align-items:center;justify-content:center;border:1px solid rgba(45,215,240,.4);background:rgba(4,7,10,.7);color:#eaf6f8;font-size:20px;line-height:1;cursor:pointer;border-radius:3px;transition:box-shadow .2s,border-color .2s">›</button>
+
+  <div onClick="{{ stop }}" ref="{{ setBannerGrid }}" style="flex:1;min-height:0;overflow:auto">
+    <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start;justify-content:center;max-width:1080px;margin:0 auto">
+      <sc-for list="{{ bannerCards }}" as="s">
+        <div ref="{{ s.setCard }}" style="position:relative;border:1px solid rgba(45,215,240,.35);background:#05090c;box-shadow:0 16px 44px rgba(0,0,0,.55)">
+          <video ref="{{ s.setVid }}" style="display:block;width:100%;object-fit:cover;background:#05090c"></video>
+          <div style="position:absolute;top:8px;left:8px;font-family:'Orbitron',sans-serif;font-size:8.5px;letter-spacing:.12em;color:#2dd7f0;background:rgba(4,7,10,.72);padding:3px 7px;border:1px solid rgba(45,215,240,.3)">{{ s.label }}</div>
+          <div style="position:absolute;top:-1px;left:-1px;width:14px;height:14px;border-top:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+          <div style="position:absolute;bottom:-1px;right:-1px;width:14px;height:14px;border-bottom:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+        </div>
+      </sc-for>
+    </div>
+    </div>
+  </div>
+</sc-if></div>
+
+
+<sc-if value="{{ model3dOpen }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ closeModel3d }}" style="position:fixed;inset:0;z-index:140;background:rgba(4,7,10,.94);backdrop-filter:blur(8px);display:flex;flex-direction:column;padding:clamp(14px,3.5vw,38px);animation:modalIn .28s ease both">
+  <div onClick="{{ stop }}" style="display:grid;grid-template-columns:1fr auto;align-items:center;gap:16px;flex-shrink:0;margin-bottom:6px">
+    <div style="min-width:0">
+      <div style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.26em;color:#2dd7f0;margin-bottom:6px">// {{ model3dLabel }}</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:clamp(15px,2.2vw,22px);letter-spacing:.04em;color:#eaf6f8">{{ model3dTitle }} &nbsp;<span style="color:rgba(45,215,240,.55);font-size:.62em;letter-spacing:.14em">{{ model3dMeta }}</span></div>
+    </div>
+    <button onClick="{{ closeModel3d }}" aria-label="Close" style-hover="box-shadow:0 0 14px rgba(45,215,240,.6)" style="justify-self:end;width:34px;height:34px;flex-shrink:0;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.05);color:#2dd7f0;font-size:17px;cursor:pointer;transition:box-shadow .25s">✕</button>
+  </div>
+  <div onClick="{{ stop }}" style="flex:1;min-height:0;position:relative;perspective:1500px;perspective-origin:50% 46%">
+    <div ref="{{ setModelStage }}" style="position:absolute;left:0;right:0;top:50%;height:0;transform-style:preserve-3d">
+      <sc-for list="{{ modelCards }}" as="m" hint-placeholder-count="3">
+        <div ref="{{ m.setSlide }}" style="position:absolute;left:50%;top:0;width:clamp(200px,23vw,300px);aspect-ratio:3/4;margin:calc(clamp(200px,23vw,300px) * -0.6667) 0 0 calc(clamp(200px,23vw,300px) * -0.5)">
+          <div data-model-card="" onClick="{{ m.select }}" style-hover="border-color:rgba(45,215,240,.6)" style="position:absolute;inset:0;border:1px solid rgba(45,215,240,.3);background:radial-gradient(120% 92% at 50% 10%,rgba(45,215,240,.09),rgba(5,9,12,0) 62%),#05090c;overflow:hidden;box-shadow:0 18px 46px rgba(0,0,0,.55);cursor:pointer;transition:border-color .25s">
+            <video ref="{{ m.setVid }}" style="position:absolute;inset:0;z-index:2;width:100%;height:100%;object-fit:contain;background:transparent"></video>
+            <div data-model-ph="" style="position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:18px">
+              <div style="width:64px;height:64px;border:1px solid rgba(45,215,240,.35);border-radius:50%;display:flex;align-items:center;justify-content:center;color:rgba(45,215,240,.65);font-family:'Orbitron',sans-serif;font-size:22px;animation:hudPulse 2.6s ease-in-out infinite">◈</div>
+              <div style="font-family:'Orbitron',sans-serif;font-size:9.5px;letter-spacing:.22em;color:rgba(45,215,240,.6)">LOADING RENDER</div>
+            </div>
+            <div style="position:absolute;z-index:3;left:0;right:0;bottom:0;padding:10px 12px;background:linear-gradient(0deg,rgba(4,7,10,.9),rgba(4,7,10,0));display:flex;align-items:flex-end;justify-content:space-between;gap:8px">
+              <div style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.04em;color:#eaf6f8">{{ m.name }}</div>
+              <div style="font-family:'Orbitron',sans-serif;font-size:8px;letter-spacing:.14em;color:#2dd7f0;white-space:nowrap">{{ m.tag }}</div>
+            </div>
+            <div style="position:absolute;z-index:4;top:-1px;left:-1px;width:14px;height:14px;border-top:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+            <div style="position:absolute;z-index:4;bottom:-1px;right:-1px;width:14px;height:14px;border-bottom:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="position:absolute;left:50%;top:calc(50% + clamp(120px,15vw,190px));width:clamp(280px,40vw,520px);height:2px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,rgba(45,215,240,.4),transparent);filter:blur(1px);pointer-events:none;z-index:0"></div>
+  </div>
+  <div onClick="{{ stop }}" style="display:flex;justify-content:center;flex-shrink:0;margin-top:8px">
+    <div style="display:flex;align-items:center;gap:14px;padding:9px 12px;border:1px solid rgba(45,215,240,.28);background:rgba(7,13,17,.72);backdrop-filter:blur(10px);border-radius:6px;box-shadow:0 12px 40px rgba(0,0,0,.5)">
+      <div ref="{{ setModelPill }}" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.12em;color:#eaf6f8;min-width:150px;text-align:center;white-space:nowrap">—</div>
+      <div style="display:flex;gap:6px">
+        <button onClick="{{ modelPrev }}" aria-label="Previous" style-hover="box-shadow:0 0 16px rgba(45,215,240,.55);background:rgba(45,215,240,.14)" style="width:38px;height:34px;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.05);color:#2dd7f0;font-size:15px;border-radius:3px;transition:box-shadow .2s,background .2s;display:flex;align-items:center;justify-content:center;cursor:pointer">←</button>
+        <button onClick="{{ modelNext }}" aria-label="Next" style-hover="box-shadow:0 0 16px rgba(45,215,240,.55);background:rgba(45,215,240,.14)" style="width:38px;height:34px;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.05);color:#2dd7f0;font-size:15px;border-radius:3px;transition:box-shadow .2s,background .2s;display:flex;align-items:center;justify-content:center;cursor:pointer">→</button>
+      </div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<section id="skills" ref="{{ setSkillsRef }}" style="position: relative; padding: min(12vw,120px) clamp(20px,6vw,80px); border-bottom: 1px solid rgba(45,215,240,.12)">
+  <div ref="{{ setSkillsHead }}" style="text-align:center;margin-bottom:44px;transition:opacity .3s">
+    <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.25em;color:#2dd7f0;margin-bottom:10px">// {{ copy.skillsLabel }}</div>
+    <h2 ref="{{ setSkillsTitleRef }}" style="font-family:'Orbitron',sans-serif;font-size:calc(clamp(26px,3.4vw,42px) * var(--type-scale,1));margin:0;color:#eaf6f8"><sc-for list="{{ skillsTitleWords }}" as="w" hint-placeholder-count="6"><span style="display:inline-block;white-space:nowrap;margin-right:.32em"><sc-for list="{{ w.chars }}" as="c" hint-placeholder-count="4"><span class="tchar" style="display:inline-block;opacity:0;filter:blur(6px)">{{ c.ch }}</span></sc-for></span></sc-for><span class="hud-caret" style="display:inline-block;width:3px;height:.85em;margin-left:3px;background:#2dd7f0;box-shadow:0 0 10px #2dd7f0;vertical-align:-.1em;opacity:0"></span></h2>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;max-width:900px;margin:0 auto">
+    <sc-for list="{{ tools }}" as="t" hint-placeholder-count="8">
+      <div ref="{{ t.setBtn }}" onMouseEnter="{{ t.enter }}" onMouseLeave="{{ t.leave }}" style="padding:10px 18px;border:1px solid rgba(45,215,240,.3);font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.08em;color:#eaf6f8;background:rgba(45,215,240,.04);cursor:default;opacity:0;transition:opacity .3s,box-shadow .3s,border-color .3s,background .3s,color .3s">{{ t.name }}</div>
+    </sc-for>
+  </div>
+  <div ref="{{ setToolLine }}" style="position:absolute;z-index:19;pointer-events:none;width:1px;height:0;background:linear-gradient(to top,#2dd7f0,rgba(45,215,240,.15));box-shadow:0 0 6px #2dd7f0;transform:translateX(-50%) scaleY(0);transform-origin:bottom;transition:transform .25s ease"></div>
+  <div ref="{{ setToolHud }}" style="position:absolute;z-index:20;pointer-events:none;opacity:0;left:0;top:0;width:290px;max-width:82vw;transform:translate(-50%,-100%) translateY(8px);border:1px solid rgba(45,215,240,.5);background:rgba(7,13,17,.94);backdrop-filter:blur(8px);box-shadow:0 0 30px rgba(45,215,240,.22),0 20px 50px rgba(0,0,0,.6);display:flex;gap:12px;padding:14px;transition:opacity .25s ease,transform .25s ease">
+    <div style="position:absolute;top:-1px;left:-1px;width:12px;height:12px;border-top:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+    <div style="position:absolute;top:-1px;right:-1px;width:12px;height:12px;border-top:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+    <div style="position:absolute;bottom:-1px;left:-1px;width:12px;height:12px;border-bottom:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+    <div style="position:absolute;bottom:-1px;right:-1px;width:12px;height:12px;border-bottom:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+    <div ref="{{ setToolHudLogo }}" style="flex:0 0 52px;width:52px;height:52px;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-weight:700;font-size:19px;border:1px solid rgba(45,215,240,.4);border-radius:4px;background:rgba(45,215,240,.06)">Ae</div>
+    <div style="flex:1;min-width:0">
+      <div ref="{{ setToolHudName }}" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.1em;color:#2dd7f0;margin-bottom:6px">TOOL</div>
+      <div ref="{{ setToolHudText }}" style="font-size:11px;line-height:1.55;color:rgba(234,246,248,.75);text-wrap:pretty">—</div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" ref="{{ setContactRef }}" style="position: relative; padding: min(14vw,140px) clamp(20px,6vw,80px) 60px; display: flex; flex-direction: column; align-items: center; text-align: center">
+  <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.25em;color:#2dd7f0;margin-bottom:14px">// {{ copy.contactLabel }}</div>
+  <h2 ref="{{ setContactTitleRef }}" style="font-family:'Orbitron',sans-serif;font-size:calc(clamp(28px,4vw,52px) * var(--type-scale,1));margin:0 0 20px;color:#eaf6f8;max-width:760px"><sc-for list="{{ contactTitleWords }}" as="w" hint-placeholder-count="6"><span style="display:inline-block;white-space:nowrap;margin-right:.32em"><sc-for list="{{ w.chars }}" as="c" hint-placeholder-count="4"><span class="tchar" style="display:inline-block;opacity:0;filter:blur(6px)">{{ c.ch }}</span></sc-for></span></sc-for><span class="hud-caret" style="display:inline-block;width:3px;height:.85em;margin-left:3px;background:#2dd7f0;box-shadow:0 0 10px #2dd7f0;vertical-align:-.1em;opacity:0"></span></h2>
+  <sc-if value="{{ showDetail }}" hint-placeholder-val="{{ true }}">
+  <p ref="{{ setContactSub }}" style="max-width:520px;font-size:calc(15px * var(--type-scale,1));line-height:1.8;color:rgba(234,246,248,.65);margin:0 0 30px">{{ copy.contactSub }}</p>
+  </sc-if>
+  <button ref="{{ setContactBtn }}" onClick="{{ openContact }}" style-hover="box-shadow:0 0 30px rgba(45,215,240,.7);transform:translateY(-1px)" style="font-family:'Orbitron',sans-serif;font-size:13px;letter-spacing:.15em;padding:16px 34px;background:#2dd7f0;color:#04070a;font-weight:700;transition:box-shadow .2s,transform .2s;border-radius:2px;margin-bottom:36px;border:0;cursor:pointer">{{ copy.contactCta }}</button>
+  <div ref="{{ setContactSocials }}" style="display:flex;gap:26px;margin-bottom:50px">
+    <sc-for list="{{ socials }}" as="soc" hint-placeholder-count="2">
+      <sc-if value="{{ soc.isEmail }}" hint-placeholder-val="{{ false }}">
+      <button onClick="{{ soc.onClick }}" style-hover="box-shadow:0 4px 14px rgba(45,215,240,.4)" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.1em;color:rgba(234,246,248,.6);border:0;border-bottom:1px solid rgba(45,215,240,.3);padding:0 0 2px;background:none;cursor:pointer;transition:box-shadow .2s">{{ soc.label }}</button>
+      </sc-if>
+      <sc-if value="{{ soc.isLink }}" hint-placeholder-val="{{ false }}">
+      <a href="{{ soc.href }}" target="_blank" rel="noopener noreferrer" style-hover="box-shadow:0 4px 14px rgba(45,215,240,.4)" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.1em;color:rgba(234,246,248,.6);border-bottom:1px solid rgba(45,215,240,.3);padding-bottom:2px;transition:box-shadow .2s">{{ soc.label }}</a>
+      </sc-if>
+    </sc-for>
+  </div>
+  <div style="width:100%;max-width:1100px;border-top:1px solid rgba(45,215,240,.15);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px">
+    <span style="font-size:11px;color:rgba(234,246,248,.4);letter-spacing:.05em">© 2026 KHAI TRAN — MOTION GRAPHIC DESIGNER</span>
+    <span style="font-size:11px;color:rgba(234,246,248,.4);letter-spacing:.05em;font-family:'Orbitron',sans-serif;display:inline-flex;align-items:center;gap:7px"><span style="width:7px;height:7px;border-radius:50%;background:#2dd7f0;box-shadow:0 0 8px 1px #2dd7f0;animation:blink 2s ease-in-out infinite"></span>STATUS: AVAILABLE</span>
+  </div>
+</section>
+
+<sc-if value="{{ contactOpen }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ closeContact }}" style="position:fixed;inset:0;z-index:140;background:rgba(4,7,10,.86);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:24px;animation:modalIn .28s ease;overflow-y:auto">
+  <div onClick="{{ stop }}" style="position:relative;width:min(94vw,560px);border:1px solid rgba(45,215,240,.4);background:#070d11;box-shadow:0 0 0 1px rgba(45,215,240,.1),0 40px 120px rgba(0,0,0,.7);margin:auto">
+    <div style="position:absolute;top:-1px;left:-1px;width:20px;height:20px;border-top:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+    <div style="position:absolute;top:-1px;right:-1px;width:20px;height:20px;border-top:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+    <div style="position:absolute;bottom:-1px;left:-1px;width:20px;height:20px;border-bottom:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+    <div style="position:absolute;bottom:-1px;right:-1px;width:20px;height:20px;border-bottom:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 18px;border-bottom:1px solid rgba(45,215,240,.25);background:rgba(45,215,240,.07)">
+      <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.2em;color:#2dd7f0">// {{ copy.contactCta }}</div>
+      <button onClick="{{ closeContact }}" aria-label="Close" style-hover="box-shadow:0 0 14px rgba(45,215,240,.6)" style="width:28px;height:28px;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.06);color:#eaf6f8;font-size:15px;line-height:1;cursor:pointer;flex-shrink:0">✕</button>
+    </div>
+    <div ref="{{ setCfForm }}" style="padding:22px 22px 24px">
+      <div style="font-family:'Chakra Petch',sans-serif;font-size:12px;letter-spacing:.05em;color:rgba(234,246,248,.55);margin-bottom:18px;line-height:1.5">{{ copy.contactFormIntro }}</div>
+      <div data-cf-grid="" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <label style="display:block"><span style="font-family:'Orbitron',sans-serif;font-size:9.5px;letter-spacing:.14em;color:#2dd7f0;display:block;margin-bottom:6px">{{ copy.cfName }} <span style="color:#ff5a6a">*</span></span><input ref="{{ setCfName }}" onInput="{{ cfValidate }}" type="text" autocomplete="name" style="width:100%;box-sizing:border-box;background:rgba(45,215,240,.05);border:1px solid rgba(45,215,240,.3);color:#eaf6f8;font-family:'Chakra Petch',sans-serif;font-size:13px;padding:10px 12px;outline:none" style-focus="border-color:#2dd7f0;box-shadow:0 0 12px rgba(45,215,240,.35)"></label>
+        <label style="display:block"><span style="font-family:'Orbitron',sans-serif;font-size:9.5px;letter-spacing:.14em;color:#2dd7f0;display:block;margin-bottom:6px">{{ copy.cfEmail }} <span style="color:#ff5a6a">*</span></span><input ref="{{ setCfEmail }}" onInput="{{ cfValidate }}" type="email" autocomplete="email" style="width:100%;box-sizing:border-box;background:rgba(45,215,240,.05);border:1px solid rgba(45,215,240,.3);color:#eaf6f8;font-family:'Chakra Petch',sans-serif;font-size:13px;padding:10px 12px;outline:none" style-focus="border-color:#2dd7f0;box-shadow:0 0 12px rgba(45,215,240,.35)"></label>
+        <label style="display:block"><span style="font-family:'Orbitron',sans-serif;font-size:9.5px;letter-spacing:.14em;color:rgba(45,215,240,.7);display:block;margin-bottom:6px">{{ copy.cfPhone }}</span><input ref="{{ setCfPhone }}" type="tel" autocomplete="tel" style="width:100%;box-sizing:border-box;background:rgba(45,215,240,.05);border:1px solid rgba(45,215,240,.3);color:#eaf6f8;font-family:'Chakra Petch',sans-serif;font-size:13px;padding:10px 12px;outline:none" style-focus="border-color:#2dd7f0;box-shadow:0 0 12px rgba(45,215,240,.35)"></label>
+        <label style="display:block"><span style="font-family:'Orbitron',sans-serif;font-size:9.5px;letter-spacing:.14em;color:rgba(45,215,240,.7);display:block;margin-bottom:6px">{{ copy.cfOther }}</span><input ref="{{ setCfOther }}" type="text" placeholder="{{ copy.cfOtherPh }}" style="width:100%;box-sizing:border-box;background:rgba(45,215,240,.05);border:1px solid rgba(45,215,240,.3);color:#eaf6f8;font-family:'Chakra Petch',sans-serif;font-size:13px;padding:10px 12px;outline:none" style-focus="border-color:#2dd7f0;box-shadow:0 0 12px rgba(45,215,240,.35)"></label>
+      </div>
+      <label style="display:block;margin-top:14px"><span style="font-family:'Orbitron',sans-serif;font-size:9.5px;letter-spacing:.14em;color:#2dd7f0;display:block;margin-bottom:6px">{{ copy.cfMessage }} <span style="color:#ff5a6a">*</span></span><textarea ref="{{ setCfMsg }}" onInput="{{ cfValidate }}" rows="4" style="width:100%;box-sizing:border-box;background:rgba(45,215,240,.05);border:1px solid rgba(45,215,240,.3);color:#eaf6f8;font-family:'Chakra Petch',sans-serif;font-size:13px;padding:10px 12px;outline:none;resize:vertical" style-focus="border-color:#2dd7f0;box-shadow:0 0 12px rgba(45,215,240,.35)"></textarea></label>
+      <div ref="{{ setCfStatus }}" style="min-height:16px;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.1em;color:#2dd7f0;margin:14px 0 4px"></div>
+      <button ref="{{ setCfSend }}" onClick="{{ submitContact }}" disabled="{{ true }}" style="width:100%;font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.15em;padding:14px;background:#2dd7f0;color:#04070a;font-weight:700;border:0;border-radius:2px;opacity:.4;cursor:not-allowed;transition:opacity .25s,box-shadow .25s">{{ copy.cfSend }}</button>
+      <div style="text-align:center;margin-top:14px;font-family:'Chakra Petch',sans-serif;font-size:12px;color:rgba(234,246,248,.45)">{{ copy.cfOrEmail }} <button onClick="{{ contactMailto }}" style="background:none;border:0;color:#2dd7f0;font-family:'Chakra Petch',sans-serif;font-size:12px;cursor:pointer;text-decoration:underline;padding:0">{{ copy.cfMailLink }}</button></div>
+    </div>
+    <div ref="{{ setCfDone }}" style="display:none;padding:44px 30px 48px;text-align:center">
+      <div style="width:56px;height:56px;margin:0 auto 20px;border:1px solid #35e08a;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(53,224,138,.5);color:#35e08a;font-size:26px">✓</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:15px;letter-spacing:.08em;color:#eaf6f8;margin-bottom:10px">{{ copy.cfDoneTitle }}</div>
+      <div style="font-family:'Chakra Petch',sans-serif;font-size:13px;line-height:1.6;color:rgba(234,246,248,.6);max-width:340px;margin:0 auto">{{ copy.cfDoneBody }}</div>
+      <button onClick="{{ closeContact }}" style="margin-top:24px;font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.14em;padding:11px 28px;background:transparent;color:#2dd7f0;border:1px solid rgba(45,215,240,.45);border-radius:2px;cursor:pointer" style-hover="box-shadow:0 0 16px rgba(45,215,240,.5)">{{ copy.cfClose }}</button>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ emailOpen }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ closeEmail }}" style="position:fixed;inset:0;z-index:145;background:rgba(4,7,10,.86);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:24px;animation:modalIn .28s ease">
+  <div onClick="{{ stop }}" style="position:relative;width:min(92vw,460px);border:1px solid rgba(45,215,240,.4);background:#070d11;box-shadow:0 0 0 1px rgba(45,215,240,.1),0 40px 120px rgba(0,0,0,.7)">
+    <div style="position:absolute;top:-1px;left:-1px;width:20px;height:20px;border-top:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+    <div style="position:absolute;top:-1px;right:-1px;width:20px;height:20px;border-top:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+    <div style="position:absolute;bottom:-1px;left:-1px;width:20px;height:20px;border-bottom:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+    <div style="position:absolute;bottom:-1px;right:-1px;width:20px;height:20px;border-bottom:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 18px;border-bottom:1px solid rgba(45,215,240,.25);background:rgba(45,215,240,.07)">
+      <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.2em;color:#2dd7f0">// EMAIL</div>
+      <button onClick="{{ closeEmail }}" aria-label="Close" style-hover="box-shadow:0 0 14px rgba(45,215,240,.6)" style="width:28px;height:28px;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.06);color:#eaf6f8;font-size:15px;line-height:1;cursor:pointer;flex-shrink:0">✕</button>
+    </div>
+    <div style="padding:26px 22px 26px;text-align:center">
+      <div style="width:52px;height:52px;margin:0 auto 16px;border:1px solid #35e08a;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 22px rgba(53,224,138,.5);color:#35e08a;font-size:24px">✓</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:14px;letter-spacing:.08em;color:#eaf6f8;margin-bottom:8px">{{ copy.emailCopiedTitle }}</div>
+      <div style="font-family:'Chakra Petch',sans-serif;font-size:12.5px;line-height:1.6;color:rgba(234,246,248,.6);max-width:320px;margin:0 auto 20px">{{ copy.emailCopiedBody }}</div>
+      <div style="display:flex;align-items:stretch;gap:8px;max-width:360px;margin:0 auto">
+        <div style="flex:1;min-width:0;display:flex;align-items:center;padding:0 14px;border:1px solid rgba(45,215,240,.3);background:rgba(45,215,240,.05);font-family:'Chakra Petch',sans-serif;font-size:13px;color:#eaf6f8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">daniel.biz0395@gmail.com</div>
+        <button ref="{{ setEmailCopyBtn }}" onClick="{{ copyEmail }}" style-hover="box-shadow:0 0 16px rgba(45,215,240,.5)" style="flex:0 0 auto;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.1em;padding:0 16px;background:#2dd7f0;color:#04070a;font-weight:700;border:0;cursor:pointer;transition:box-shadow .2s">{{ copy.emailCopyBtn }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;typeScale&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.9,&quot;min&quot;:0.85,&quot;max&quot;:1.35,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Feel&quot;},&quot;motionDepth&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0.3,&quot;max&quot;:2,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Feel&quot;},&quot;contentDensity&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;full&quot;,&quot;options&quot;:[&quot;full&quot;,&quot;minimal&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Feel&quot;}}">
+const EN = {
+  heroRole: 'MOTION GRAPHIC DESIGNER // VIDEO ENGINEER // STUDIO LEAD',
+  heroSub: 'Khai Tran — motion designer who builds the system behind the videos, not just the videos.',
+  ctaReel: 'VIEW REEL',
+  ctaContact: 'CONTACT',
+  profileLabel: 'PROFILE',
+  timelineLabel: 'CAREER_LOG',
+  aboutLabel: 'ABOUT',
+  aboutTitle: 'I don\'t just make the video. I build the studio that makes it.',
+  aboutP1: 'Five years across an international production house and an in-house startup studio. At Shuttlerock (NZ): short-form ads at volume — brand guidelines, platform specs, tight turnarounds, every aspect ratio. At The Umdenken (AU): founding creative hire. No studio, no pipeline, no process. I built post-production end to end, wrote it into the company\'s official SOP, and grew it into a four-person team I led.',
+  aboutP2: 'That\'s the combination — the craft to make the work, and the systems thinking to make it repeatable after I\'ve made it once. Sci-fi and HUD is where I\'m most at home: every frame treated like an interface, precise grids, intentional glow, motion that reads as data made cinematic.',
+  aboutBody: 'Motion designer and video engineer. Founding creative hire at an Australian Edtech startup — built the post-production studio from zero, then led it.',
+  servicesLabel: 'ALSO BUILT',
+  servicesTitle: 'Graphics. Banners. 3D Modeling / Animation.',
+  reelBadge: 'ACCESS GRANTED — IDENTITY VERIFIED',
+  reelTitle: 'Motion Graphic Showreel',
+  workLabel: 'SELECTED WORK',
+  workTitle: 'Project archive',
+  skillsLabel: 'TOOLSET',
+  skillsTitle: 'Software & pipeline',
+  contactLabel: 'CONTACT',
+  contactTitle: 'Got a brief? Let\'s build it.',
+  contactSub: 'Open to full-time motion design and video engineering roles — remote or Ho Chi Minh City. Freelance briefs welcome too.',
+  contactCta: 'TRANSMIT MESSAGE',
+  contactFormIntro: 'Tell me how to reach you and what you have in mind. I\'ll get an email and reply directly.',
+  cfName: 'NAME', cfEmail: 'EMAIL', cfPhone: 'PHONE (OPTIONAL)', cfOther: 'OTHER CONTACT (OPTIONAL)', cfOtherPh: 'Telegram, WhatsApp, LinkedIn…', cfMessage: 'MESSAGE', cfSend: 'TRANSMIT', cfClose: 'CLOSE',
+  cfDoneTitle: 'MESSAGE TRANSMITTED', cfDoneBody: 'Thanks — your message is on its way to my inbox. I\'ll get back to you soon.',
+  cfOrEmail: 'Or reach me directly —', cfMailLink: 'open your email app', cfFail: 'Server unavailable — use “open your email app” below.',
+  emailCopiedTitle: 'EMAIL COPIED', emailCopiedBody: 'My email is on your clipboard — paste it anywhere. You can copy it again below.', emailCopyBtn: 'COPY', emailCopiedBtn: 'COPIED ✓',
+};
+const VI = {
+  heroRole: 'MOTION GRAPHIC DESIGNER // VIDEO ENGINEER // STUDIO LEAD',
+  heroSub: 'Khai Tran — motion designer xây dựng cả hệ thống đằng sau những video, không chỉ video.',
+  ctaReel: 'XEM SHOWREEL',
+  ctaContact: 'LIÊN HỆ',
+  profileLabel: 'HỒ SƠ',
+  timelineLabel: 'CAREER_LOG',
+  aboutLabel: 'GIỚI THIỆU',
+  aboutTitle: 'Tôi không chỉ làm video. Tôi dựng cái studio làm ra nó.',
+  aboutP1: 'Năm năm qua hai môi trường: một production house quốc tế và một studio in-house của startup. Ở Shuttlerock (New Zealand): short-form ads chạy số lượng lớn — brand guideline, platform spec, deadline gắt, đủ mọi tỉ lệ khung hình. Ở The Umdenken (Úc): nhân sự sáng tạo đầu tiên. Không studio, không pipeline, không quy trình. Tôi dựng toàn bộ hậu kỳ, viết nó thành SOP chính thức của công ty, rồi phát triển thành team 4 người do tôi dẫn dắt.',
+  aboutP2: 'Đó là sự kết hợp — tay nghề để làm ra sản phẩm, và tư duy hệ thống để nó lặp lại được sau khi tôi làm lần đầu. Sci-fi và HUD là nơi tôi thoải mái nhất: mỗi khung hình được xử lý như một giao diện — lưới chính xác, ánh sáng có chủ đích, chuyển động mang cảm giác dữ liệu được điện ảnh hóa.',
+  aboutBody: 'Motion designer và video engineer. Nhân sự sáng tạo đầu tiên của một startup Edtech Úc — dựng studio hậu kỳ từ con số 0, rồi dẫn dắt nó.',
+  servicesLabel: 'ALSO BUILT',
+  servicesTitle: 'Graphics. Banners. 3D Modeling / Animation.',
+  reelBadge: 'ĐÃ XÁC THỰC — QUYỀN TRUY CẬP',
+  reelTitle: 'Motion Graphic Showreel',
+  workLabel: 'DỰ ÁN NỔI BẬT',
+  workTitle: 'Kho dự án',
+  skillsLabel: 'CÔNG CỤ',
+  skillsTitle: 'Phần mềm & quy trình',
+  contactLabel: 'LIÊN HỆ',
+  contactTitle: 'Cùng xây dựng hệ thống hình ảnh tiếp theo.',
+  contactSub: 'Sẵn sàng cho vị trí full-time motion design / video engineering — remote hoặc TP.HCM. Freelance brief cũng luôn được chào đón.',
+  contactCta: 'GỬI TIN NHẮN',
+  contactFormIntro: 'Cho mình biết cách liên hệ và điều bạn đang muốn trao đổi. Mình sẽ nhận email và phản hồi trực tiếp.',
+  cfName: 'TÊN', cfEmail: 'EMAIL', cfPhone: 'SỐ ĐIỆN THOẠI (KHÔNG BẮT BUỘC)', cfOther: 'LIÊN HỆ KHÁC (KHÔNG BẮT BUỘC)', cfOtherPh: 'Telegram, WhatsApp, LinkedIn…', cfMessage: 'THÔNG ĐIỆP', cfSend: 'GỬI ĐI', cfClose: 'ĐÓNG',
+  cfDoneTitle: 'ĐÃ GỬI THÀNH CÔNG', cfDoneBody: 'Cảm ơn bạn — tin nhắn đang trên đường tới hộp thư của mình. Mình sẽ phản hồi sớm.',
+  cfOrEmail: 'Hoặc liên hệ trực tiếp —', cfMailLink: 'mở ứng dụng email', cfFail: 'Không gửi được qua server — hãy dùng “mở ứng dụng email” bên dưới.',
+  emailCopiedTitle: 'ĐÃ COPY EMAIL', emailCopiedBody: 'Email của mình đã được sao chép vào bộ nhớ tạm — dán vào đâu cũng được. Bạn có thể copy lại bên dưới.', emailCopyBtn: 'COPY', emailCopiedBtn: 'ĐÃ COPY ✓',
+};
+
+const tag = (v) => ({ v });
+const CAREER_EN = [
+  { year: '2020', accent: '#2dd7f0', headColor: 'rgba(234,246,248,.82)', head: 'FPT Arena — Distinction', org: 'EDUCATION // FPT ARENA MULTIMEDIA',
+    body: 'Multimedia foundation — graphic design, motion and production fundamentals. Graduated with Distinction. Later completed a dedicated Blender course at Keyframe Multimedia to add 3D to the toolkit.',
+    tags: ['GRAPHIC DESIGN', 'MOTION BASICS', 'BLENDER / KEYFRAME'].map(tag) },
+  { year: '2020–2024', accent: '#2dd7f0', headColor: 'rgba(234,246,248,.82)', head: 'Shuttlerock (NZ) — Motion Designer', org: 'CREATIVE PRODUCTION // 10/2020 – 05/2024',
+    body: 'High-converting short-form social ads for global brands, at volume — every platform spec, aspect ratio and brand guideline. Built interactive HTML banners plus 3D models and motion graphics for campaign work.',
+    tags: ['SOCIAL ADS', 'HTML BANNERS', '3D & MOTION', 'MOËT HENNESSY'].map(tag) },
+  { year: '04/2025', accent: '#2dd7f0', headColor: 'rgba(234,246,248,.82)', head: 'The Umdenken (AU) — Founding hire', sub: '(contractor → full-time 10/25)', org: 'EDTECH STARTUP // VIDEO ENGINEER',
+    body: 'Founding creative hire. Built post-production end to end — ingest, chroma key, multi-take assembly, retouch, colour grading, motion graphics, sound design, export — and set the studio\'s visual and technical standard.',
+    tags: ['CHROMA KEY', 'COLOUR GRADE', 'SOUND DESIGN', 'PIPELINE'].map(tag) },
+  { year: '06/2026', accent: '#35e08a', headColor: '#eaf6f8', head: '→ Creative Studio Team Leader', org: 'THE UMDENKEN // STUDIO LEAD',
+    body: 'Promoted to lead a 4-person creative studio. Wrote the workflow into the company\'s official SOP, built the asset and file system from scratch, and stayed hands-on lead on the most complex deliverables.',
+    tags: ['TEAM OF 4', 'SOP DESIGN', 'ASSET SYSTEM', 'HANDS-ON LEAD'].map(tag) },
+];
+const CAREER_VI = [
+  { year: '2020', accent: '#2dd7f0', headColor: 'rgba(234,246,248,.82)', head: 'FPT Arena — Distinction', org: 'HỌC VẤN // FPT ARENA MULTIMEDIA',
+    body: 'Nền tảng multimedia — thiết kế đồ họa, motion và kiến thức sản xuất. Tốt nghiệp loại Distinction. Sau đó hoàn thành khóa Blender chuyên sâu tại Keyframe Multimedia để bổ sung 3D vào bộ công cụ.',
+    tags: ['THIẾT KẾ ĐỒ HỌA', 'MOTION CƠ BẢN', 'BLENDER / KEYFRAME'].map(tag) },
+  { year: '2020–2024', accent: '#2dd7f0', headColor: 'rgba(234,246,248,.82)', head: 'Shuttlerock (NZ) — Motion Designer', org: 'CREATIVE PRODUCTION // 10/2020 – 05/2024',
+    body: 'Short-form social ads chuyển đổi cao cho các thương hiệu toàn cầu, chạy số lượng lớn — đủ mọi platform spec, tỉ lệ khung hình và brand guideline. Dựng interactive HTML banner cùng 3D model và motion graphics cho các chiến dịch.',
+    tags: ['SOCIAL ADS', 'HTML BANNER', '3D & MOTION', 'MOËT HENNESSY'].map(tag) },
+  { year: '04/2025', accent: '#2dd7f0', headColor: 'rgba(234,246,248,.82)', head: 'The Umdenken (AU) — Founding hire', sub: '(contractor → full-time 10/25)', org: 'STARTUP EDTECH // VIDEO ENGINEER',
+    body: 'Nhân sự sáng tạo đầu tiên. Dựng toàn bộ hậu kỳ từ đầu đến cuối — ingest, chroma key, ghép nhiều take, retouch, color grading, motion graphics, sound design, export — và thiết lập chuẩn hình ảnh, kỹ thuật cho studio.',
+    tags: ['CHROMA KEY', 'COLOR GRADE', 'SOUND DESIGN', 'PIPELINE'].map(tag) },
+  { year: '06/2026', accent: '#35e08a', headColor: '#eaf6f8', head: '→ Creative Studio Team Leader', org: 'THE UMDENKEN // STUDIO LEAD',
+    body: 'Được thăng cấp dẫn dắt studio sáng tạo 4 người. Viết quy trình thành SOP chính thức của công ty, xây hệ thống asset và file từ con số 0, đồng thời trực tiếp cầm những deliverable phức tạp nhất.',
+    tags: ['TEAM 4 NGƯỜI', 'SOP DESIGN', 'HỆ THỐNG ASSET', 'TRỰC TIẾP DẪN'].map(tag) },
+];
+
+class Component extends DCLogic {
+  state = { lang: 'en', modalOpen: false, modalItem: 0, careerOpen: false, careerItem: 0, contactOpen: false, emailOpen: false, graphicsOpen: false, gfxIndex: 0, bannersOpen: false, bannerProject: 0, model3dOpen: false };
+  _gfxEls = [];
+  _modelSlides = [];
+  modelIndex = 0;
+  _modelRot = 0;
+  _slides = [];
+  _reflects = [];
+  _minis = [];
+  _plays = [];
+  _reelCorners = [];
+  _toolBtns = [];
+  workIndex = 0;
+  _workRot = 0;
+
+  componentDidMount() {
+    this._raf = null;
+    this._workAngle = 26;
+    this._workRadius = 0;
+    this._workIntroSpin = -380;
+    requestAnimationFrame(() => this.layoutCarousel(false));
+    this._onKey = (e) => { if (e.key === 'Escape') { if (this.state.model3dOpen) this.closeModel3d(); else if (this.state.bannersOpen) this.closeBanners(); else if (this.state.graphicsOpen) this.closeGraphics(); else if (this.state.emailOpen) this.closeEmail(); else if (this.state.contactOpen) this.closeContact(); else if (this.state.careerOpen) this.closeCareer(); else if (this.state.modalOpen) this.closeModal(); } };
+    window.addEventListener('keydown', this._onKey);
+    this._sections = [this.aboutEl, this.servicesEl, this.reelEl, this.workEl, this.skillsEl, this.contactEl].filter(Boolean);
+    this._onScroll = () => {
+      if (this._raf) return;
+      this._raf = requestAnimationFrame(() => {
+        this._raf = null;
+        this.tick();
+      });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    this._onResize = () => { this.measureChars(); this.layoutCarousel(false); if (this.state.model3dOpen) this.layoutModelCarousel(false); };
+    window.addEventListener('resize', this._onResize);
+    requestAnimationFrame(() => { this.measureChars(); this.tick(); });
+    this._startInteractHints();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { this.measureChars(); this.tick(); });
+    this._introTimer = setTimeout(() => { this.measureChars(); this.tick(); }, 3300);
+    this.applyTypeScale();
+    this._titleObserver = null;
+    setTimeout(() => {
+      this.typeTitle(this.heroRoleEl, () => {
+        if (this.heroCtaEl) {
+          this.heroCtaEl.style.transition = 'opacity .6s ease, transform .6s cubic-bezier(.2,.8,.25,1)';
+          this.heroCtaEl.style.opacity = '1';
+          this.heroCtaEl.style.transform = 'translateY(0)';
+        }
+        setTimeout(() => { this._heroIntroDone = true; }, 650);
+      });
+    }, 1500);
+    const v = this._portalVideo;
+    if (v) {
+      v.muted = true;
+      const tryPlay = () => v.play().catch(() => {});
+      tryPlay();
+      window.addEventListener('pointerdown', tryPlay, { once: true });
+    }
+
+    // ---- Scroll-snap navigation ----
+    this._curSection = 0;
+    this._snapping = false;
+    this._cooldownUntil = 0;
+    this._snapDelays = [0, 0, 0, 0, 0, 0, 0];
+    this._buildSnapTargets = () => {
+      this._snapTargets = [null, this.workEl, this.reelEl, this.aboutEl, this.servicesEl, this.skillsEl, this.contactEl];
+    };
+    this._buildSnapTargets();
+    // On tablets/phones (touch or narrow viewport) use native scrolling instead of
+    // full-section snap, so tall sections aren't trapped/clipped. Entrance animations
+    // are fired by an IntersectionObserver as each section scrolls into view.
+    this._isPhoneOrTablet = () => window.innerWidth <= 1024 || window.matchMedia('(pointer:coarse)').matches;
+    this._enableSnap = () => {
+      this._onWheel = (e) => {
+        if (this.state.modalOpen || this.state.careerOpen || this.state.contactOpen || this.state.emailOpen || this.state.graphicsOpen || this.state.bannersOpen || this.state.model3dOpen) return;
+        e.preventDefault();
+        if (this._snapping || performance.now() < this._cooldownUntil) return;
+        this.snap(e.deltaY > 0 ? 1 : -1);
+      };
+      window.addEventListener('wheel', this._onWheel, { passive: false });
+      this._onTouchStart = (e) => { this._touchY = e.touches[0].clientY; };
+      this._onTouchMove = (e) => {
+        if (this.state.modalOpen || this.state.careerOpen || this.state.contactOpen || this.state.emailOpen || this.state.graphicsOpen || this.state.bannersOpen || this.state.model3dOpen) return;
+        if (this._snapping) { e.preventDefault(); return; }
+        const dy = this._touchY - e.touches[0].clientY;
+        if (Math.abs(dy) > 28 && performance.now() >= this._cooldownUntil) { e.preventDefault(); this.snap(dy > 0 ? 1 : -1); }
+      };
+      window.addEventListener('touchstart', this._onTouchStart, { passive: false });
+      window.addEventListener('touchmove', this._onTouchMove, { passive: false });
+    };
+    this._disableSnap = () => {
+      if (this._onWheel) { window.removeEventListener('wheel', this._onWheel); this._onWheel = null; }
+      if (this._onTouchStart) { window.removeEventListener('touchstart', this._onTouchStart); this._onTouchStart = null; }
+      if (this._onTouchMove) { window.removeEventListener('touchmove', this._onTouchMove); this._onTouchMove = null; }
+      if (this._snapTimer) { clearTimeout(this._snapTimer); this._snapTimer = null; }
+      this._snapping = false;
+    };
+    // Native scroll: reveal each section's entrance animation once as it scrolls into
+    // view (IntersectionObserver is unreliable in some embedded webviews).
+    const secList = [[this.workEl, 1], [this.reelEl, 2], [this.aboutEl, 3], [this.servicesEl, 4], [this.skillsEl, 5], [this.contactEl, 6]];
+    this._nativeTriggered = {};
+    this._nativeCheck = () => {
+      const vh = window.innerHeight;
+      secList.forEach((pair) => {
+        const el = pair[0], idx = pair[1];
+        if (!el || this._nativeTriggered[idx]) return;
+        const r = el.getBoundingClientRect();
+        const thresh = idx === 1 ? 0.78 : 0.6;
+        if (r.top < vh * thresh && r.bottom > 0) { this._nativeTriggered[idx] = true; this._curSection = idx; this.triggerSection(idx); }
+      });
+    };
+    this._enableNative = () => {
+      if (this._nativeBound) return;
+      this._nativeBound = true;
+      window.addEventListener('scroll', this._nativeCheck, { passive: true });
+      requestAnimationFrame(() => this._nativeCheck());
+      setTimeout(() => this._nativeCheck(), 400);
+    };
+    this._nativeScroll = this._isPhoneOrTablet();
+    if (this._nativeScroll) { this._enableNative(); } else { this._enableSnap(); }
+    // Re-evaluate on resize: drop scroll-snap the moment the viewport is phone/tablet-sized.
+    this._onResizeMode = () => {
+      const wantNative = this._isPhoneOrTablet();
+      if (wantNative === this._nativeScroll) return;
+      this._nativeScroll = wantNative;
+      if (wantNative) { this._disableSnap(); this._enableNative(); }
+      else { this._enableSnap(); }
+    };
+    window.addEventListener('resize', this._onResizeMode);
+    // Tablet/phone: reproduce the desktop hero exit animation on swipe. While the intro
+    // is still playing, hold the page at the hero; once it's done, the first downward
+    // swipe plays the slogan + side-cluster exit (same sequence as desktop snap), then
+    // scrolls on to the next section. Scrolling back to the top re-arms it.
+    this._heroIntroDone = false;
+    this._heroOutPlaying = false;
+    this._heroOutDone = false;
+    this._heroLeft = false;
+    this._heroTouchY = 0;
+    this._atHeroGate = () => this._nativeScroll && !this._heroOutDone
+      && !this.state.modalOpen && !this.state.careerOpen && !this.state.contactOpen && !this.state.emailOpen && !this.state.graphicsOpen && !this.state.bannersOpen && !this.state.model3dOpen
+      && window.scrollY <= 4;
+    this._heroExit = (delta) => {
+      if (!this._heroIntroDone || this._heroOutPlaying || delta <= 6) return;
+      this._heroOutPlaying = true;
+      this.playHeroOut(() => {
+        this._heroOutDone = true;
+        this._heroLeft = false;
+        this._heroOutPlaying = false;
+        this.scrollToSection(1, () => this.triggerSection(1));
+      });
+    };
+    this._heroWheel = (e) => { if (!this._atHeroGate()) return; e.preventDefault(); this._heroExit(e.deltaY); };
+    this._heroTouchStart = (e) => { this._heroTouchY = e.touches && e.touches[0] ? e.touches[0].clientY : 0; };
+    this._heroTouchMove = (e) => { if (!this._atHeroGate()) return; e.preventDefault(); const y = e.touches && e.touches[0] ? e.touches[0].clientY : this._heroTouchY; this._heroExit(this._heroTouchY - y); };
+    window.addEventListener('wheel', this._heroWheel, { passive: false });
+    window.addEventListener('touchstart', this._heroTouchStart, { passive: false });
+    window.addEventListener('touchmove', this._heroTouchMove, { passive: false });
+    // Safety release so scroll is never locked indefinitely if the type callback misfires.
+    this._heroIntroTimer = setTimeout(() => { this._heroIntroDone = true; }, 6000);
+    this._onKeyNav = (e) => {
+      if (this.state.model3dOpen) { if (e.key === 'ArrowLeft') { e.preventDefault(); this.moveModel(-1); } else if (e.key === 'ArrowRight') { e.preventDefault(); this.moveModel(1); } return; }
+      if (this.state.graphicsOpen) { if (e.key === 'ArrowLeft') { e.preventDefault(); this.gfxGo(this.state.gfxIndex - 1); } else if (e.key === 'ArrowRight') { e.preventDefault(); this.gfxGo(this.state.gfxIndex + 1); } return; }
+      if (this.state.modalOpen || this.state.careerOpen || this.state.contactOpen || this.state.emailOpen || this.state.graphicsOpen || this.state.bannersOpen || this.state.model3dOpen) return;
+      if (this._nativeScroll) return;
+      if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); this.snap(1); }
+      else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); this.snap(-1); }
+    };
+    window.addEventListener('keydown', this._onKeyNav);
+    setTimeout(() => this.heroSideIn(), 900);
+
+    this._reelObserver = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (!e.isIntersecting) this.stopReel(); });
+    }, { threshold: 0.32 });
+    if (this.reelEl) this._reelObserver.observe(this.reelEl);
+    requestAnimationFrame(() => this.resetReel());
+    requestAnimationFrame(() => this.resetContact());
+    this._onYTMessage = (e) => {
+      if (typeof e.data !== 'string' || e.origin.indexOf('youtube') === -1) return;
+      let d; try { d = JSON.parse(e.data); } catch (_) { return; }
+      const ps = d && d.info && typeof d.info.playerState !== 'undefined' ? d.info.playerState
+        : (d && d.event === 'onStateChange' ? d.info : undefined);
+      if (typeof ps === 'number') { this._reelPlaying = ps === 1; this.setRecBlink(ps === 1); }
+    };
+    window.addEventListener('message', this._onYTMessage);
+  }
+
+  setRecBlink(on) {
+    if (!this._recDot) return;
+    if (on) { this._recDot.style.animation = 'blink 1s steps(1) infinite'; }
+    else { this._recDot.style.animation = 'none'; this._recDot.style.opacity = '1'; }
+  }
+
+  reelCmd(func) {
+    if (!this._reelIframe) return;
+    try { this._reelIframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: func, args: [] }), '*'); } catch (_) {}
+  }
+
+  stopReel() {
+    this.reelCmd('pauseVideo');
+    this._reelPlaying = false;
+    this.setRecBlink(false);
+  }
+
+  resetReel() {
+    if (this._reelBadge) { this._reelBadge.style.transition = 'none'; this._reelBadge.style.transform = 'scaleX(0)'; }
+    if (this._reelBadgeChars) this._reelBadgeChars.forEach((s) => { s.style.transition = 'none'; s.style.opacity = '0'; s.style.color = '#eaf6f8'; s.style.textShadow = 'none'; });
+    if (this._reelIframe) {
+      this._reelIframe.style.transition = 'none';
+      this._reelIframe.style.transform = 'scale(0)';
+    }
+    if (this._reelPoster) {
+      this._reelPoster.style.transition = 'none';
+      this._reelPoster.style.transform = 'scale(0)';
+      this._reelPoster.style.opacity = '1';
+    }
+    if (this._reelPlayBtn) {
+      this._reelPlayBtn.style.transition = 'none';
+      this._reelPlayBtn.style.transform = 'scale(0)';
+      this._reelPlayBtn.style.opacity = '1';
+    }
+    this._reelCorners.forEach((c) => {
+      const box = this._reelBox;
+      if (!box) return;
+      const br = box.getBoundingClientRect(), r = c.getBoundingClientRect();
+      const ox = (br.left + br.width / 2) - (r.left + r.width / 2);
+      const oy = (br.top + br.height / 2) - (r.top + r.height / 2);
+      c.style.transition = 'none';
+      c.style.transform = `translate(${ox}px,${oy}px) scale(.35)`;
+      c.style.opacity = '0';
+    });
+    this._reelPlayed = false;
+    if (this._hudLabel) { this._hudLabel.style.opacity = '0'; if (this._hudLabel._chars) this._hudLabel._chars.forEach((s) => { s.style.transition = 'none'; s.style.opacity = '0'; s.style.filter = 'blur(6px)'; s.style.textShadow = 'none'; }); }
+    if (this._recLabel) { if (this._recLabel.getAnimations) this._recLabel.getAnimations().forEach((a) => a.cancel()); this._recLabel.style.opacity = '0'; }
+  }
+
+  playReelIn() {
+    if (this._reelPlayed) return;
+    this._reelPlayed = true;
+    // 1) badge box scales X, then chars flicker in randomly with glow (total ~3s)
+    if (this._reelBadge) {
+      const b = this._reelBadge;
+      b.style.transition = 'none'; b.style.transform = 'scaleX(0)';
+      void b.offsetHeight;
+      setTimeout(() => { b.style.transition = 'transform .55s cubic-bezier(.2,.85,.25,1)'; b.style.transform = 'scaleX(1)'; }, 20);
+    }
+    if (this._reelBadgeChars && this._reelBadgeChars.length) {
+      const order = this._reelBadgeChars.map((_, i) => i).sort(() => Math.random() - 0.5);
+      const start = 120, span = 700;
+      order.forEach((idx, k) => {
+        const s = this._reelBadgeChars[idx];
+        setTimeout(() => {
+          s.style.transition = 'opacity .18s';
+          s.style.opacity = '1';
+          s.style.color = '#bef2ff';
+          s.style.textShadow = '0 0 12px rgba(45,215,240,.95), 0 0 4px rgba(255,255,255,.9)';
+          setTimeout(() => { s.style.transition = 'color .5s, text-shadow .5s'; s.style.color = '#eaf6f8'; s.style.textShadow = 'none'; }, 260);
+        }, start + (k / order.length) * span);
+      });
+    }
+    // 2) 0.5s after the text animation finishes (~1s), the video box + corners scale in
+    setTimeout(() => this.animateReelLabels(), 1150);
+    setTimeout(() => this.playReelBoxIn(), 1650);
+  }
+
+  animateReelLabels() {
+    const hud = this._hudLabel;
+    if (hud) {
+      if (!hud._split) {
+        const txt = hud.textContent;
+        hud.textContent = '';
+        hud._chars = Array.from(txt).map((ch) => {
+          const s = document.createElement('span');
+          s.textContent = ch === ' ' ? '\u00A0' : ch;
+          s.style.display = 'inline-block';
+          hud.appendChild(s);
+          return s;
+        });
+        hud._split = true;
+      }
+      hud.style.opacity = '1';
+      hud._chars.forEach((s, i) => {
+        s.style.transition = 'none'; s.style.opacity = '0'; s.style.filter = 'blur(6px)';
+        setTimeout(() => {
+          s.style.transition = 'opacity .18s, filter .22s';
+          s.style.opacity = '1'; s.style.filter = 'blur(0)';
+          s.style.textShadow = '0 0 10px rgba(45,215,240,.9)';
+          setTimeout(() => { s.style.textShadow = 'none'; }, 220);
+        }, i * 32);
+      });
+    }
+    const rec = this._recLabel;
+    if (rec) {
+      if (rec.getAnimations) rec.getAnimations().forEach((a) => a.cancel());
+      try {
+        rec.animate([
+          { opacity: 0 }, { opacity: 1, offset: .12 }, { opacity: 0, offset: .26 },
+          { opacity: 1, offset: .42 }, { opacity: 0, offset: .56 },
+          { opacity: 1, offset: .72 }, { opacity: 1 }
+        ], { duration: 760, easing: 'steps(1)', fill: 'forwards' });
+      } catch (e) {}
+      rec.style.opacity = '1';
+    }
+  }
+
+  playReelBoxIn() {
+    if (this._reelIframe) {
+      const el = this._reelIframe;
+      el.style.transition = 'none';
+      el.style.transform = 'scale(0)';
+      void el.offsetHeight;
+      setTimeout(() => {
+        el.style.transition = 'transform .7s cubic-bezier(.2,.85,.25,1) .2s';
+        el.style.transform = 'scale(1)';
+      }, 20);
+    }
+    if (this._reelPoster) {
+      const p = this._reelPoster;
+      p.style.transition = 'none';
+      p.style.transform = 'scale(0)';
+      void p.offsetHeight;
+      setTimeout(() => {
+        p.style.transition = 'transform .7s cubic-bezier(.2,.85,.25,1) .2s, opacity .5s ease';
+        p.style.transform = 'scale(1)';
+      }, 20);
+    }
+    if (this._reelPlayBtn) {
+      const b = this._reelPlayBtn;
+      b.style.transition = 'none';
+      b.style.transform = 'scale(0)';
+      void b.offsetHeight;
+      setTimeout(() => {
+        b.style.transition = 'transform .7s cubic-bezier(.2,.85,.25,1) .35s, opacity .4s ease';
+        b.style.transform = 'scale(1)';
+      }, 20);
+    }
+    this._reelCorners.forEach((c) => {
+      void c.offsetHeight;
+      setTimeout(() => {
+        c.style.transition = 'transform .6s cubic-bezier(.2,.85,.25,1), opacity .35s';
+        c.style.transform = 'translate(0,0) scale(1)';
+        c.style.opacity = '1';
+      }, 20);
+    });
+  }
+
+  toolEnter(i) {
+    const sec = this.skillsEl, card = this._toolHud, line = this._toolLine, btn = this._toolBtns[i];
+    if (!sec || !btn) return;
+    this._toolHoverIdx = i;
+    if (this._skillsHead) this._skillsHead.style.opacity = '.4';
+    this._toolBtns.forEach((b, k) => {
+      if (!b) return;
+      if (k === i) { b.style.opacity = '1'; b.style.borderColor = '#2dd7f0'; b.style.boxShadow = '0 0 18px rgba(45,215,240,.55)'; b.style.background = 'rgba(45,215,240,.16)'; b.style.color = '#ffffff'; }
+      else { b.style.opacity = '.4'; b.style.borderColor = 'rgba(45,215,240,.3)'; b.style.boxShadow = 'none'; b.style.background = 'rgba(45,215,240,.04)'; b.style.color = '#eaf6f8'; }
+    });
+    const info = this._toolInfo && this._toolInfo[i];
+    if (info) {
+      if (this._toolHudLogo) { this._toolHudLogo.style.color = info.color; this._toolHudLogo.style.borderColor = info.color; this._toolHudLogo.style.boxShadow = '0 0 14px ' + info.color + '55'; if (info.logo) { this._toolHudLogo.textContent = ''; this._toolHudLogo.innerHTML = '<img src="' + info.logo + '" alt="" style="max-width:78%;max-height:78%;object-fit:contain;display:block">'; } else { this._toolHudLogo.textContent = info.mono; } }
+      if (this._toolHudName) this._toolHudName.textContent = info.name;
+      if (this._toolHudText) this._toolHudText.textContent = info.use;
+    }
+    const sr = sec.getBoundingClientRect(), br = btn.getBoundingClientRect();
+    const cx = br.left + br.width / 2 - sr.left;
+    const btnTop = br.top - sr.top;
+    const LINE = 42;
+    if (line) { line.style.left = cx + 'px'; line.style.top = (btnTop - LINE) + 'px'; line.style.height = LINE + 'px'; line.style.transform = 'translateX(-50%) scaleY(0)'; void line.offsetHeight; line.style.transform = 'translateX(-50%) scaleY(1)'; }
+    if (card) {
+      card.style.left = cx + 'px'; card.style.top = (btnTop - LINE) + 'px';
+      card.style.opacity = '0'; card.style.transform = 'translate(-50%,-100%) translateY(8px)';
+      clearTimeout(this._toolCardT);
+      this._toolCardT = setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translate(-50%,-100%) translateY(0)'; }, 160);
+    }
+  }
+
+  toolLeave(i) {
+    if (this._toolHoverIdx !== i) return;
+    this._toolHoverIdx = null;
+    clearTimeout(this._toolCardT);
+    if (this._skillsHead) this._skillsHead.style.opacity = '1';
+    this._toolBtns.forEach((b) => { if (!b) return; b.style.opacity = '1'; b.style.borderColor = 'rgba(45,215,240,.3)'; b.style.boxShadow = 'none'; b.style.background = 'rgba(45,215,240,.04)'; b.style.color = '#eaf6f8'; });
+    if (this._toolHud) { this._toolHud.style.opacity = '0'; this._toolHud.style.transform = 'translate(-50%,-100%) translateY(8px)'; }
+    if (this._toolLine) { this._toolLine.style.transform = 'translateX(-50%) scaleY(0)'; }
+  }
+
+  playCareerLog() {
+    if (this._clPlayed) return;
+    const panel = this._careerPanel; if (!panel) return;
+    this._clPlayed = true;
+    panel.style.transition = 'transform .55s cubic-bezier(.2,.8,.25,1)';
+    panel.style.transform = 'scaleY(1)';
+    const labelChars = Array.from(panel.querySelectorAll('[data-cl-ch]'));
+    const dots = Array.from(panel.querySelectorAll('[data-cl-dot]'));
+    const texts = Array.from(panel.querySelectorAll('[data-cl-text]'));
+    const line = this._careerLine;
+    // 1) CAREER_LOG label — offset typing after panel opens
+    labelChars.forEach((s, i) => setTimeout(() => {
+      s.style.transition = 'opacity .12s, filter .12s';
+      s.style.opacity = '1';
+      s.style.filter = 'blur(0)';
+      s.style.textShadow = '0 0 8px rgba(45,215,240,.85)';
+      setTimeout(() => { s.style.textShadow = 'none'; }, 150);
+    }, 620 + i * 46));
+    const labelDone = 620 + labelChars.length * 46 + 160;
+    // 2) each milestone: dot flickers in, then its info types in
+    const perEntry = 540;
+    dots.forEach((dot, i) => {
+      const t = labelDone + i * perEntry;
+      setTimeout(() => this.flickerIn(dot), t);
+      const txt = texts[i];
+      if (txt) setTimeout(() => {
+        txt.style.transition = 'clip-path .42s steps(16), opacity .1s';
+        txt.style.opacity = '1';
+        txt.style.clipPath = 'inset(0 0 0 0)';
+      }, t + 200);
+    });
+    // 3) connect the dots with the vertical line
+    const lineT = labelDone + dots.length * perEntry + 120;
+    if (line) setTimeout(() => {
+      line.style.transition = 'transform .55s cubic-bezier(.4,0,.2,1)';
+      line.style.transform = 'scaleY(1)';
+    }, lineT);
+    // 4) after the panel is done, glitch the 3 stat boxes in, left → right
+    const stats = this._statsRow ? Array.from(this._statsRow.querySelectorAll('[data-cl-stat]')) : [];
+    stats.forEach((box, i) => setTimeout(() => {
+      box.style.animation = 'statGlitch .5s steps(7) forwards';
+      box.addEventListener('animationend', () => { box.style.animation = 'none'; box.style.opacity = '1'; }, { once: true });
+      const val = box.firstElementChild;
+      if (val) { val.style.textShadow = '0 0 12px rgba(45,215,240,.95), 2px 0 0 rgba(255,45,90,.6), -2px 0 0 rgba(45,215,240,.6)'; setTimeout(() => { val.style.transition = 'text-shadow .4s'; val.style.textShadow = 'none'; }, 360); }
+    }, lineT + 640 + i * 220));
+  }
+
+  flickerIn(el) {
+    const seq = [0.25, 1, 0.4, 1, 0.65, 1];
+    let n = 0;
+    const iv = setInterval(() => {
+      el.style.opacity = String(seq[n]);
+      if (++n >= seq.length) { clearInterval(iv); el.style.opacity = '1'; }
+    }, 72);
+  }
+
+  playReelVideo(e) {
+    this.reelCmd('listening');
+    if (this._reelPlaying) {
+      this.reelCmd('pauseVideo');
+      this._reelPlaying = false;
+      this.setRecBlink(false);
+    } else {
+      // Touch devices block autoplay WITH sound, so the API playVideo (and an autoplay=1 reload)
+      // just falls back to YouTube's thumbnail. Reload muted (always allowed) so the video visibly
+      // plays, then unmute via the API; drop our overlay so YouTube's native controls are reachable.
+      if (this._isTouch() && !this._reelInlineStarted && this._reelIframe) {
+        this._reelInlineStarted = true;
+        if (e && e.currentTarget) e.currentTarget.style.pointerEvents = 'none';
+        const el = this._reelIframe;
+        el.addEventListener('load', () => {
+          try { el.contentWindow.postMessage('{"event":"listening"}', '*'); } catch (_) {}
+        }, { once: true });
+        el.src = 'https://www.youtube-nocookie.com/embed/dIxOcOyNn5Q?enablejsapi=1&rel=0&playsinline=1&autoplay=1';
+      } else {
+        this.reelCmd('playVideo');
+      }
+      this._reelPlaying = true;
+      this.setRecBlink(true);
+      if (this._reelPoster) { this._reelPoster.style.opacity = '0'; }
+      if (this._reelPlayBtn) { this._reelPlayBtn.style.opacity = '0'; }
+    }
+  }
+
+  heroSideIn() {
+    const inBar = (el, fromBelow) => {
+      if (!el) return;
+      el.style.transition = 'none';
+      el.style.opacity = '0';
+      el.style.transform = `translateY(${fromBelow ? '160%' : '-160%'})`;
+      void el.offsetHeight;
+      setTimeout(() => {
+        el.style.transition = 'transform .6s cubic-bezier(.2,.8,.25,1), opacity .45s';
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }, 20);
+    };
+    const inText = (el, fromBelow, visPos, delay) => {
+      if (!el) return;
+      el.style.transition = 'none';
+      el.style.opacity = '0';
+      el.style.transform = `translateY(${fromBelow ? '18px' : '-18px'})`;
+      el.style.webkitMaskPosition = visPos;
+      el.style.maskPosition = visPos;
+      setTimeout(() => {
+        el.style.transition = 'opacity .45s ease, transform .55s cubic-bezier(.2,.8,.25,1)';
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }, delay);
+    };
+    inBar(this._techBar, true); inText(this._techText, true, '0% 0%', 360);
+    inBar(this._motionBar, false); inText(this._motionText, false, '0% 100%', 360);
+  }
+
+  playSidesOut() {
+    const outBar = (bar, up) => {
+      if (!bar) return;
+      bar.style.transition = 'transform .6s ease-in, opacity .3s .45s';
+      bar.style.transform = `translateY(${up ? '-280%' : '280%'})`;
+      bar.style.opacity = '0';
+    };
+    const outText = (el, hidePos) => {
+      if (!el) return;
+      el.style.transition = '-webkit-mask-position .55s linear, mask-position .55s linear';
+      el.style.webkitMaskPosition = hidePos;
+      el.style.maskPosition = hidePos;
+    };
+    outBar(this._techBar, true); outText(this._techText, '0% 100%');
+    outBar(this._motionBar, false); outText(this._motionText, '0% 0%');
+  }
+
+  triggerSection(i) {
+    const titles = { 1: this.workTitleEl, 2: this.reelTitleEl, 3: this.aboutTitleEl, 4: this.servicesTitleEl, 5: this.skillsTitleEl, 6: this.contactTitleEl };
+    if (titles[i]) this.typeTitle(titles[i], i === 6 ? () => this.playContact() : undefined);
+    if (i === 1) this.playWorkIn();
+    if (i === 2) this.playReelIn();
+    if (i === 3) { this.playCareerLog(); this.playAboutParas(); }
+    if (i === 4) this.playServices();
+    if (i === 5) this.playSkills();
+  }
+
+  resetContact() {
+    if (this._contactSub) { this._contactSub.style.transition = 'none'; this._contactSub.style.opacity = '0'; this._contactSub.style.transform = 'translateY(-16px)'; }
+    const btns = [this._contactBtn].concat(this._contactSocials ? Array.from(this._contactSocials.querySelectorAll('a,button')) : []).filter(Boolean);
+    btns.forEach((b) => { b.style.transition = 'none'; b.style.transformOrigin = 'center center'; b.style.transform = 'scale(0)'; b.style.opacity = '0'; });
+  }
+
+  playContact() {
+    if (this._contactPlayed) return;
+    this._contactPlayed = true;
+    if (this._contactSub) {
+      const p = this._contactSub;
+      p.style.transition = 'none'; p.style.opacity = '0'; p.style.transform = 'translateY(-16px)';
+      void p.offsetHeight;
+      p.style.transition = 'opacity .55s ease, transform .55s cubic-bezier(.2,.85,.25,1)';
+      p.style.opacity = '1'; p.style.transform = 'translateY(0)';
+    }
+    const btns = [this._contactBtn].concat(this._contactSocials ? Array.from(this._contactSocials.querySelectorAll('a,button')) : []).filter(Boolean);
+    btns.forEach((b, k) => {
+      b.style.transition = 'none'; b.style.transformOrigin = 'center center';
+      b.style.transform = 'scale(0)'; b.style.opacity = '0';
+      void b.offsetHeight;
+      setTimeout(() => {
+        b.style.transition = 'transform .5s cubic-bezier(.2,.9,.3,1.35), opacity .35s ease, box-shadow .5s ease';
+        b.style.transform = 'scale(1)'; b.style.opacity = '1';
+        b.style.boxShadow = '0 0 28px rgba(45,215,240,.9)';
+        setTimeout(() => { b.style.boxShadow = ''; }, 460);
+      }, 620 + k * 170);
+    });
+  }
+
+  playSkills() {
+    if (this._skillsPlayed) return;
+    this._skillsPlayed = true;
+    const btns = this._toolBtns.filter(Boolean);
+    if (!btns.length) return;
+    const title = this.skillsTitleEl;
+    const charCount = title ? title.querySelectorAll('.tchar').length : 18;
+    const total = Math.max(750, charCount * 50);
+    const order = btns.map((_, k) => k).sort(() => Math.random() - 0.5);
+    order.forEach((idx, k) => {
+      const b = btns[idx];
+      b.style.transition = 'none';
+      b.style.opacity = '0';
+      setTimeout(() => {
+        b.style.transition = 'opacity .3s';
+        b.style.opacity = '1';
+        b.style.boxShadow = '0 0 22px rgba(45,215,240,.8)';
+        b.style.borderColor = '#2dd7f0';
+        b.style.background = 'rgba(45,215,240,.18)';
+        b.style.color = '#ffffff';
+        setTimeout(() => {
+          if (this._toolHoverIdx === idx) return;
+          b.style.transition = 'box-shadow .55s,border-color .55s,background .55s,color .55s';
+          b.style.boxShadow = 'none'; b.style.borderColor = 'rgba(45,215,240,.3)'; b.style.background = 'rgba(45,215,240,.04)'; b.style.color = '#eaf6f8';
+        }, 300);
+      }, (k / order.length) * total * 0.9);
+    });
+  }
+
+  playAboutParas() {
+    if (this._aboutParasPlayed) return;
+    const col = this._aboutTextCol; if (!col) return;
+    const paras = Array.from(col.querySelectorAll('[data-about-p]'));
+    if (!paras.length) return;
+    this._aboutParasPlayed = true;
+    const titleChars = this.aboutTitleEl ? this.aboutTitleEl.querySelectorAll('.tchar').length : 0;
+    const startDelay = 300 + titleChars * 24;
+    paras.forEach((p, k) => setTimeout(() => {
+      p.style.transition = 'opacity .6s ease, transform .6s cubic-bezier(.2,.8,.25,1)';
+      p.style.opacity = '1';
+      p.style.transform = 'translateY(0)';
+    }, startDelay + k * 260));
+  }
+
+  finalizeAboutParas() {
+    if (!this._aboutParasPlayed || !this._aboutTextCol) return;
+    this._aboutTextCol.querySelectorAll('[data-about-p]').forEach((p) => { p.style.opacity = '1'; p.style.transform = 'translateY(0)'; });
+  }
+
+  playServices() {
+    if (this._svcPlayed) return;
+    const sec = this.servicesEl; if (!sec) return;
+    const cards = Array.from(sec.querySelectorAll('[data-svc-card]'));
+    if (!cards.length) return;
+    this._svcPlayed = true;
+    const per = 460;
+    cards.forEach((card, k) => {
+      const base = k * per;
+      card.style.transition = 'none';
+      card.style.transform = 'none';
+      const rect = card.getBoundingClientRect();
+      const cornerTargets = Array.from(card.querySelectorAll('[data-svc-corner]')).map((c) => {
+        const cr = c.getBoundingClientRect();
+        return { c, dx: (rect.left + rect.width / 2) - (cr.left + cr.width / 2), dy: (rect.top + rect.height / 2) - (cr.top + cr.height / 2) };
+      });
+      card.style.transform = 'scale(0)';
+      setTimeout(() => {
+        card.style.opacity = '1';
+        card.style.transform = 'none';
+        try { card.animate([{ transform: 'scale(0)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 520, easing: 'cubic-bezier(.2,.8,.25,1)' }); } catch (e) {}
+      }, base);
+      setTimeout(() => { card.getAnimations().forEach((a) => a.cancel()); card.style.transform = 'none'; card.style.opacity = '1'; }, base + 660);
+      cornerTargets.forEach(({ c, dx, dy }) => {
+        c.style.transition = 'none';
+        c.style.transform = 'none';
+        c.style.opacity = '0';
+        setTimeout(() => {
+          c.style.opacity = '1';
+          try { c.animate([{ transform: `translate(${dx}px,${dy}px) scale(0)` }, { transform: 'none' }], { duration: 500, easing: 'cubic-bezier(.2,.8,.25,1)' }); } catch (e) {}
+        }, base + 20);
+        setTimeout(() => { c.getAnimations().forEach((a) => a.cancel()); c.style.transform = 'none'; c.style.opacity = '1'; }, base + 640);
+      });
+      const num = card.querySelector('[data-svc-num]');
+      if (num) setTimeout(() => {
+        num.style.transition = 'none';
+        num.style.setProperty('opacity', '1', 'important');
+        try { num.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, easing: 'ease' }); } catch (e) {}
+      }, base + 430);
+      const title = card.querySelector('[data-svc-title]');
+      if (title) setTimeout(() => this.typeText(title), base + 640);
+      const desc = card.querySelector('[data-svc-desc]');
+      if (desc) setTimeout(() => this.typeText(desc), base + 900);
+    });
+  }
+
+  playCareerPop(card) {
+    if (!card) return;
+    card.style.transform = 'scale(0)';
+    requestAnimationFrame(() => {
+      const corners = Array.from(card.querySelectorAll('[data-cp-corner]')).map((c) => {
+        const rect = card.getBoundingClientRect(), cr = c.getBoundingClientRect();
+        return { c, dx: (rect.left + rect.width / 2) - (cr.left + cr.width / 2), dy: (rect.top + rect.height / 2) - (cr.top + cr.height / 2) };
+      });
+      card.style.transform = 'none';
+      try { card.animate([{ transform: 'scale(.55)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 440, easing: 'cubic-bezier(.2,.8,.25,1)' }); } catch (e) {}
+      corners.forEach(({ c, dx, dy }) => {
+        c.style.opacity = '0';
+        setTimeout(() => {
+          c.style.opacity = '1';
+          try { c.animate([{ transform: `translate(${dx}px,${dy}px) scale(0)` }, { transform: 'none' }], { duration: 480, easing: 'cubic-bezier(.2,.8,.25,1)' }); } catch (e) {}
+        }, 40);
+        setTimeout(() => { c.getAnimations().forEach((a) => a.cancel()); c.style.transform = 'none'; c.style.opacity = '1'; }, 640);
+      });
+      card.querySelectorAll('[data-cp-num]').forEach((num) => setTimeout(() => {
+        num.style.setProperty('opacity', '1', 'important');
+        try { num.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 380, easing: 'ease' }); } catch (e) {}
+      }, 300));
+      const title = card.querySelector('[data-cp-title]');
+      if (title) setTimeout(() => { title.style.opacity = '1'; this.typeText(title); }, 460);
+      const sub = card.querySelector('[data-cp-sub]');
+      if (sub) setTimeout(() => { sub.style.opacity = '1'; try { sub.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400 }); } catch (e) {} }, 820);
+      const desc = card.querySelector('[data-cp-desc]');
+      if (desc) setTimeout(() => this.typeText(desc), 740);
+      Array.from(card.querySelectorAll('[data-cp-tag]')).forEach((t, i) => {
+        t.style.opacity = '0';
+        setTimeout(() => {
+          t.style.opacity = '1';
+          try { t.animate([{ transform: 'scale(0)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 340, easing: 'cubic-bezier(.2,.8,.25,1)' }); } catch (e) {}
+        }, 1040 + i * 90);
+      });
+    });
+  }
+
+  typeText(el) {
+    if (!el || el._typed) return;
+    el._typed = true;
+    const txt = el.textContent;
+    el.textContent = '';
+    el.style.opacity = '1';
+    const spans = Array.from(txt).map((ch) => {
+      const s = document.createElement('span');
+      s.textContent = ch;
+      s.style.opacity = '0';
+      s.style.filter = 'blur(6px)';
+      el.appendChild(s);
+      return s;
+    });
+    let i = 0;
+    const step = () => {
+      if (i >= spans.length) return;
+      const s = spans[i];
+      s.style.transition = 'opacity .05s linear, filter .09s linear';
+      s.style.opacity = '1';
+      s.style.filter = 'blur(0)';
+      s.style.textShadow = '0 0 10px rgba(45,215,240,.9)';
+      setTimeout(() => { s.style.textShadow = 'none'; }, 120);
+      i++;
+      setTimeout(step, 14 + Math.random() * 38);
+    };
+    step();
+  }
+
+  finalizeServices() {
+    if (!this._svcPlayed || !this.servicesEl) return;
+    this.servicesEl.querySelectorAll('[data-svc-card]').forEach((card) => {
+      card.getAnimations().forEach((a) => a.cancel()); card.style.transform = 'none'; card.style.opacity = '1';
+      card.querySelectorAll('[data-svc-corner]').forEach((c) => { c.getAnimations().forEach((a) => a.cancel()); c.style.transform = 'none'; c.style.opacity = '1'; });
+      const num = card.querySelector('[data-svc-num]'); if (num) { num.style.transition = 'none'; num.style.setProperty('opacity', '1', 'important'); }
+      ['[data-svc-title]', '[data-svc-desc]'].forEach((sel) => { const el = card.querySelector(sel); if (el) el.style.opacity = '1'; });
+    });
+  }
+
+  navTo(href) {
+    const map = { '#hero': 0, '#top': 0, '#work': 1, '#reel': 2, '#about': 3, '#services': 4, '#skills': 5, '#contact': 6 };
+    const i = map[href];
+    if (i == null) return;
+    const el = i === 0 ? null : this._snapTargets[i];
+    const y = el ? Math.round(el.getBoundingClientRect().top + window.scrollY) : 0;
+    if (i === 0) this.resetHero();
+    this._curSection = i;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+    this.triggerSection(i);
+  }
+
+  finalizeCareer() {
+    if (!this._clPlayed) return;
+    const panel = this._careerPanel;
+    if (panel) {
+      panel.style.transform = 'scaleY(1)';
+      panel.querySelectorAll('[data-cl-ch]').forEach((s) => { s.style.opacity = '1'; s.style.filter = 'blur(0)'; });
+      panel.querySelectorAll('[data-cl-dot]').forEach((d) => { d.style.opacity = '1'; });
+      panel.querySelectorAll('[data-cl-text]').forEach((t) => { t.style.opacity = '1'; t.style.clipPath = 'inset(0 0 0 0)'; });
+    }
+    if (this._careerLine) this._careerLine.style.transform = 'scaleY(1)';
+    if (this._statsRow) this._statsRow.querySelectorAll('[data-cl-stat]').forEach((b) => { b.style.opacity = '1'; });
+  }
+
+  snap(dir) {
+    const n = this._snapTargets.length;
+    const target = this._curSection + dir;
+    if (target < 0 || target >= n) return;
+    this._snapping = true;
+    const cur = this._curSection;
+    const finish = () => { this._curSection = target; this._snapping = false; this._cooldownUntil = performance.now() + 280; this.triggerSection(target); };
+    const go = () => this.scrollToSection(target, finish);
+    if (cur === 0 && dir > 0) {
+      this.playHeroOut(go);
+    } else {
+      if (target === 0) this.resetHero();
+      this._snapTimer = setTimeout(go, this._snapDelays[cur] ?? 350);
+    }
+  }
+
+  scrollToSection(i, done) {
+    const targetY = i === 0 ? 0 : (this._snapTargets[i] ? this._snapTargets[i].offsetTop : 0);
+    const startY = window.scrollY;
+    const dist = targetY - startY;
+    if (Math.abs(dist) < 2) { window.scrollTo(0, targetY); if (done) done(); return; }
+    const dur = 780, t0 = performance.now();
+    const ease = (x) => x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+    const step = (now) => {
+      const p = Math.min(1, (now - t0) / dur);
+      window.scrollTo(0, startY + dist * ease(p));
+      if (p < 1) requestAnimationFrame(step); else if (done) done();
+    };
+    requestAnimationFrame(step);
+  }
+
+  playHeroOut(done) {
+    this.playSidesOut();
+    const dur = 1150, t0 = performance.now();
+    const step = (now) => {
+      const p = Math.min(1, (now - t0) / dur);
+      this.applyHeroChars(p);
+      if (p < 1) requestAnimationFrame(step); else if (done) done();
+    };
+    requestAnimationFrame(step);
+  }
+
+  resetHero() {
+    this.applyHeroChars(0);
+    if (this._portraitImg) this._portraitImg.style.filter = 'drop-shadow(0 0 32px rgba(45,215,240,.25)) brightness(1)';
+    this.heroSideIn();
+  }
+
+  applyHeroChars(p) {
+    const depth = this.props.motionDepth ?? 1;
+    if (this.heroSloganEl && this._charMeta && this._charEls) {
+      for (let i = 0; i < this._charEls.length; i++) {
+        const el = this._charEls[i], m = this._charMeta[i];
+        if (!el || !m) continue;
+        let q = Math.max(0, Math.min(1, (p - m.delay) / 0.65));
+        const moveQ = Math.min(1, q / 0.85);
+        const e = moveQ * moveQ * (3 - 2 * moveQ);
+        const dx = (m.tx - m.x) * e;
+        const dy = (m.ty - m.y) * e;
+        const flashQ = Math.max(0, Math.min(1, (q - 0.8) / 0.14));
+        const glow = q >= 0.8 && q < 0.94 ? Math.sin(flashQ * Math.PI) : 0;
+        const op = q < 0.94 ? 1 : 0;
+        el.style.transform = `translate(${dx * depth}px, ${dy * depth}px) scale(${1 - e * 0.62}) rotate(${e * m.rot * depth}deg)`;
+        el.style.opacity = String(op);
+        el.style.color = glow > 0 ? `rgba(255,255,255,${Math.min(1, glow * 1.3)})` : 'transparent';
+        el.style.textShadow = glow > 0 ? `0 0 ${14 + glow * 40}px rgba(45,215,240,${glow}), 0 0 ${6 + glow * 16}px rgba(255,255,255,${glow * 0.95})` : 'none';
+      }
+      const impact = Math.max(0, Math.min(1, (p - 0.45) / 0.45)) * Math.max(0, 1 - Math.max(0, (p - 0.92) / 0.08));
+      if (this._portraitImg) this._portraitImg.style.filter = `drop-shadow(0 0 ${32 + impact * 44}px rgba(45,215,240,${0.25 + impact * 0.5})) brightness(${1 + impact * 0.18})`;
+    }
+  }
+
+  syncCurSection() {
+    if (!this._snapTargets) return;
+    const probe = window.scrollY + window.innerHeight * 0.4;
+    let best = 0, bd = Infinity;
+    this._snapTargets.forEach((el, i) => {
+      const y = i === 0 ? window.innerHeight * 0.4 : el.offsetTop + window.innerHeight * 0.1;
+      const d = Math.abs(probe - y);
+      if (d < bd) { bd = d; best = i; }
+    });
+    if (best !== this._curSection) { this._curSection = best; this.triggerSection(best); }
+  }
+
+  // A touch device (any phone/tablet, including tablets wider than 1024px) — not just narrow viewports.
+  _isTouch() { return window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(max-width:1024px)').matches; }
+
+  onWorkClick(e) {
+    if (this._swipeEndAt && performance.now() - this._swipeEndAt < 360) return;
+    if (!this._stage) return;
+    const vp = this._stage.parentElement.getBoundingClientRect();
+    const cx = vp.left + vp.width / 2;
+    // Center of the front card → open the project popup (plays there); left/right → rotate.
+    // On touch the dead-zone is capped so the exposed side cards stay tappable for rotation.
+    const touch = this._isTouch();
+    const dead = touch ? Math.min((this._workSlideW || 280) * 0.44, vp.width * 0.30) : (this._workSlideW || 280) * 0.44;
+    if (Math.abs(e.clientX - cx) < dead) this.openModal(this.workIndex);
+    else if (e.clientX > cx) this.moveWork(-1);
+    else this.moveWork(1);
+  }
+
+  componentDidUpdate() {
+    this.applyTypeScale();
+    this.applyModal();
+    this.finalizeCareer();
+    this.finalizeAboutParas();
+    this.finalizeServices();
+    if (this.state.graphicsOpen) requestAnimationFrame(() => this.layoutGfx());
+  }
+
+  layoutCarousel(animate) {
+    const n = this._slides.length || (this._workDefs ? this._workDefs.length : 0);
+    if (!n) return;
+    const step = 360 / n;
+    const stageW = this._stage ? this._stage.offsetWidth : 900;
+    const slideW = Math.max(230, Math.min(360, stageW * 0.30));
+    this._workSlideW = slideW;
+    const radius = (slideW / 2) / Math.tan(Math.PI / n) * 1.18;
+    this._workRadius = radius;
+    const trans = animate ? 'transform .8s cubic-bezier(.33,.72,.2,1),filter .6s' : 'none';
+    const dimOf = (i) => { let off = i - this.workIndex; off = ((off % n) + n) % n; if (off > n / 2) off -= n; return Math.abs(off); };
+    for (let i = 0; i < this._slides.length; i++) {
+      const el = this._slides[i]; if (!el) continue;
+      const dist = dimOf(i);
+      const frontScale = dist < 0.5 ? 1.15 : 1;
+      el.style.transform = `rotateY(${i * step}deg) translateZ(${radius}px) scale(${frontScale})`;
+      el.style.transition = trans;
+      el.style.filter = `saturate(.9) contrast(1.05) brightness(${Math.max(0.32, 1 - dist * 0.34)})`;
+      el.style.zIndex = String(200 - Math.round(dist * 10));
+      if (this._plays[i]) {
+        this._plays[i].style.opacity = dist < 0.5 ? '1' : '0';
+        this._plays[i].style.transform = dist < 0.5 ? 'translate(-50%,-50%) scale(1)' : 'translate(-50%,-50%) scale(.9)';
+      }
+    }
+    for (let i = 0; i < this._reflects.length; i++) {
+      const el = this._reflects[i]; if (!el) continue;
+      el.style.transform = `rotateY(${i * step}deg) translateZ(${radius}px)`;
+      el.style.transition = trans;
+      el.style.filter = `saturate(.8) contrast(1) brightness(${Math.max(0.28, 1 - dimOf(i) * 0.34)})`;
+    }
+    const stageSpin = this._workIntroSpin || 0;
+    const stageTrans = this._workIntroTrans ? 'transform 1.4s cubic-bezier(.2,.7,.2,1)' : (animate ? 'transform .8s cubic-bezier(.33,.72,.2,1)' : 'none');
+    const stageT = `translateZ(${-radius}px) rotateX(7deg) rotateY(${-this._workRot * step + stageSpin}deg)`;
+    if (this._stage) {
+      this._stage.style.transition = stageTrans;
+      this._stage.style.transform = stageT;
+    }
+    if (this._stageR) {
+      this._stageR.style.transition = stageTrans;
+      this._stageR.style.transform = stageT;
+    }
+    const miniStep = 360 / n;
+    const miniR = 28;
+    for (let i = 0; i < this._minis.length; i++) {
+      const el = this._minis[i]; if (!el) continue;
+      el.style.transform = `rotateY(${i * miniStep}deg) translateZ(${miniR}px)`;
+      el.style.filter = `brightness(${Math.max(0.3, 1 - dimOf(i) * 0.32)})`;
+    }
+    if (this._miniDisc) {
+      this._miniDisc.style.transition = stageTrans;
+      this._miniDisc.style.transform = `translateZ(${-miniR}px) rotateY(${-this._workRot * miniStep + stageSpin}deg)`;
+    }
+    this.updatePill();
+  }
+
+  playWorkIn() {
+    if (this._workPlayed) return;
+    const n = this._slides.length; if (!n) return;
+    this._workPlayed = true;
+    if (this._workStageWrap) {
+      const w = this._workStageWrap;
+      w.style.transition = 'none';
+      w.style.transform = 'scale(0)';
+      requestAnimationFrame(() => { w.style.transition = 'transform 1s cubic-bezier(.2,.8,.25,1)'; w.style.transform = 'scale(1)'; });
+    }
+    this._workIntroSpin = -380;
+    this.layoutCarousel(false);
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      this._workIntroSpin = 0;
+      this._workIntroTrans = true;
+      this.layoutCarousel(false);
+      this._workIntroTrans = false;
+    }));
+  }
+
+  updatePill() {
+    const d = this._workDefs && this._workDefs[this.workIndex];
+    if (!d) return;
+    if (this._pillTitle) this._pillTitle.textContent = d.title;
+  }
+
+  moveWork(dir) {
+    const n = this._slides.length; if (!n) return;
+    this._workRot += dir;
+    this.workIndex = ((this._workRot % n) + n) % n;
+    this.layoutCarousel(true);
+  }
+
+  // Touch swipe rotation for the 3D carousels — phone/tablet only (≤1024px).
+  // Drag follows the finger; on release it snaps to the nearest card.
+  _bindCarouselSwipe(el, kind) {
+    if (!el || el._swipeBound) return;
+    el._swipeBound = true;
+    const isTouch = () => this._isTouch();
+    const rotRef = kind === 'work' ? '_workRot' : '_modelRot';
+    const idxRef = kind === 'work' ? 'workIndex' : 'modelIndex';
+    const relayout = (anim) => (kind === 'work' ? this.layoutCarousel(anim) : this.layoutModelCarousel(anim));
+    const nOf = () => (kind === 'work' ? this._slides.length : this._modelSlides.length);
+    let sx = 0, sy = 0, startRot = 0, active = false, decided = false, moved = false, pxPer = 90;
+    el.addEventListener('touchstart', (e) => {
+      if (!isTouch() || e.touches.length !== 1) { active = false; return; }
+      sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+      startRot = this[rotRef]; active = true; decided = false; moved = false;
+      pxPer = Math.max(46, (el.clientWidth || 320) / 4.5);
+    }, { passive: true });
+    el.addEventListener('touchmove', (e) => {
+      if (!active) return;
+      const dx = e.touches[0].clientX - sx;
+      const dy = e.touches[0].clientY - sy;
+      if (!decided) {
+        if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+        if (Math.abs(dx) <= Math.abs(dy)) { active = false; return; } // vertical intent → let page scroll
+        decided = true;
+      }
+      e.preventDefault();
+      moved = true;
+      const n = nOf(); if (!n) return;
+      this[rotRef] = startRot - dx / pxPer; // content follows the finger
+      this[idxRef] = ((Math.round(this[rotRef]) % n) + n) % n;
+      relayout(false);
+    }, { passive: false });
+    const end = () => {
+      if (!active) return;
+      active = false;
+      if (!moved) return;
+      const n = nOf(); if (!n) return;
+      this[rotRef] = Math.round(this[rotRef]);
+      this[idxRef] = ((this[rotRef] % n) + n) % n;
+      this._swipeEndAt = performance.now();
+      relayout(true);
+    };
+    el.addEventListener('touchend', end, { passive: true });
+    el.addEventListener('touchcancel', end, { passive: true });
+  }
+
+  // Phone/tablet only: with no hover to reveal affordance, randomly pulse a glow on the
+  // Toolset chips and the Also-Built cards to hint that they're tappable.
+  _startInteractHints() {
+    if (!this._isTouch()) return;
+    const inView = (el) => { const r = el.getBoundingClientRect(); return r.top < innerHeight - 40 && r.bottom > 40; };
+    const ready = (el) => parseFloat(getComputedStyle(el).opacity) > 0.5;
+    const pulse = (el) => {
+      if (!el || el._pulsing) return;
+      el._pulsing = true;
+      const base = getComputedStyle(el).borderColor;
+      const anim = el.animate([
+        { boxShadow: '0 0 0 rgba(45,215,240,0)', borderColor: base },
+        { boxShadow: '0 0 22px rgba(45,215,240,.55)', borderColor: 'rgba(45,215,240,.9)', offset: 0.5 },
+        { boxShadow: '0 0 0 rgba(45,215,240,0)', borderColor: base },
+      ], { duration: 1150, easing: 'ease-in-out' });
+      anim.onfinish = anim.oncancel = () => { el._pulsing = false; };
+    };
+    const pick = (arr, n) => {
+      const cands = arr.filter((el) => el && inView(el) && ready(el) && !el._pulsing);
+      for (let k = 0; k < n && cands.length; k++) pulse(cands.splice(Math.floor(Math.random() * cands.length), 1)[0]);
+    };
+    this._hintTimer = setInterval(() => {
+      if (this.state.graphicsOpen || this.state.bannersOpen || this.state.model3dOpen || this.state.modalOpen) return;
+      pick(this._toolBtns, 1);
+      if (this.servicesEl) pick(Array.from(this.servicesEl.querySelectorAll('[data-svc-card]')), 1);
+    }, 1500);
+  }
+
+  // Discrete horizontal-swipe navigation (Graphics slider, Banners project tabs) — phone/tablet only.
+  _bindSwipeNav(el, onPrev, onNext) {
+    if (!el || el._swipeNavBound) return;
+    el._swipeNavBound = true;
+    const isTouch = () => this._isTouch();
+    let sx = 0, sy = 0, active = false, fired = false;
+    el.addEventListener('touchstart', (e) => {
+      if (!isTouch() || e.touches.length !== 1) { active = false; return; }
+      sx = e.touches[0].clientX; sy = e.touches[0].clientY; active = true; fired = false;
+    }, { passive: true });
+    el.addEventListener('touchmove', (e) => {
+      if (!active || fired) return;
+      const dx = e.touches[0].clientX - sx, dy = e.touches[0].clientY - sy;
+      if (Math.abs(dx) < 44 || Math.abs(dx) <= Math.abs(dy) * 1.2) return;
+      fired = true; active = false;
+      e.preventDefault();
+      this._navSwipeAt = performance.now();
+      if (dx < 0) onNext(); else onPrev();
+    }, { passive: false });
+  }
+
+  bannerStep(dir) {
+    const n = this._bannerCount || 1;
+    const cur = this.state.bannerProject < 0 ? 0 : this.state.bannerProject;
+    this.setBannerProject(((cur + dir) % n + n) % n);
+  }
+
+  selectWork(i) {
+    if (i === this.workIndex) { this.openModal(i); return; }
+    const n = this._slides.length; if (!n) return;
+    let delta = i - this.workIndex;
+    delta = ((delta % n) + n) % n; if (delta > n / 2) delta -= n;
+    this._workRot += delta;
+    this.workIndex = ((this._workRot % n) + n) % n;
+    this.layoutCarousel(true);
+  }
+
+  openModal(i) { this.setState({ modalOpen: true, modalItem: i }); }
+  openCareer(i) { this.setState({ careerOpen: true, careerItem: i }); }
+  closeCareer() { this.setState({ careerOpen: false }); }
+
+  openGraphics() { this.setState({ graphicsOpen: true, gfxIndex: 0 }, () => this._gfxLayoutRetry(0)); }
+  _gfxLayoutRetry(n) {
+    if (!this.state.graphicsOpen || n > 40) return;
+    const els = this._gfxEls || [];
+    if (els.length >= 4 && els.every((e) => e)) { this.layoutGfx(); requestAnimationFrame(() => this.layoutGfx()); return; }
+    requestAnimationFrame(() => this._gfxLayoutRetry(n + 1));
+  }
+  closeGraphics() { if (this._navSwipeAt && performance.now() - this._navSwipeAt < 380) return; this.setState({ graphicsOpen: false }); }
+
+  openBanners() { this.setState({ bannersOpen: true, bannerProject: 0 }); clearInterval(this._bannerWatch); this._bannerWatch = setInterval(() => { if (!this.state.bannersOpen) { clearInterval(this._bannerWatch); return; } const root = this._bannerGrid; if (!root) return; root.querySelectorAll('video').forEach((v) => { if (v.paused && !v.ended && v.readyState >= 2) { const p = v.play(); if (p && p.catch) p.catch(() => {}); } }); }, 450); }
+  closeBanners() { clearInterval(this._bannerWatch); this.setState({ bannersOpen: false }); }
+  openModel3d() { this._modelRot = 0; this.modelIndex = 0; this.setState({ model3dOpen: true }, () => this._modelLayoutRetry(0)); }
+  _modelLayoutRetry(n) {
+    if (!this.state.model3dOpen || n > 40) return;
+    const defs = this._modelDefs || [];
+    if (this._modelStage && defs.length && this._modelSlides.length >= defs.length && this._modelSlides.every((x) => x)) { this.layoutModelCarousel(false); requestAnimationFrame(() => this.layoutModelCarousel(false)); return; }
+    requestAnimationFrame(() => this._modelLayoutRetry(n + 1));
+  }
+  closeModel3d() { this.setState({ model3dOpen: false }); }
+  layoutModelCarousel(animate) {
+    const n = this._modelSlides.length; if (!n || !this._modelStage) return;
+    const step = 360 / n;
+    const stageW = this._modelStage.offsetWidth || 900;
+    const slideW = Math.max(200, Math.min(300, stageW * 0.23));
+    const radius = (slideW / 2) / Math.tan(Math.PI / n) * 1.28;
+    const trans = animate ? 'transform .8s cubic-bezier(.33,.72,.2,1),filter .6s' : 'none';
+    const dimOf = (i) => { let off = i - this.modelIndex; off = ((off % n) + n) % n; if (off > n / 2) off -= n; return Math.abs(off); };
+    for (let i = 0; i < n; i++) {
+      const el = this._modelSlides[i]; if (!el) continue;
+      const dist = dimOf(i);
+      const fs = dist < 0.5 ? 1.12 : 0.9;
+      el.style.transform = 'rotateY(' + (i * step) + 'deg) translateZ(' + radius + 'px) scale(' + fs + ')';
+      el.style.transition = trans;
+      el.style.filter = 'brightness(' + Math.max(0.42, 1 - dist * 0.42) + ')';
+      el.style.zIndex = String(200 - Math.round(dist * 10));
+    }
+    const stageTrans = animate ? 'transform .8s cubic-bezier(.33,.72,.2,1)' : 'none';
+    this._modelStage.style.transition = stageTrans;
+    this._modelStage.style.transform = 'translateZ(' + (-radius) + 'px) rotateX(6deg) rotateY(' + (-this._modelRot * step) + 'deg)';
+    const cur = this._modelDefs && this._modelDefs[this.modelIndex];
+    if (this._modelPill && cur) this._modelPill.textContent = cur.name;
+  }
+  moveModel(dir) { const n = this._modelSlides.length; if (!n) return; this._modelRot += dir; this.modelIndex = ((this._modelRot % n) + n) % n; this.layoutModelCarousel(true); }
+  selectModel(i) { const n = this._modelSlides.length; if (!n || i === this.modelIndex) return; let d = i - this.modelIndex; d = ((d % n) + n) % n; if (d > n / 2) d -= n; this._modelRot += d; this.modelIndex = ((this._modelRot % n) + n) % n; this.layoutModelCarousel(true); }
+  setBannerProject(i) { if (i === this.state.bannerProject) return; this.setState({ bannerProject: -1 }); setTimeout(() => this.setState({ bannerProject: i }), 60); }
+  gfxGo(i) {
+    const n = this._gfxEls.length || 4;
+    const clamped = Math.max(0, Math.min(n - 1, i));
+    if (clamped === this.state.gfxIndex) return;
+    this.setState({ gfxIndex: clamped }, () => this.layoutGfx());
+  }
+  layoutGfx() {
+    const els = this._gfxEls || [];
+    const active = this.state.gfxIndex;
+    const stageW = (this._gfxStage && this._gfxStage.offsetWidth) || 900;
+    const base = Math.min(340, stageW * 0.36);
+    els.forEach((el, i) => {
+      if (!el) return;
+      const d = i - active;
+      const ad = Math.abs(d);
+      let tx, scale, opacity, blur, z;
+      if (d === 0) { tx = 0; scale = 1; opacity = 1; blur = 0; z = 30; }
+      else { tx = d * base; scale = ad === 1 ? 0.7 : 0.52; opacity = ad === 1 ? 0.5 : 0; blur = ad === 1 ? 2 : 5; z = 20 - ad; }
+      el.style.transform = 'translate(-50%,-50%) translateX(' + tx + 'px) scale(' + scale + ')';
+      el.style.opacity = opacity;
+      el.style.filter = blur ? 'blur(' + blur + 'px)' : 'none';
+      el.style.zIndex = z;
+      el.style.pointerEvents = ad <= 1 ? 'auto' : 'none';
+    });
+  }
+
+  openContact() { this.setState({ contactOpen: true }); }
+  closeContact() { this.setState({ contactOpen: false }); }
+
+  copyClip(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text).catch(() => this._copyFallback(text));
+    return Promise.resolve(this._copyFallback(text));
+  }
+  _copyFallback(text) {
+    try { const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); } catch (e) {}
+  }
+  openEmail() { this.setState({ emailOpen: true }); this.copyClip('daniel.biz0395@gmail.com'); }
+  closeEmail() { this.setState({ emailOpen: false }); }
+  copyEmail() {
+    this.copyClip('daniel.biz0395@gmail.com');
+    const b = this._emailCopyBtn; if (!b) return;
+    b.textContent = this.state.lang === 'en' ? EN.emailCopiedBtn : VI.emailCopiedBtn;
+    clearTimeout(this._emailCopyT);
+    this._emailCopyT = setTimeout(() => { if (this._emailCopyBtn) this._emailCopyBtn.textContent = this.state.lang === 'en' ? EN.emailCopyBtn : VI.emailCopyBtn; }, 1600);
+  }
+  setCfStatus(text, color) { if (this._cfStatus) { this._cfStatus.textContent = text || ''; this._cfStatus.style.color = color || '#2dd7f0'; } }
+  cfValidate() {
+    const n = this._cfName && this._cfName.value.trim();
+    const e = (this._cfEmail && this._cfEmail.value.trim()) || '';
+    const m = this._cfMsg && this._cfMsg.value.trim();
+    const ok = !!n && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e) && !!m;
+    const b = this._cfSend;
+    if (b) { b.disabled = !ok; b.style.opacity = ok ? '1' : '.4'; b.style.cursor = ok ? 'pointer' : 'not-allowed'; b.style.boxShadow = ok ? '0 0 22px rgba(45,215,240,.55)' : 'none'; }
+    return ok;
+  }
+  submitContact() {
+    if (this._cfSending) return;
+    if (!this.cfValidate()) return;
+    this._cfSending = true;
+    if (this._cfSend) { this._cfSend.disabled = true; this._cfSend.style.opacity = '.6'; }
+    this.setCfStatus('TRANSMITTING…', '#2dd7f0');
+    const payload = {
+      name: this._cfName.value.trim(),
+      email: this._cfEmail.value.trim(),
+      phone: (this._cfPhone && this._cfPhone.value.trim()) || '—',
+      other_contact: (this._cfOther && this._cfOther.value.trim()) || '—',
+      message: this._cfMsg.value.trim(),
+      _subject: 'Portfolio contact — ' + this._cfName.value.trim(),
+      _captcha: 'false',
+    };
+    const fail = (msg) => {
+      this._cfSending = false;
+      if (this._cfSend) { this._cfSend.disabled = false; this._cfSend.style.opacity = '1'; }
+      this.setCfStatus(msg || (this.state.lang === 'en' ? EN.cfFail : VI.cfFail), '#ff5a6a');
+    };
+    fetch('https://formsubmit.co/ajax/daniel.biz0395@gmail.com', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload)
+    }).then((r) => r.json()).then((data) => {
+      const ok = data && (data.success === 'true' || data.success === true);
+      if (ok) {
+        this._cfSending = false;
+        if (this._cfForm) this._cfForm.style.display = 'none';
+        if (this._cfDone) this._cfDone.style.display = 'block';
+      } else { fail(); }
+    }).catch(() => fail());
+  }
+  contactMailto() {
+    const v = (el) => (el && el.value.trim()) || '';
+    const lines = [
+      'Name: ' + v(this._cfName),
+      'Email: ' + v(this._cfEmail),
+      'Phone: ' + (v(this._cfPhone) || '-'),
+      'Other contact: ' + (v(this._cfOther) || '-'),
+      '', v(this._cfMsg),
+    ];
+    const subject = 'Portfolio contact' + (v(this._cfName) ? ' — ' + v(this._cfName) : '');
+    const href = 'mailto:daniel.biz0395@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n'));
+    window.location.href = href;
+  }
+  closeModal() {
+    if (this._modalFrame) this._modalFrame.src = 'about:blank';
+    this.setState({ modalOpen: false });
+  }
+  applyModal() {
+    if (!this.state.modalOpen) return;
+    const d = this._workDefs && this._workDefs[this.state.modalItem];
+    if (this._modalTitleEl && d) this._modalTitleEl.textContent = d.title;
+    if (this._modalFrame && this._modalMock) {
+      if (d && d.yt) {
+        const auto = this._isTouch() ? '&autoplay=1' : '';
+        this._modalFrame.src = 'https://www.youtube-nocookie.com/embed/' + d.yt + '?rel=0&enablejsapi=1&playsinline=1' + auto;
+        this._modalMock.style.display = 'none';
+      } else {
+        this._modalFrame.src = 'about:blank';
+        this._modalMock.style.display = 'flex';
+      }
+    }
+  }
+
+  onWorkMove(e) {
+    const r = this.workEl.getBoundingClientRect();
+    const x = e.clientX - r.left, y = e.clientY - r.top;
+    if (this._cursorDot) this._cursorDot.style.transform = `translate(${x}px,${y}px) translate(-50%,-50%)`;
+    if (this._cursorHeat) this._cursorHeat.style.transform = `translate(${x}px,${y}px) translate(-50%,-50%)`;
+  }
+  onWorkEnter() {
+    if (this._cursorDot) this._cursorDot.style.opacity = '1';
+    if (this._cursorHeat) this._cursorHeat.style.opacity = '1';
+  }
+  onWorkLeave() {
+    if (this._cursorDot) this._cursorDot.style.opacity = '0';
+    if (this._cursorHeat) this._cursorHeat.style.opacity = '0';
+  }
+
+  applyTypeScale() {
+    if (this.rootEl) this.rootEl.style.setProperty('--type-scale', String(this.props.typeScale ?? 1));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+    if (this._onResize) window.removeEventListener('resize', this._onResize);
+    if (this._raf) cancelAnimationFrame(this._raf);
+    if (this._introTimer) clearTimeout(this._introTimer);
+    if (this._hintTimer) clearInterval(this._hintTimer);
+    if (this._titleObserver) this._titleObserver.disconnect();
+    if (this._onKey) window.removeEventListener('keydown', this._onKey);
+    if (this._onWheel) window.removeEventListener('wheel', this._onWheel);
+    if (this._onTouchStart) window.removeEventListener('touchstart', this._onTouchStart);
+    if (this._onTouchMove) window.removeEventListener('touchmove', this._onTouchMove);
+    if (this._onKeyNav) window.removeEventListener('keydown', this._onKeyNav);
+    if (this._onResizeMode) window.removeEventListener('resize', this._onResizeMode);
+    if (this._heroWheel) window.removeEventListener('wheel', this._heroWheel);
+    if (this._heroTouchStart) window.removeEventListener('touchstart', this._heroTouchStart);
+    if (this._heroTouchMove) window.removeEventListener('touchmove', this._heroTouchMove);
+    if (this._heroIntroTimer) clearTimeout(this._heroIntroTimer);
+    if (this._nativeCheck) window.removeEventListener('scroll', this._nativeCheck);
+    if (this._snapTimer) clearTimeout(this._snapTimer);
+    if (this._reelObserver) this._reelObserver.disconnect();
+    if (this._onYTMessage) window.removeEventListener('message', this._onYTMessage);
+  }
+
+  tick() {
+    const vh = window.innerHeight;
+    const depth = this.props.motionDepth ?? 1;
+    if (!this._snapping) this.syncCurSection();
+    if (this._nativeScroll && this._heroOutDone && !this._heroOutPlaying) {
+      if (window.scrollY > vh * 0.5) this._heroLeft = true;
+      else if (this._heroLeft && window.scrollY <= vh * 0.12) { this._heroOutDone = false; this._heroLeft = false; this.resetHero(); }
+    }
+
+    if (!this._nativeScroll) this._sections.forEach((el) => {
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const center = r.top + r.height / 2;
+      const dist = center - vh / 2;
+      const norm = Math.max(-1, Math.min(1, dist / (vh * 0.75)));
+      const progress = 1 - Math.abs(norm);
+      const rotX = norm * 6 * depth;
+      const ty = norm * 40 * depth;
+      const scale = 0.96 + progress * 0.04 * depth;
+      el.style.transform = `perspective(1400px) rotateX(${rotX}deg) translateY(${ty}px) scale(${scale})`;
+      el.style.opacity = String(0.35 + progress * 0.65);
+    });
+  }
+
+  buildSilhouette(img) {
+    try {
+      const c = document.createElement('canvas');
+      c.width = img.naturalWidth; c.height = img.naturalHeight;
+      this._silCtx = c.getContext('2d');
+      this._silCtx.drawImage(img, 0, 0);
+      this._silReady = true;
+    } catch (e) { this._silReady = false; }
+  }
+
+  silhouetteEdge(imgRect, img, rowY, fromLeft) {
+    if (!this._silReady || !this._silCtx || !img.naturalHeight) return null;
+    const scale = imgRect.height / img.naturalHeight;
+    const rowImg = Math.round((rowY - imgRect.top) / scale);
+    if (rowImg < 0 || rowImg >= img.naturalHeight) return null;
+    const w = img.naturalWidth;
+    let data;
+    try { data = this._silCtx.getImageData(0, rowImg, w, 1).data; } catch (e) { return null; }
+    const thresh = 24;
+    if (fromLeft) {
+      for (let x = 0; x < w; x++) { if (data[x * 4 + 3] > thresh) return imgRect.left + x * scale; }
+    } else {
+      for (let x = w - 1; x >= 0; x--) { if (data[x * 4 + 3] > thresh) return imgRect.left + (x + 1) * scale; }
+    }
+    return null;
+  }
+
+  typeTitle(el, onDone) {
+    if (!el || el._typed) return;
+    el._typed = true;
+    const spans = Array.from(el.querySelectorAll('.tchar'));
+    const caret = el.querySelector('.hud-caret');
+    if (caret) { caret.style.opacity = '1'; caret.style.position = 'relative'; }
+    let i = 0;
+    const placeCaretAfter = (s) => { if (caret && s && s.parentNode) s.parentNode.insertBefore(caret, s.nextSibling); };
+    if (caret && spans[0]) placeCaretAfter(null), spans[0].parentNode.insertBefore(caret, spans[0]);
+    const step = () => {
+      if (i >= spans.length) {
+        if (caret) { caret.style.animation = 'blink .9s steps(1) infinite'; setTimeout(() => { caret.style.opacity = '0'; caret.style.transition = 'opacity .4s'; }, 500); }
+        if (onDone) setTimeout(onDone, 480);
+        return;
+      }
+      const s = spans[i];
+      if (s.textContent.trim() === '') { s.style.opacity = '1'; i++; placeCaretAfter(s); step(); return; }
+      s.style.transition = 'opacity .05s linear, filter .09s linear';
+      s.style.opacity = '1';
+      s.style.filter = 'blur(0)';
+      s.style.color = '#eaf6f8';
+      s.style.textShadow = '0 0 14px rgba(45,215,240,.95), 0 0 4px rgba(255,255,255,.85)';
+      const cur = s;
+      setTimeout(() => { cur.style.textShadow = 'none'; }, 110);
+      i++;
+      placeCaretAfter(s);
+      setTimeout(step, 22 + Math.random() * 55);
+    };
+    step();
+  }
+
+  onPortraitLoad(img) {
+    this.buildSilhouette(img);
+    this.measureChars();
+  }
+
+  measureChars() {
+    if (!this.heroSloganEl || !this.heroPortraitEl) return;
+    const els = Array.from(this.heroSloganEl.querySelectorAll('[data-ch]'));
+    if (!els.length) return;
+    const img = this.heroPortraitEl.querySelector('img');
+    const savedPortrait = this.heroPortraitEl.style.transform;
+    this.heroPortraitEl.style.transform = 'none';
+    const saved = els.map((el) => el.style.transform);
+    els.forEach((el) => { el.style.transform = 'none'; });
+    const pr = (img || this.heroPortraitEl).getBoundingClientRect();
+    const cols = Array.from(this.heroSloganEl.children);
+    this._charMeta = els.map((el, i) => {
+      const r = el.getBoundingClientRect();
+      const col = cols.findIndex((c) => c.contains(el));
+      const onRight = col === 1;
+      const rowY = r.top + r.height / 2;
+      const edge = img ? this.silhouetteEdge(pr, img, rowY, !onRight) : null;
+      return {
+        x: r.left + r.width / 2,
+        y: rowY,
+        tx: edge != null ? edge : (onRight ? pr.right : pr.left),
+        ty: rowY,
+        delay: ((i * 7919) % 13) / 13 * 0.3,
+        rot: ((i * 104729) % 21) - 10,
+      };
+    });
+    els.forEach((el, i) => { el.style.transform = saved[i]; });
+    this.heroPortraitEl.style.transform = savedPortrait;
+    this._charEls = els;
+    this._portraitImg = img;
+  }
+
+  toggleLang() {
+    [this.aboutTitleEl, this.servicesTitleEl, this.reelTitleEl, this.workTitleEl, this.skillsTitleEl, this.contactTitleEl]
+      .forEach((el) => { if (el) el._typed = false; });
+    this.setState((s) => ({ lang: s.lang === 'en' ? 'vi' : 'en' }), () => {
+      requestAnimationFrame(() => {
+        [this.aboutTitleEl, this.servicesTitleEl, this.reelTitleEl, this.workTitleEl, this.skillsTitleEl, this.contactTitleEl]
+          .forEach((el) => { if (el) this.typeTitle(el); });
+        this.measureChars();
+      });
+    });
+  }
+
+  renderVals() {
+    const lang = this.state.lang;
+    const copy = lang === 'en' ? EN : VI;
+
+    const navItems = lang === 'en'
+      ? [{ label: 'ABOUT', href: '#about' }, { label: 'SERVICES', href: '#services' }, { label: 'REEL', href: '#reel' }, { label: 'WORK', href: '#work' }, { label: 'CONTACT', href: '#contact' }]
+      : [{ label: 'GIỚI THIỆU', href: '#about' }, { label: 'DỊCH VỤ', href: '#services' }, { label: 'REEL', href: '#reel' }, { label: 'DỰ ÁN', href: '#work' }, { label: 'LIÊN HỆ', href: '#contact' }];
+
+    const stats = [
+      { value: '5+', label: lang === 'en' ? 'YEARS' : 'NĂM' },
+      { value: '01', label: lang === 'en' ? 'STUDIO BUILT' : 'STUDIO TỰ DỰNG' },
+      { value: '04', label: lang === 'en' ? 'TEAM MEMBERS LEAD' : 'THÀNH VIÊN TEAM' },
+    ];
+
+    const servicesRaw = lang === 'en' ? [
+      { idx: 1, title: 'GRAPHICS', desc: 'Brand systems, key art & static campaigns built for impact.' },
+      { idx: 2, title: 'BANNERS', desc: 'Motion banners & digital ad systems across every format.' },
+      { idx: 3, title: '3D MODELING', desc: 'Product visualization and 3D assets rendered photoreal.' },
+    ] : [
+      { idx: 1, title: 'GRAPHICS', desc: 'Hệ thống thương hiệu, key art và chiến dịch tĩnh giàu tác động.' },
+      { idx: 2, title: 'BANNERS', desc: 'Banner động và hệ thống quảng cáo số trên mọi định dạng.' },
+      { idx: 3, title: '3D MODELING', desc: 'Trực hình hóa sản phẩm và asset 3D render chân thực.' },
+    ];
+    const services = servicesRaw.map((s) => ({ ...s, open: s.title === 'GRAPHICS' ? () => this.openGraphics() : s.title === 'BANNERS' ? () => this.openBanners() : s.title === '3D MODELING' ? () => this.openModel3d() : null }));
+
+    const mkVid = (s) => ({ ...s, setVid: (el) => { if (!el || el._srcKey === s.src) return; el._srcKey = s.src; el.muted = true; el.loop = true; el.playsInline = true; el.autoplay = true; el.style.aspectRatio = s.ar; el.src = s.src; const tryPlay = () => { if (el._srcKey !== s.src) return; const p = el.play(); if (p && p.catch) p.catch(() => {}); }; el.oncanplay = tryPlay; el.onloadeddata = tryPlay; el.onpause = () => { if (el._srcKey === s.src && !el.ended) requestAnimationFrame(tryPlay); }; tryPlay(); } });
+    const bannerProjects = [
+      { tab: 'NETGEAR ORBI WIFI 7', title: 'Netgear Orbi WiFi 7 display set', sizes: [
+        { w: 300, h: 600, src: 'uploads/C1_EN_DV360_300x600_HTML_026209_R3_HERO.mp4' },
+        { w: 1200, h: 628, src: 'uploads/C1_EN_DV360_1200x628_HTML_026209_R3.mp4' },
+        { w: 970, h: 250, src: 'uploads/C1_EN_DV360_970x250_HTML_026209_R3.mp4' },
+        { w: 728, h: 90, src: 'uploads/C1_EN_DV360_728x90_HTML_026209_R3-b506b70b.mp4' },
+      ] },
+      { tab: 'WHISKAS', title: 'Whiskas display set', sizes: [
+        { w: 224, h: 240, src: 'uploads/C1_EN_GGL_224x240_HTML_028160_R1.mp4' },
+        { w: 640, h: 200, src: 'uploads/C1_EN_GGL_640x200_HTML_028160_R1.mp4' },
+        { w: 1600, h: 200, src: 'uploads/C1_EN_GGL_1600x200_HTML_028160_R1.mp4' },
+      ] },
+      { tab: 'DUCK', title: 'Duck display set', sizes: [
+        { w: 300, h: 600, src: 'uploads/C1_EN_CUSTOM_300x600_HTML_012863_R3_HERO.mp4' },
+        { w: 300, h: 600, src: 'uploads/C2_EN_CUSTOM_300x600_HTML_012863_R3_HERO.mp4' },
+        { w: 160, h: 600, src: 'uploads/C2_EN_CUSTOM_160x600_HTML_012863_R3.mp4' },
+        { w: 160, h: 600, src: 'uploads/C1_EN_CUSTOM_160x600_HTML_012863_R3.mp4' },
+        { w: 300, h: 250, src: 'uploads/C2_EN_CUSTOM_300x250_HTML_012863_R3.mp4' },
+        { w: 300, h: 250, src: 'uploads/C2_EN_CUSTOM_300x250_HTML_012863_R3-fcacafee.mp4' },
+        { w: 728, h: 90, src: 'uploads/C1_EN_CUSTOM_728x90_HTML_012863_R3.mp4' },
+        { w: 728, h: 90, src: 'uploads/C2_EN_CUSTOM_728x90_HTML_012863_R3.mp4' },
+      ] },
+      { tab: 'RIPPLE FOOD', title: 'Ripple Food display set', sizes: [
+        { w: 1200, h: 629, src: 'uploads/C2_EN_AMZN_1200x629_HTML_026591_R7_video.mp4' },
+        { w: 300, h: 600, src: 'uploads/C2_EN_AMZN_300x600_HTML_024859_R6.mp4' },
+        { w: 300, h: 600, src: 'uploads/c2_en_amzn_300x600_html_026591_r7_d6f04c7f.mp4' },
+        { w: 300, h: 250, src: 'uploads/C2_EN_GA_300x250_HTML_024859_R6.mp4' },
+        { w: 300, h: 250, src: 'uploads/c2_en_amzn_300x250_html_026591_r7_eeab423d.mp4' },
+      ] },
+    ];
+    const models = lang === 'en' ? [
+      { name: 'Speaker', tag: 'PRODUCT // 360', src: 'uploads/Speaker_Webm-a831f224.webm' },
+      { name: 'Perfume Bottle', tag: 'PRODUCT // 360', src: 'uploads/Perfume bottle_Webm.webm' },
+      { name: 'Turtle', tag: 'BIC PENS // SEALIFE', src: 'uploads/Turtle_webm.webm' },
+      { name: 'Crab', tag: 'BIC PENS // SEALIFE', src: 'uploads/Crab_webm.webm' },
+      { name: 'Jellyfish', tag: 'BIC PENS // SEALIFE', src: 'uploads/Jellyfish_Webm.webm' },
+    ] : [
+      { name: 'Loa (Speaker)', tag: 'SẢN PHẨM // 360', src: 'uploads/Speaker_Webm-a831f224.webm' },
+      { name: 'Chai Nước Hoa', tag: 'SẢN PHẨM // 360', src: 'uploads/Perfume bottle_Webm.webm' },
+      { name: 'Rùa (Turtle)', tag: 'BIC PENS // SEALIFE', src: 'uploads/Turtle_webm.webm' },
+      { name: 'Cua (Crab)', tag: 'BIC PENS // SEALIFE', src: 'uploads/Crab_webm.webm' },
+      { name: 'Sứa (Jellyfish)', tag: 'BIC PENS // SEALIFE', src: 'uploads/Jellyfish_Webm.webm' },
+    ];
+    this._modelDefs = models;
+    const modelCards = models.map((m, i) => ({ ...m,
+      setSlide: (el) => { this._modelSlides[i] = el; if (el) requestAnimationFrame(() => this.layoutModelCarousel(false)); },
+      select: () => this.selectModel(i),
+      setVid: (el) => {
+        if (!el || el._mk === m.src) return; el._mk = m.src;
+        el.muted = true; el.loop = true; el.playsInline = true; el.autoplay = true;
+        el.setAttribute('muted', ''); el.setAttribute('playsinline', '');
+        el.src = encodeURI(m.src);
+        const done = () => { const c = el.closest('[data-model-card]'); const ph = c && c.querySelector('[data-model-ph]'); if (ph) ph.style.display = 'none'; const p = el.play(); if (p && p.catch) p.catch(() => {}); };
+        el.onloadeddata = done; el.oncanplay = done; el.load();
+      },
+    }));
+    const model3dLabel = lang === 'en' ? '3D MODELING — PRODUCT VISUALIZATION' : '3D MODELING — TRỰC HÌNH SẢN PHẨM';
+    const model3dTitle = lang === 'en' ? '3D Product Renders' : 'Render Sản Phẩm 3D';
+    const model3dMeta = models.length + (lang === 'en' ? ' assets' : ' asset');
+    const switchingBanner = this.state.bannerProject < 0;
+    this._bannerCount = bannerProjects.length;
+    const activeBannerIdx = switchingBanner ? 0 : Math.min(this.state.bannerProject, bannerProjects.length - 1);
+    const activeBannerProj = bannerProjects[activeBannerIdx];
+    const mkSize = (s) => ({ ...s, label: s.w + ' × ' + s.h, ar: s.w + ' / ' + s.h });
+    const bannerSized = switchingBanner ? [] : activeBannerProj.sizes.map(mkSize);
+    const bannerCards = bannerSized.map((s) => ({ ...mkVid(s), setCard: (el) => { if (!el) return; el.style.flex = '0 1 ' + s.w + 'px'; el.style.maxWidth = s.w + 'px'; } }));
+    const bannerTitle = activeBannerProj.title;
+    const bannerMeta = activeBannerProj.sizes.length + ' formats';
+    const bannerTabs = bannerProjects.map((p, i) => ({ label: p.tab, num: '0' + (i + 1), color: i === activeBannerIdx ? '#eaf6f8' : 'rgba(234,246,248,.45)', border: i === activeBannerIdx ? '#2dd7f0' : 'rgba(45,215,240,.12)', onClick: (e) => { if (e) e.stopPropagation(); this.setBannerProject(i); } }));
+
+    const gfxBase = [
+      { key: 'asics', img: 'uploads/C4_EN_SNAP_s9x16_IMG_010673_R1.png', brand: 'ASICS', title: 'Find Your Perfect Shoe', meta: 'SOCIAL STORY · 9:16', tags: ['KEY VISUAL', 'RETOUCH', 'LAYOUT'] },
+      { key: 'hennessy', img: 'uploads/FB_C1_IMG_1x1_15s_006686_R3_00084.png', brand: 'HENNESSY × NBA', title: 'Grab The Best Seats', meta: 'SOCIAL POST · 1:1', tags: ['KEY VISUAL', 'COMPOSITING', 'TYPE'] },
+      { key: 'jubees', img: 'uploads/Julibee.jpg', brand: "ALLEN'S JUBEES · NESTLÉ", title: 'Our Iconic Flavours', meta: 'KEY VISUAL · 2:3', tags: ['PACKAGING', 'RETOUCH', 'LAYOUT'] },
+      { key: 'asus', img: 'uploads/IMG1x1_005274_R0_00465.png', img2: 'uploads/IMG16x9_005274_R0_00465_00465.png', dual: true, brand: 'ASUS', title: 'The Future Is Here', meta: 'CAMPAIGN · 1:1 + 16:9', tags: ['KEY VISUAL', '2 FORMATS', 'TYPE'] },
+    ];
+    const gfxSlides = gfxBase.map((s, i) => ({ ...s, dual: !!s.dual, single: !s.dual, tags: s.tags.map((v) => ({ v })), setEl: (el) => { this._gfxEls[i] = el; }, setImg: (el) => { if (el && el.src !== s.img) el.src = s.img; }, setImg2: (el) => { if (el && s.img2 && el.src !== s.img2) el.src = s.img2; }, onClick: (e) => { if (e) e.stopPropagation(); this.gfxGo(i); } }));
+    const gfxActive = gfxSlides[this.state.gfxIndex] || gfxSlides[0];
+    const gfxNum = '0' + (this.state.gfxIndex + 1);
+    const gfxTotal = '0' + gfxSlides.length;
+
+    const workDefs = [
+      { img: 'uploads/01%20Asus%20Zenbook%20Duo_00789.jpg', title: 'ASUS ZENBOOK DUO 14', role: 'Motion Graphic Designer / Video Editor', tag: 'VIDEO', yt: 'rIAAtfYZzAk' },
+      { img: 'uploads/02%20BIC%20Pen_00097.jpg', title: 'BIC PENS — SEALIFE', role: '3D Modeler', tag: '3D', yt: 'PmqLbvhKOCo' },
+      { img: 'uploads/03%20HART%20Tools_00097.jpg', title: 'HART TOOLS', role: 'Motion Graphic Designer', tag: 'VIDEO', yt: 'enRNEX-pKXg' },
+      { img: 'uploads/04%20Neat_00408.jpg', title: 'NEAT.COM', role: 'Motion Designer', tag: 'VIDEO', yt: 'rEIasqHlXvU' },
+      { img: 'uploads/05%20Del%20Mar_00079.jpg', title: 'DEL MAR MARGARITA', role: 'Motion Graphic Designer', tag: 'VIDEO', yt: '-Jlxr6XKlMI' },
+      { img: 'uploads/06%20Yelp_00405.jpg', title: 'YELP FOR BUSINESS', role: 'Motion Designer', tag: 'VIDEO', yt: 'SjqVIQwRC_k' },
+      { img: 'uploads/07%20COX_00500.jpg', title: 'COX MEDIA', role: 'Motion Graphic Designer', tag: 'VIDEO', yt: 'TQp-jb0Zbfs' },
+      { img: 'uploads/08%20Brumate.jpg', title: 'BRÜMATE', role: 'Motion Graphic Designer', tag: 'VIDEO', yt: 'gLFOiKV04bo' },
+    ];
+    this._workDefs = workDefs;
+    const setSrc = (el, src) => { if (el && el.getAttribute('src') !== src) el.setAttribute('src', src); };
+    const mN = workDefs.length;
+    const workItems = workDefs.map((d, i) => ({
+      ...d, idx: i,
+      setImg: (el) => setSrc(el, d.img),
+      setImgR: (el) => setSrc(el, d.img),
+      setImgM: (el) => setSrc(el, d.img),
+      setSlideR: (el) => { this._reflects[i] = el; },
+      setSlide: (el) => { this._slides[i] = el; if (el) requestAnimationFrame(() => this.layoutCarousel(false)); },
+      setFloat: (el) => { if (el) el.style.animation = 'cardfloat ' + (4.4 + (i % 3) * 0.7) + 's ease-in-out ' + (-i * 0.85) + 's infinite'; },
+      setFloatR: (el) => { if (el) el.style.animation = 'cardfloat ' + (4.4 + (i % 3) * 0.7) + 's ease-in-out ' + (-i * 0.85) + 's infinite'; },
+      setPlay: (el) => { this._plays[i] = el; },
+      setMini: (el) => { this._minis[i] = el; if (el) requestAnimationFrame(() => this.layoutCarousel(false)); },
+      select: () => this.selectWork(i),
+    }));
+
+    const withImg = (p) => ({ ...p, setImg: (el) => { if (el && el.getAttribute('src') !== p.img) el.setAttribute('src', p.img); } });
+    const projects = [
+      { img: 'uploads/Port 01_00511.jpg', title: 'MOËT HENNESSY', role: lang === 'en' ? 'Graphic Design — Advertising' : 'Thiết kế đồ họa — Quảng cáo', tag: 'BANNER' },
+      { img: 'uploads/Port 02_00197.jpg', title: 'PROJECT_02', role: lang === 'en' ? 'Motion Design' : 'Motion Design', tag: 'VIDEO' },
+      { img: 'uploads/Port 03_00253.jpg', title: 'PROJECT_03', role: lang === 'en' ? 'Motion Design' : 'Motion Design', tag: 'VIDEO' },
+      { img: 'uploads/Port 04_00314.jpg', title: 'PROJECT_04', role: lang === 'en' ? '3D Modeling' : '3D Modeling', tag: '3D' },
+      { img: 'uploads/Port 05_00498.jpg', title: 'PROJECT_05', role: lang === 'en' ? 'Graphic Design' : 'Thiết kế đồ họa', tag: 'GRAPHIC' },
+      { img: 'uploads/Port 06_00973.jpg', title: 'PROJECT_06', role: lang === 'en' ? 'Motion Design' : 'Motion Design', tag: 'VIDEO' },
+      { img: 'uploads/Port 07_01282.jpg', title: 'PROJECT_07', role: lang === 'en' ? 'Banner Design' : 'Thiết kế Banner', tag: 'BANNER' },
+      { img: 'uploads/Port 08_01282.jpg', title: 'PROJECT_08', role: lang === 'en' ? '3D Modeling' : '3D Modeling', tag: '3D' },
+    ].map(withImg);
+
+    const toolDefs = [
+      { name: 'AFTER EFFECTS', mono: 'Ae', color: '#c7c2ff', en: 'Primary tool for motion graphics, 2D animation & compositing.', vi: 'Công cụ chính cho motion graphics, 2D animation & compositing.' },
+      { name: 'PREMIERE PRO', mono: 'Pr', color: '#c7c2ff', en: 'Multi-take assembly, editing & timeline finishing.', vi: 'Ghép nhiều take, dựng & hoàn thiện timeline.' },
+      { name: 'ILLUSTRATOR', mono: 'Ai', color: '#ff9a3c', en: 'Vector key art, logos & shape systems for animation.', vi: 'Key art vector, logo & hệ shape để làm animation.' },
+      { name: 'PHOTOSHOP', mono: 'Ps', color: '#4bb4ff', en: 'Retouch, matte work & texture prep for comps.', vi: 'Retouch, matte & chuẩn bị texture cho comp.' },
+      { name: 'CAPCUT', mono: 'Cc', color: '#33e0e0', logo: 'uploads/Capcut%20logo.png', en: 'Fast social cuts & platform-native short-form.', vi: 'Cắt dựng social nhanh & short-form đúng nền tảng.' },
+      { name: 'BLENDER', mono: 'Bl', color: '#ff8a3c', logo: 'uploads/Blender%20logo.png', en: '3D models, motion graphics & product renders.', vi: '3D model, motion graphics & render sản phẩm.' },
+      { name: 'VEO 3', mono: 'V3', color: '#8ab4ff', logo: 'uploads/VEO%203%20logo.png', en: 'AI previz & generated footage drafts in the pipeline.', vi: 'AI previz & bản nháp footage sinh trong pipeline.' },
+      { name: 'CLAUDE', mono: 'Cl', color: '#e6a07c', logo: 'uploads/Claude%20logo.png', en: 'Scripting, workflow / SOP writing & production logic.', vi: 'Viết script, quy trình / SOP & logic sản xuất.' },
+      { name: 'GEMINI', mono: 'Gm', color: '#7aa6ff', logo: 'uploads/Gemini%20logo.png', en: 'Research, ideation & asset prompting.', vi: 'Nghiên cứu, lên ý tưởng & prompt tạo asset.' },
+      { name: 'ELEVENLABS', mono: '11', color: '#e8eef2', logo: 'uploads/Elevenlabs%20logo.png', en: 'AI voiceover drafts & sound design scratch.', vi: 'Bản nháp VO bằng AI & scratch cho sound design.' },
+    ];
+    const tools = toolDefs.map((t, i) => ({
+      name: t.name, mono: t.mono, color: t.color, logo: t.logo, use: lang === 'en' ? t.en : t.vi,
+      setBtn: (el) => { this._toolBtns[i] = el; },
+      enter: () => this.toolEnter(i),
+      leave: () => this.toolLeave(i),
+    }));
+    this._toolInfo = tools;
+
+    const socials = [
+      { label: 'LINKEDIN', href: 'https://www.linkedin.com/in/khaitran095/', isLink: true },
+      { label: 'UPWORK', href: 'https://www.upwork.com/freelancers/khaitran?mp_source=share', isLink: true },
+      { label: 'EMAIL', isEmail: true, onClick: () => this.openEmail() },
+    ];
+
+    const toChars = (s) => s.split('').map((ch, k) => ({ ch: ch === ' ' ? '\u00A0' : ch, k }));
+    const toWords = (s) => s.split(' ').map((word, wi) => ({ wi, chars: word.split('').map((ch, k) => ({ ch, k })) }));
+    const showDetail = (this.props.contentDensity ?? 'full') !== 'minimal';
+    const careerBase = lang === 'en' ? CAREER_EN : CAREER_VI;
+    const detailsLabel = lang === 'en' ? 'DETAILS ›' : 'CHI TIẾT ›';
+    const careerEntries = careerBase.map((e, i) => ({ ...e, detailsLabel, open: () => this.openCareer(i) }));
+    const careerSel = careerEntries[this.state.careerItem] || careerEntries[0];
+    return {
+      copy, navItems, stats, services, projects, tools, socials, showDetail, workItems,
+      careerEntries, careerSel, careerOpen: this.state.careerOpen,
+      closeCareer: () => this.closeCareer(),
+      graphicsOpen: this.state.graphicsOpen, gfxSlides, gfxActive, gfxNum, gfxTotal,
+      closeGraphics: () => this.closeGraphics(),
+      gfxPrev: () => this.gfxGo(this.state.gfxIndex - 1),
+      gfxNext: () => this.gfxGo(this.state.gfxIndex + 1),
+      setGfxStage: (el) => { this._gfxStage = el; if (el) this._bindSwipeNav(el, () => this.gfxGo(this.state.gfxIndex - 1), () => this.gfxGo(this.state.gfxIndex + 1)); },
+      bannersOpen: this.state.bannersOpen, bannerCards, bannerTitle, bannerMeta, bannerTabs,
+      model3dOpen: this.state.model3dOpen, closeModel3d: () => this.closeModel3d(), modelCards, model3dLabel, model3dTitle, model3dMeta,
+      setModelStage: (el) => { this._modelStage = el; if (el) { requestAnimationFrame(() => this.layoutModelCarousel(false)); if (el.parentElement) this._bindCarouselSwipe(el.parentElement, 'model'); } },
+      setModelPill: (el) => { this._modelPill = el; },
+      modelPrev: () => this.moveModel(-1), modelNext: () => this.moveModel(1),
+      setBannerGrid: (el) => { this._bannerGrid = el; if (el) this._bindSwipeNav(el, () => this.bannerStep(-1), () => this.bannerStep(1)); },
+      closeBanners: () => this.closeBanners(),
+      bannerPrev: (e) => { if (e) e.stopPropagation(); this.setBannerProject((activeBannerIdx - 1 + bannerProjects.length) % bannerProjects.length); },
+      bannerNext: (e) => { if (e) e.stopPropagation(); this.setBannerProject((activeBannerIdx + 1) % bannerProjects.length); },
+      contactOpen: this.state.contactOpen,
+      openContact: () => this.openContact(),
+      closeContact: () => this.closeContact(),
+      cfValidate: () => this.cfValidate(),
+      submitContact: () => this.submitContact(),
+      contactMailto: () => this.contactMailto(),
+      emailOpen: this.state.emailOpen,
+      openEmail: () => this.openEmail(),
+      closeEmail: () => this.closeEmail(),
+      copyEmail: () => this.copyEmail(),
+      setEmailCopyBtn: (el) => { this._emailCopyBtn = el; },
+      setCfForm: (el) => { this._cfForm = el; },
+      setCfDone: (el) => { this._cfDone = el; },
+      setCfName: (el) => { this._cfName = el; },
+      setCfEmail: (el) => { this._cfEmail = el; },
+      setCfPhone: (el) => { this._cfPhone = el; },
+      setCfOther: (el) => { this._cfOther = el; },
+      setCfMsg: (el) => { this._cfMsg = el; },
+      setCfStatus: (el) => { this._cfStatus = el; },
+      setCfSend: (el) => { this._cfSend = el; },
+      setCareerPop: (el) => { this._careerPop = el; if (el) this.playCareerPop(el); },
+      modalOpen: this.state.modalOpen,
+      workPrev: () => this.moveWork(1),
+      workNext: () => this.moveWork(-1),
+      closeModal: () => this.closeModal(),
+      stop: (e) => e.stopPropagation(),
+      onWorkMove: (e) => this.onWorkMove(e),
+      onWorkEnter: () => this.onWorkEnter(),
+      onWorkLeave: () => this.onWorkLeave(),
+      setStage: (el) => { this._stage = el; if (el) requestAnimationFrame(() => this.layoutCarousel(false)); },
+      setStageR: (el) => { this._stageR = el; if (el) requestAnimationFrame(() => this.layoutCarousel(false)); },
+      setMiniDisc: (el) => { this._miniDisc = el; },
+      setWorkStageWrap: (el) => { this._workStageWrap = el; if (el) { if (this._workPlayed) el.style.transform = 'scale(1)'; this._bindCarouselSwipe(el, 'work'); } },
+      onWorkClick: (e) => this.onWorkClick(e),
+      setTechBar: (el) => { this._techBar = el; },
+      setMotionBar: (el) => { this._motionBar = el; },
+      setTechText: (el) => { this._techText = el; },
+      setMotionText: (el) => { this._motionText = el; },
+      setReelBox: (el) => { this._reelBox = el; },
+      reelBadgeChars: toChars(copy.reelBadge),
+      setReelBadge: (el) => { this._reelBadge = el; if (el) this._reelBadgeChars = Array.from(el.querySelectorAll('[data-bch]')); },
+      setReelIframe: (el) => {
+        this._reelIframe = el;
+        if (el) el.addEventListener('load', () => { try { el.contentWindow.postMessage('{"event":"listening"}', '*'); } catch (_) {} });
+      },
+      setReelOverlay: (el) => { this._reelOverlay = el; },
+      setReelPoster: (el) => { this._reelPoster = el; if (el && el.src.indexOf('Port%2005_00498-4f8801b5.jpg') === -1) el.src = 'uploads/Port%2005_00498-4f8801b5.jpg'; },
+      setReelPlayBtn: (el) => { this._reelPlayBtn = el; },
+      setRecDot: (el) => { this._recDot = el; },
+      setHudLabel: (el) => { this._hudLabel = el; },
+      setRecLabel: (el) => { this._recLabel = el; },
+      setSkillsHead: (el) => { this._skillsHead = el; },
+      setToolLine: (el) => { this._toolLine = el; },
+      setToolHud: (el) => { this._toolHud = el; },
+      setToolHudLogo: (el) => { this._toolHudLogo = el; },
+      setToolHudName: (el) => { this._toolHudName = el; },
+      setToolHudText: (el) => { this._toolHudText = el; },
+      setReelCorner: (el) => { if (el && this._reelCorners.indexOf(el) === -1) this._reelCorners.push(el); },
+      playReelVideo: (e) => this.playReelVideo(e),
+      setPillTitle: (el) => { this._pillTitle = el; if (el) requestAnimationFrame(() => this.updatePill()); },
+      setCursorDot: (el) => { this._cursorDot = el; },
+      setCursorHeat: (el) => { this._cursorHeat = el; },
+      setModalFrame: (el) => { this._modalFrame = el; if (el && !el._lsn) { el._lsn = true; el.addEventListener('load', () => { try { el.contentWindow.postMessage('{"event":"listening"}', '*'); } catch (_) {} setTimeout(() => { try { el.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'playVideo', args: [] }), '*'); } catch (_) {} }, 350); }); } if (el) requestAnimationFrame(() => this.applyModal()); },
+      setModalMock: (el) => { this._modalMock = el; },
+      setModalTitle: (el) => { this._modalTitleEl = el; if (el) requestAnimationFrame(() => this.applyModal()); },
+      setRootRef: (el) => { this.rootEl = el; if (el) this.applyTypeScale(); },
+      sloganChars1: toChars('WHERE TECH MEETS'),
+      sloganChars2: toChars('CREATIVE MOTION'),
+      setPortraitImgRef: (el) => {
+        if (!el || el._loadBound) return;
+        el._loadBound = true;
+        if (el.complete && el.naturalWidth) this.onPortraitLoad(el);
+        else el.addEventListener('load', () => this.onPortraitLoad(el), { once: true });
+      },
+      setPortraitWrapRef: (el) => { this._portraitWrap = el; },
+      careerLabelChars: toChars(copy.timelineLabel),
+      setCareerPanel: (el) => { this._careerPanel = el; this._careerObsEl = el && el.parentElement; },
+      setCareerLine: (el) => { this._careerLine = el; },
+      setStatsRow: (el) => { this._statsRow = el; },
+      onNavClick: (e) => { e.preventDefault(); this.navTo((e.currentTarget.getAttribute('href') || '').trim()); },
+      heroRoleWords: copy.heroRole.split(' // ').map((ph, wi, arr) => ({ wi, chars: (ph + (wi < arr.length - 1 ? ' //' : '')).split('').map((ch, k) => ({ ch: ch === ' ' ? '\u00A0' : ch, k })) })),
+      setHeroRoleRef: (el) => { this.heroRoleEl = el; },
+      setHeroCtaRef: (el) => { this.heroCtaEl = el; },
+      aboutTitleWords: toWords(copy.aboutTitle),
+      servicesTitleWords: toWords(copy.servicesTitle),
+      reelTitleWords: toWords(copy.reelTitle),
+      workTitleWords: toWords(copy.workTitle),
+      skillsTitleWords: toWords(copy.skillsTitle),
+      contactTitleWords: toWords(copy.contactTitle),
+      setAboutTitleRef: (el) => { this.aboutTitleEl = el; },
+      setAboutTextCol: (el) => { this._aboutTextCol = el; },
+      setServicesTitleRef: (el) => { this.servicesTitleEl = el; },
+      setReelTitleRef: (el) => { this.reelTitleEl = el; },
+      setWorkTitleRef: (el) => { this.workTitleEl = el; },
+      setSkillsTitleRef: (el) => { this.skillsTitleEl = el; },
+      setContactTitleRef: (el) => { this.contactTitleEl = el; },
+      setContactSub: (el) => { this._contactSub = el; },
+      setContactBtn: (el) => { this._contactBtn = el; },
+      setContactSocials: (el) => { this._contactSocials = el; },
+      langLabel: lang === 'en' ? 'VI' : 'EN',
+      toggleLang: () => this.toggleLang(),
+      setHeroRef: (el) => { this.heroEl = el; },
+      setHeroGrid: (el) => { this.heroGridEl = el; },
+      setHeroSlogan: (el) => { this.heroSloganEl = el; },
+      setHeroPortrait: (el) => { this.heroPortraitEl = el; },
+      setPortalVideo: (el) => {
+        this._portalVideo = el;
+        if (el) { el.muted = true; el.play().catch(() => {}); }
+      },
+      setAboutRef: (el) => { this.aboutEl = el; },
+      setServicesRef: (el) => { this.servicesEl = el; },
+      setReelRef: (el) => { this.reelEl = el; },
+      setWorkRef: (el) => { this.workEl = el; },
+      setSkillsRef: (el) => { this.skillsEl = el; },
+      setContactRef: (el) => { this.contactEl = el; },
+    };
+  }
+}
+</script>
+</body>
+</html>
