@@ -695,6 +695,7 @@ class Component extends DCLogic {
   _workRot = 0;
 
   componentDidMount() {
+    this._setupFavicon();
     this._raf = null;
     this._workAngle = 26;
     this._workRadius = 0;
@@ -1288,6 +1289,34 @@ class Component extends DCLogic {
         }, 300);
       }, (k / order.length) * total * 0.9);
     });
+    // Desktop: once the toolset chips finish animating in, chain straight into the
+    // contact section's in-animation instead of waiting for the viewer to scroll there.
+    if (!this._isTouch()) {
+      clearTimeout(this._skillsToContactT);
+      this._skillsToContactT = setTimeout(() => this.triggerSection(6), total + 950);
+    }
+  }
+
+  _setupFavicon() {
+    let link = document.querySelector('link[rel~="icon"]');
+    if (!link) { link = document.createElement('link'); link.rel = 'icon'; document.head.appendChild(link); }
+    const draw = (on) => {
+      const s = 64, c = document.createElement('canvas'); c.width = c.height = s;
+      const x = c.getContext('2d'); x.clearRect(0, 0, s, s);
+      const cx = s / 2, cy = s / 2, r = 15;
+      if (on) {
+        const g = x.createRadialGradient(cx, cy, 0, cx, cy, r * 2.1);
+        g.addColorStop(0, 'rgba(45,215,240,.9)'); g.addColorStop(1, 'rgba(45,215,240,0)');
+        x.fillStyle = g; x.beginPath(); x.arc(cx, cy, r * 2.1, 0, Math.PI * 2); x.fill();
+      }
+      x.fillStyle = on ? '#2dd7f0' : 'rgba(45,215,240,.28)';
+      x.beginPath(); x.arc(cx, cy, r, 0, Math.PI * 2); x.fill();
+      return c.toDataURL('image/png');
+    };
+    let on = true;
+    link.href = draw(true);
+    clearInterval(this._faviconT);
+    this._faviconT = setInterval(() => { on = !on; link.href = draw(on); }, 700);
   }
 
   playAboutParas() {
@@ -1975,6 +2004,8 @@ class Component extends DCLogic {
     if (this._heroIntroTimer) clearTimeout(this._heroIntroTimer);
     if (this._nativeCheck) window.removeEventListener('scroll', this._nativeCheck);
     if (this._snapTimer) clearTimeout(this._snapTimer);
+    if (this._faviconT) clearInterval(this._faviconT);
+    if (this._skillsToContactT) clearTimeout(this._skillsToContactT);
     if (this._reelObserver) this._reelObserver.disconnect();
     if (this._onYTMessage) window.removeEventListener('message', this._onYTMessage);
   }
