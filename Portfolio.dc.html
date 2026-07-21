@@ -33,8 +33,12 @@ a:hover{color:#7fe9f7}
 ::-webkit-scrollbar-track{background:#04070a}
 ::-webkit-scrollbar-thumb{background:#12707a;border-radius:4px}
 
+/* Forced headline line-break markers — only on touch/small layouts */
+.wbrk{display:none}
+
 /* ---- Mobile / phone responsive overrides ---- */
 @media (max-width:1024px){
+  .wbrk{display:block}
   /* Tablet/phone: soften the 3D-carousel reflection and let it fade smoothly top→bottom
      instead of reading as a hard dark block on the taller portrait layout. */
   #work [data-om-label="Carousel Shadow"]{opacity:.21 !important}
@@ -280,7 +284,7 @@ a:hover{color:#7fe9f7}
 <section id="services" ref="{{ setServicesRef }}" style="position:relative;padding:min(12vw,120px) clamp(20px,6vw,80px);border-bottom:1px solid rgba(45,215,240,.12)">
   <div style="text-align:center;margin-bottom:56px">
     <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.25em;color:#2dd7f0;margin-bottom:10px">// {{ copy.servicesLabel }}</div>
-    <h2 ref="{{ setServicesTitleRef }}" style="font-family:'Orbitron',sans-serif;font-size:calc(clamp(26px,3.4vw,42px) * var(--type-scale,1));margin:0;color:#eaf6f8"><sc-for list="{{ servicesTitleWords }}" as="w" hint-placeholder-count="6"><span style="display:inline-block;white-space:nowrap;margin-right:.32em"><sc-for list="{{ w.chars }}" as="c" hint-placeholder-count="4"><span class="tchar" style="display:inline-block;opacity:0;filter:blur(6px)">{{ c.ch }}</span></sc-for></span></sc-for><span class="hud-caret" style="display:inline-block;width:3px;height:.85em;margin-left:3px;background:#2dd7f0;box-shadow:0 0 10px #2dd7f0;vertical-align:-.1em;opacity:0"></span></h2>
+    <h2 ref="{{ setServicesTitleRef }}" style="font-family:'Orbitron',sans-serif;font-size:calc(clamp(26px,3.4vw,42px) * var(--type-scale,1));margin:0;color:#eaf6f8"><sc-for list="{{ servicesTitleWords }}" as="w" hint-placeholder-count="6"><sc-if value="{{ w.br }}"><br class="wbrk"></sc-if><span style="display:inline-block;white-space:nowrap;margin-right:.32em"><sc-for list="{{ w.chars }}" as="c" hint-placeholder-count="4"><span class="tchar" style="display:inline-block;opacity:0;filter:blur(6px)">{{ c.ch }}</span></sc-for></span></sc-for><span class="hud-caret" style="display:inline-block;width:3px;height:.85em;margin-left:3px;background:#2dd7f0;box-shadow:0 0 10px #2dd7f0;vertical-align:-.1em;opacity:0"></span></h2>
   </div>
   <div style="display:flex;flex-wrap:wrap;gap:22px;justify-content:center">
     <sc-for list="{{ services }}" as="svc" hint-placeholder-count="4">
@@ -484,6 +488,8 @@ a:hover{color:#7fe9f7}
     </sc-for>
   </div>
   <div ref="{{ setToolLine }}" style="position:absolute;z-index:19;pointer-events:none;width:1px;height:0;background:linear-gradient(to top,#2dd7f0,rgba(45,215,240,.15));box-shadow:0 0 6px #2dd7f0;transform:translateX(-50%) scaleY(0);transform-origin:bottom;transition:transform .25s ease"></div>
+  <div ref="{{ setToolLine2 }}" style="position:absolute;z-index:19;pointer-events:none;height:1px;width:0;background:linear-gradient(to right,rgba(45,215,240,.15),#2dd7f0);box-shadow:0 0 6px #2dd7f0;transform:scaleX(0);transform-origin:left;transition:transform .25s ease;opacity:0"></div>
+  <div ref="{{ setToolElbow }}" style="position:absolute;z-index:20;pointer-events:none;width:5px;height:5px;margin:-2.5px 0 0 -2.5px;background:#2dd7f0;box-shadow:0 0 8px #2dd7f0;transform:rotate(45deg) scale(0);transition:transform .2s ease;opacity:0"></div>
   <div ref="{{ setToolHud }}" style="position:absolute;z-index:20;pointer-events:none;opacity:0;left:0;top:0;width:290px;max-width:82vw;transform:translate(-50%,-100%) translateY(8px);border:1px solid rgba(45,215,240,.5);background:rgba(7,13,17,.94);backdrop-filter:blur(8px);box-shadow:0 0 30px rgba(45,215,240,.22),0 20px 50px rgba(0,0,0,.6);display:flex;gap:12px;padding:14px;transition:opacity .25s ease,transform .25s ease">
     <div style="position:absolute;top:-1px;left:-1px;width:12px;height:12px;border-top:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
     <div style="position:absolute;top:-1px;right:-1px;width:12px;height:12px;border-top:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
@@ -499,7 +505,7 @@ a:hover{color:#7fe9f7}
 
 <section id="contact" ref="{{ setContactRef }}" style="position: relative; padding: min(14vw,140px) clamp(20px,6vw,80px) 60px; display: flex; flex-direction: column; align-items: center; text-align: center">
   <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.25em;color:#2dd7f0;margin-bottom:14px">// {{ copy.contactLabel }}</div>
-  <h2 ref="{{ setContactTitleRef }}" style="font-family:'Orbitron',sans-serif;font-size:calc(clamp(28px,4vw,52px) * var(--type-scale,1));margin:0 0 20px;color:#eaf6f8;max-width:760px"><sc-for list="{{ contactTitleWords }}" as="w" hint-placeholder-count="6"><span style="display:inline-block;white-space:nowrap;margin-right:.32em"><sc-for list="{{ w.chars }}" as="c" hint-placeholder-count="4"><span class="tchar" style="display:inline-block;opacity:0;filter:blur(6px)">{{ c.ch }}</span></sc-for></span></sc-for><span class="hud-caret" style="display:inline-block;width:3px;height:.85em;margin-left:3px;background:#2dd7f0;box-shadow:0 0 10px #2dd7f0;vertical-align:-.1em;opacity:0"></span></h2>
+  <h2 ref="{{ setContactTitleRef }}" style="font-family:'Orbitron',sans-serif;font-size:calc(clamp(28px,4vw,52px) * var(--type-scale,1));margin:0 0 20px;color:#eaf6f8;max-width:760px"><sc-for list="{{ contactTitleWords }}" as="w" hint-placeholder-count="6"><sc-if value="{{ w.br }}"><br class="wbrk"></sc-if><span style="display:inline-block;white-space:nowrap;margin-right:.32em"><sc-for list="{{ w.chars }}" as="c" hint-placeholder-count="4"><span class="tchar" style="display:inline-block;opacity:0;filter:blur(6px)">{{ c.ch }}</span></sc-for></span></sc-for><span class="hud-caret" style="display:inline-block;width:3px;height:.85em;margin-left:3px;background:#2dd7f0;box-shadow:0 0 10px #2dd7f0;vertical-align:-.1em;opacity:0"></span></h2>
   <sc-if value="{{ showDetail }}" hint-placeholder-val="{{ true }}">
   <p ref="{{ setContactSub }}" style="max-width:520px;font-size:calc(15px * var(--type-scale,1));line-height:1.8;color:rgba(234,246,248,.65);margin:0 0 30px">{{ copy.contactSub }}</p>
   </sc-if>
@@ -1037,6 +1043,32 @@ class Component extends DCLogic {
     const cx = br.left + br.width / 2 - sr.left;
     const btnTop = br.top - sr.top;
     const LINE = 42;
+    const touch = this._isTouch();
+    const line2 = this._toolLine2, elbow = this._toolElbow;
+    if (touch) {
+      // Popup can't hang centered over an edge button without overflowing the screen,
+      // so on touch it always sits centered in the section; a HUD elbow connects the
+      // button up to the popup: vertical riser from the chip, then a horizontal jog.
+      const centerX = sr.width / 2;
+      const elbowY = btnTop - LINE;
+      if (line) { line.style.left = cx + 'px'; line.style.top = elbowY + 'px'; line.style.height = LINE + 'px'; line.style.transform = 'translateX(-50%) scaleY(0)'; void line.offsetHeight; line.style.transform = 'translateX(-50%) scaleY(1)'; }
+      if (line2) {
+        const x0 = Math.min(cx, centerX), w = Math.abs(centerX - cx);
+        line2.style.left = x0 + 'px'; line2.style.top = elbowY + 'px'; line2.style.width = w + 'px';
+        line2.style.transformOrigin = cx <= centerX ? 'left' : 'right';
+        line2.style.opacity = '1'; line2.style.transform = 'scaleX(0)'; void line2.offsetHeight; line2.style.transform = 'scaleX(1)';
+      }
+      if (elbow) { elbow.style.left = cx + 'px'; elbow.style.top = elbowY + 'px'; elbow.style.opacity = '1'; elbow.style.transform = 'rotate(45deg) scale(0)'; void elbow.offsetHeight; elbow.style.transform = 'rotate(45deg) scale(1)'; }
+      if (card) {
+        card.style.left = centerX + 'px'; card.style.top = elbowY + 'px';
+        card.style.opacity = '0'; card.style.transform = 'translate(-50%,-100%) translateY(8px)';
+        clearTimeout(this._toolCardT);
+        this._toolCardT = setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translate(-50%,-100%) translateY(0)'; }, 160);
+      }
+      return;
+    }
+    if (line2) { line2.style.opacity = '0'; line2.style.transform = 'scaleX(0)'; }
+    if (elbow) { elbow.style.opacity = '0'; elbow.style.transform = 'rotate(45deg) scale(0)'; }
     if (line) { line.style.left = cx + 'px'; line.style.top = (btnTop - LINE) + 'px'; line.style.height = LINE + 'px'; line.style.transform = 'translateX(-50%) scaleY(0)'; void line.offsetHeight; line.style.transform = 'translateX(-50%) scaleY(1)'; }
     if (card) {
       card.style.left = cx + 'px'; card.style.top = (btnTop - LINE) + 'px';
@@ -1054,6 +1086,8 @@ class Component extends DCLogic {
     this._toolBtns.forEach((b) => { if (!b) return; b.style.opacity = '1'; b.style.borderColor = 'rgba(45,215,240,.3)'; b.style.boxShadow = 'none'; b.style.background = 'rgba(45,215,240,.04)'; b.style.color = '#eaf6f8'; });
     if (this._toolHud) { this._toolHud.style.opacity = '0'; this._toolHud.style.transform = 'translate(-50%,-100%) translateY(8px)'; }
     if (this._toolLine) { this._toolLine.style.transform = 'translateX(-50%) scaleY(0)'; }
+    if (this._toolLine2) { this._toolLine2.style.opacity = '0'; this._toolLine2.style.transform = 'scaleX(0)'; }
+    if (this._toolElbow) { this._toolElbow.style.opacity = '0'; this._toolElbow.style.transform = 'rotate(45deg) scale(0)'; }
   }
 
   playCareerLog() {
@@ -2249,6 +2283,7 @@ class Component extends DCLogic {
 
     const toChars = (s) => s.split('').map((ch, k) => ({ ch: ch === ' ' ? '\u00A0' : ch, k }));
     const toWords = (s) => s.split(' ').map((word, wi) => ({ wi, chars: word.split('').map((ch, k) => ({ ch, k })) }));
+    const withBreak = (words, idx) => { if (idx >= 0 && words[idx]) words[idx] = { ...words[idx], br: true }; return words; };
     const showDetail = (this.props.contentDensity ?? 'full') !== 'minimal';
     const careerBase = lang === 'en' ? CAREER_EN : CAREER_VI;
     const detailsLabel = lang === 'en' ? 'DETAILS ›' : 'CHI TIẾT ›';
@@ -2325,6 +2360,8 @@ class Component extends DCLogic {
       setRecLabel: (el) => { this._recLabel = el; },
       setSkillsHead: (el) => { this._skillsHead = el; },
       setToolLine: (el) => { this._toolLine = el; },
+      setToolLine2: (el) => { this._toolLine2 = el; },
+      setToolElbow: (el) => { this._toolElbow = el; },
       setToolHud: (el) => { this._toolHud = el; },
       setToolHudLogo: (el) => { this._toolHudLogo = el; },
       setToolHudName: (el) => { this._toolHudName = el; },
@@ -2356,11 +2393,11 @@ class Component extends DCLogic {
       setHeroRoleRef: (el) => { this.heroRoleEl = el; },
       setHeroCtaRef: (el) => { this.heroCtaEl = el; },
       aboutTitleWords: toWords(copy.aboutTitle),
-      servicesTitleWords: toWords(copy.servicesTitle),
+      servicesTitleWords: withBreak(toWords(copy.servicesTitle), 2),
       reelTitleWords: toWords(copy.reelTitle),
       workTitleWords: toWords(copy.workTitle),
       skillsTitleWords: toWords(copy.skillsTitle),
-      contactTitleWords: toWords(copy.contactTitle),
+      contactTitleWords: withBreak(toWords(copy.contactTitle), lang === 'en' ? 3 : -1),
       setAboutTitleRef: (el) => { this.aboutTitleEl = el; },
       setAboutTextCol: (el) => { this._aboutTextCol = el; },
       setServicesTitleRef: (el) => { this.servicesTitleEl = el; },
