@@ -126,12 +126,12 @@ a:hover{color:#7fe9f7}
   </div>
 
   <div style="position: absolute; left: clamp(16px,4vw,56px); top: 50%; transform: translateY(-50%); z-index: 4; display: flex; flex-direction: column; gap: 10px" data-om-label="Hero_L_Text">
-    <div ref="{{ setTechText }}" style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.2em;color:#2dd7f0;writing-mode:vertical-rl;will-change:transform,opacity;-webkit-mask-image:linear-gradient(to bottom,black 50%,transparent 50%);mask-image:linear-gradient(to bottom,black 50%,transparent 50%);-webkit-mask-size:100% 200%;mask-size:100% 200%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:0% 0%;mask-position:0% 0%">Tech in vein</div>
+    <div ref="{{ setTechText }}" style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.2em;color:#2dd7f0;writing-mode:vertical-rl;will-change:transform,opacity">Tech in vein</div>
     <div ref="{{ setTechBar }}" style="width:1px;height:70px;background:linear-gradient(#2dd7f0,transparent);margin:0 auto;will-change:transform,opacity"></div>
   </div>
   <div style="position: absolute; right: clamp(16px,4vw,56px); top: 50%; transform: translateY(-50%); z-index: 4; display: flex; flex-direction: column; gap: 10px; align-items: center" data-om-label="Hero_R_Text">
     <div ref="{{ setMotionBar }}" style="width:1px;height:70px;background:linear-gradient(transparent,#2dd7f0);will-change:transform,opacity"></div>
-    <div ref="{{ setMotionText }}" style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.2em;color:#2dd7f0;writing-mode:vertical-rl;will-change:transform,opacity;-webkit-mask-image:linear-gradient(to bottom,transparent 50%,black 50%);mask-image:linear-gradient(to bottom,transparent 50%,black 50%);-webkit-mask-size:100% 200%;mask-size:100% 200%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:0% 100%;mask-position:0% 100%">Motion in breath</div>
+    <div ref="{{ setMotionText }}" style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.2em;color:#2dd7f0;writing-mode:vertical-rl;will-change:transform,opacity">Motion in breath</div>
   </div>
 
   <div style="position: absolute; bottom: 254px; left: 0; right: 0; z-index: 5; display: flex; flex-direction: column; align-items: center; gap: 18px" data-om-label="Title">
@@ -1169,6 +1169,19 @@ class Component extends DCLogic {
   }
 
   heroSideIn() {
+    // Mask-wipe reveal is a desktop-only nicety. On phone/tablet it could freeze
+    // mid-wipe and truncate the labels ("Tech in…"), so the mask is applied here only
+    // on desktop; mobile keeps the plain, always-full text.
+    if (!this._nativeScroll) {
+      const mask = (el, dir) => {
+        if (!el) return;
+        const g = dir === 'top' ? 'linear-gradient(to bottom,black 50%,transparent 50%)' : 'linear-gradient(to bottom,transparent 50%,black 50%)';
+        el.style.webkitMaskImage = g; el.style.maskImage = g;
+        el.style.webkitMaskSize = '100% 200%'; el.style.maskSize = '100% 200%';
+        el.style.webkitMaskRepeat = 'no-repeat'; el.style.maskRepeat = 'no-repeat';
+      };
+      mask(this._techText, 'top'); mask(this._motionText, 'bottom');
+    }
     const inBar = (el, fromBelow) => {
       if (!el) return;
       el.style.transition = 'none';
@@ -1196,12 +1209,6 @@ class Component extends DCLogic {
     };
     inBar(this._techBar, true); inText(this._techText, true, '0% 0%', 360);
     inBar(this._motionBar, false); inText(this._motionText, false, '0% 100%', 360);
-    // Phone/tablet: the mask-wipe reveal can get stranded mid-transition (interrupted
-    // swipe → truncated "Tech in…" / "Motion in…"). Drop the mask so the text is always
-    // fully painted; it simply scrolls away with the hero on native scroll.
-    if (this._nativeScroll) {
-      [this._techText, this._motionText].forEach((el) => { if (el) { el.style.webkitMaskImage = 'none'; el.style.maskImage = 'none'; } });
-    }
   }
 
   playSidesOut() {
