@@ -132,7 +132,7 @@ a:hover{color:#7fe9f7}
   <div style="position: absolute; right: clamp(16px,4vw,56px); top: 50%; transform: translateY(-50%); z-index: 4; display: flex; flex-direction: column; gap: 10px; align-items: center" data-om-label="Hero_R_Text">
     <div ref="{{ setMotionBar }}" style="width:1px;height:70px;background:linear-gradient(transparent,#2dd7f0);will-change:transform,opacity"></div>
     <div ref="{{ setMotionText }}" style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.2em;color:#2dd7f0;writing-mode:vertical-rl;will-change:transform,opacity;-webkit-mask-image:linear-gradient(to bottom,transparent 50%,black 50%);mask-image:linear-gradient(to bottom,transparent 50%,black 50%);-webkit-mask-size:100% 200%;mask-size:100% 200%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:0% 100%;mask-position:0% 100%">Motion in breath</div>
-  </div><video ref="{{ setPortalVideo }}" src="uploads/Digital Circular Stage_R2.mp4" autoplay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" style="position: absolute; z-index: -10; bottom: -4vh; left: 50%; transform: translateX(-50%); width: 1104px; mix-blend-mode: multiply; pointer-events: none; -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 55%,black 55%,transparent 78%); mask-image: radial-gradient(ellipse 50% 50% at 50% 55%,black 55%,transparent 78%); top: 748px; height: 579px; opacity: 0"></video>
+  </div>
 
   <div style="position: absolute; bottom: 254px; left: 0; right: 0; z-index: 5; display: flex; flex-direction: column; align-items: center; gap: 18px" data-om-label="Title">
     <div ref="{{ setHeroRoleRef }}" style="font-family: 'Orbitron',sans-serif; font-size: calc(20px * 0.9); letter-spacing: .25em; color: #EAF6F800; text-align: center; padding: 0 20px; font-weight: 800; display: inline"><sc-for list="{{ heroRoleWords }}" as="w" hint-placeholder-count="6"><span style="display:inline-block;white-space:nowrap;margin-right:.32em"><sc-for list="{{ w.chars }}" as="c" hint-placeholder-count="4"><span class="tchar" style="display:inline-block;opacity:0;filter:blur(6px)">{{ c.ch }}</span></sc-for></span></sc-for><span class="hud-caret" style="display:inline-block;width:3px;height:.85em;margin-left:3px;background:#2dd7f0;box-shadow:0 0 10px #2dd7f0;vertical-align:-.1em;opacity:0"></span></div>
@@ -730,13 +730,6 @@ class Component extends DCLogic {
         setTimeout(() => { this._heroIntroDone = true; }, 650);
       });
     }, 1500);
-    const v = this._portalVideo;
-    if (v) {
-      v.muted = true;
-      const tryPlay = () => v.play().catch(() => {});
-      tryPlay();
-      window.addEventListener('pointerdown', tryPlay, { once: true });
-    }
 
     // ---- Scroll-snap navigation ----
     this._curSection = 0;
@@ -2446,10 +2439,6 @@ class Component extends DCLogic {
       setHeroGrid: (el) => { this.heroGridEl = el; },
       setHeroSlogan: (el) => { this.heroSloganEl = el; },
       setHeroPortrait: (el) => { this.heroPortraitEl = el; },
-      setPortalVideo: (el) => {
-        this._portalVideo = el;
-        if (el) { el.muted = true; el.play().catch(() => {}); }
-      },
       setAboutRef: (el) => { this.aboutEl = el; },
       setServicesRef: (el) => { this.servicesEl = el; },
       setReelRef: (el) => { this.reelEl = el; },
