@@ -840,7 +840,20 @@ class Component extends DCLogic {
       else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); this.snap(-1); }
     };
     window.addEventListener('keydown', this._onKeyNav);
+    // Reliable touch-capability probe (independent of a transient innerWidth read).
+    this._isTouchDevice = () => ('ontouchstart' in window)
+      || (window.matchMedia && window.matchMedia('(pointer:coarse)').matches)
+      || window.innerWidth <= 1024;
+    // Safety: on touch, guarantee the side labels carry no mask (kills the first-load
+    // truncation seen when the hero renders before the viewport settles).
+    this._stripSideMasks = () => {
+      if (!this._isTouchDevice()) return;
+      [this._techText, this._motionText].forEach((el) => { if (el) { el.style.webkitMaskImage = 'none'; el.style.maskImage = 'none'; } });
+    };
+    window.addEventListener('load', this._stripSideMasks);
+    window.addEventListener('orientationchange', () => setTimeout(this._stripSideMasks, 200));
     setTimeout(() => this.heroSideIn(), 900);
+    setTimeout(this._stripSideMasks, 1400);
 
     this._reelObserver = new IntersectionObserver((entries) => {
       entries.forEach((e) => { if (!e.isIntersecting) this.stopReel(); });
@@ -1171,8 +1184,10 @@ class Component extends DCLogic {
   heroSideIn() {
     // Mask-wipe reveal is a desktop-only nicety. On phone/tablet it could freeze
     // mid-wipe and truncate the labels ("Tech in…"), so the mask is applied here only
-    // on desktop; mobile keeps the plain, always-full text.
-    if (!this._nativeScroll) {
+    // on true (non-touch) desktop. NOTE: don't trust a one-off window.innerWidth read
+    // (it's unreliable during a Zalo→Safari hand-off); use the touch capability, which
+    // is stable, so the mask is never applied on a phone in the first place.
+    if (!this._isTouchDevice()) {
       const mask = (el, dir) => {
         if (!el) return;
         const g = dir === 'top' ? 'linear-gradient(to bottom,black 50%,transparent 50%)' : 'linear-gradient(to bottom,transparent 50%,black 50%)';
@@ -1209,6 +1224,7 @@ class Component extends DCLogic {
     };
     inBar(this._techBar, true); inText(this._techText, true, '0% 0%', 360);
     inBar(this._motionBar, false); inText(this._motionText, false, '0% 100%', 360);
+    this._stripSideMasks();
   }
 
   playSidesOut() {
