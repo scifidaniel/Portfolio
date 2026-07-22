@@ -840,20 +840,7 @@ class Component extends DCLogic {
       else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); this.snap(-1); }
     };
     window.addEventListener('keydown', this._onKeyNav);
-    // Reliable touch-capability probe (independent of a transient innerWidth read).
-    this._isTouchDevice = () => ('ontouchstart' in window)
-      || (window.matchMedia && window.matchMedia('(pointer:coarse)').matches)
-      || window.innerWidth <= 1024;
-    // Safety: on touch, guarantee the side labels carry no mask (kills the first-load
-    // truncation seen when the hero renders before the viewport settles).
-    this._stripSideMasks = () => {
-      if (!this._isTouchDevice()) return;
-      [this._techText, this._motionText].forEach((el) => { if (el) { el.style.webkitMaskImage = 'none'; el.style.maskImage = 'none'; } });
-    };
-    window.addEventListener('load', this._stripSideMasks);
-    window.addEventListener('orientationchange', () => setTimeout(this._stripSideMasks, 200));
     setTimeout(() => this.heroSideIn(), 900);
-    setTimeout(this._stripSideMasks, 1400);
 
     this._reelObserver = new IntersectionObserver((entries) => {
       entries.forEach((e) => { if (!e.isIntersecting) this.stopReel(); });
@@ -1182,21 +1169,9 @@ class Component extends DCLogic {
   }
 
   heroSideIn() {
-    // Mask-wipe reveal is a desktop-only nicety. On phone/tablet it could freeze
-    // mid-wipe and truncate the labels ("Tech in…"), so the mask is applied here only
-    // on true (non-touch) desktop. NOTE: don't trust a one-off window.innerWidth read
-    // (it's unreliable during a Zalo→Safari hand-off); use the touch capability, which
-    // is stable, so the mask is never applied on a phone in the first place.
-    if (!this._isTouchDevice()) {
-      const mask = (el, dir) => {
-        if (!el) return;
-        const g = dir === 'top' ? 'linear-gradient(to bottom,black 50%,transparent 50%)' : 'linear-gradient(to bottom,transparent 50%,black 50%)';
-        el.style.webkitMaskImage = g; el.style.maskImage = g;
-        el.style.webkitMaskSize = '100% 200%'; el.style.maskSize = '100% 200%';
-        el.style.webkitMaskRepeat = 'no-repeat'; el.style.maskRepeat = 'no-repeat';
-      };
-      mask(this._techText, 'top'); mask(this._motionText, 'bottom');
-    }
+    // Reveal the side labels with a plain fade + slide (no mask). The old mask-wipe
+    // was the sole cause of the labels rendering truncated ("Tech in…") on some
+    // first-load / in-app-browser states — removed entirely for good.
     const inBar = (el, fromBelow) => {
       if (!el) return;
       el.style.transition = 'none';
@@ -1209,42 +1184,36 @@ class Component extends DCLogic {
         el.style.transform = 'translateY(0)';
       }, 20);
     };
-    const inText = (el, fromBelow, visPos, delay) => {
+    const inText = (el, fromBelow, delay) => {
       if (!el) return;
       el.style.transition = 'none';
       el.style.opacity = '0';
       el.style.transform = `translateY(${fromBelow ? '18px' : '-18px'})`;
-      el.style.webkitMaskPosition = visPos;
-      el.style.maskPosition = visPos;
       setTimeout(() => {
         el.style.transition = 'opacity .45s ease, transform .55s cubic-bezier(.2,.8,.25,1)';
         el.style.opacity = '1';
         el.style.transform = 'translateY(0)';
       }, delay);
     };
-    inBar(this._techBar, true); inText(this._techText, true, '0% 0%', 360);
-    inBar(this._motionBar, false); inText(this._motionText, false, '0% 100%', 360);
-    this._stripSideMasks();
+    inBar(this._techBar, true); inText(this._techText, true, 360);
+    inBar(this._motionBar, false); inText(this._motionText, false, 360);
   }
 
   playSidesOut() {
-    // Native scroll (phone/tablet): no mask-wipe exit — the sides just scroll off with
-    // the hero. Prevents the mask from freezing mid-wipe and truncating the labels.
-    if (this._nativeScroll) return;
     const outBar = (bar, up) => {
       if (!bar) return;
       bar.style.transition = 'transform .6s ease-in, opacity .3s .45s';
       bar.style.transform = `translateY(${up ? '-280%' : '280%'})`;
       bar.style.opacity = '0';
     };
-    const outText = (el, hidePos) => {
+    const outText = (el, up) => {
       if (!el) return;
-      el.style.transition = '-webkit-mask-position .55s linear, mask-position .55s linear';
-      el.style.webkitMaskPosition = hidePos;
-      el.style.maskPosition = hidePos;
+      el.style.transition = 'opacity .4s ease, transform .55s cubic-bezier(.4,0,.7,.2)';
+      el.style.opacity = '0';
+      el.style.transform = `translateY(${up ? '-18px' : '18px'})`;
     };
-    outBar(this._techBar, true); outText(this._techText, '0% 100%');
-    outBar(this._motionBar, false); outText(this._motionText, '0% 0%');
+    outBar(this._techBar, true); outText(this._techText, true);
+    outBar(this._motionBar, false); outText(this._motionText, false);
   }
 
   triggerSection(i) {
