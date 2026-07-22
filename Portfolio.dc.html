@@ -1196,9 +1196,18 @@ class Component extends DCLogic {
     };
     inBar(this._techBar, true); inText(this._techText, true, '0% 0%', 360);
     inBar(this._motionBar, false); inText(this._motionText, false, '0% 100%', 360);
+    // Phone/tablet: the mask-wipe reveal can get stranded mid-transition (interrupted
+    // swipe → truncated "Tech in…" / "Motion in…"). Drop the mask so the text is always
+    // fully painted; it simply scrolls away with the hero on native scroll.
+    if (this._nativeScroll) {
+      [this._techText, this._motionText].forEach((el) => { if (el) { el.style.webkitMaskImage = 'none'; el.style.maskImage = 'none'; } });
+    }
   }
 
   playSidesOut() {
+    // Native scroll (phone/tablet): no mask-wipe exit — the sides just scroll off with
+    // the hero. Prevents the mask from freezing mid-wipe and truncating the labels.
+    if (this._nativeScroll) return;
     const outBar = (bar, up) => {
       if (!bar) return;
       bar.style.transition = 'transform .6s ease-in, opacity .3s .45s';
@@ -1497,7 +1506,12 @@ class Component extends DCLogic {
   }
 
   scrollToSection(i, done) {
-    const targetY = i === 0 ? 0 : (this._snapTargets[i] ? this._snapTargets[i].offsetTop : 0);
+    // Phone/tablet: land the section below the fixed header so its label + headline
+    // aren't clipped (desktop snap keeps flush alignment).
+    const headerOffset = (i !== 0 && this._nativeScroll)
+      ? (((document.querySelector('nav') || {}).offsetHeight || 72) + 16)
+      : 0;
+    const targetY = i === 0 ? 0 : (this._snapTargets[i] ? Math.max(0, this._snapTargets[i].offsetTop - headerOffset) : 0);
     const startY = window.scrollY;
     const dist = targetY - startY;
     if (Math.abs(dist) < 2) { window.scrollTo(0, targetY); if (done) done(); return; }
