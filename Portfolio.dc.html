@@ -23,6 +23,7 @@
 @keyframes portalFade{0%{opacity:0}20%{opacity:.85}30%{opacity:.3}45%{opacity:.95}100%{opacity:1}}
 @keyframes holoRise{0%{opacity:0;clip-path:inset(100% 0 0 0);transform:translateY(16%)}12%{opacity:.55}18%{opacity:.15}28%{opacity:.75}38%{opacity:.35}50%{opacity:.9}62%{opacity:.6}100%{opacity:1;clip-path:inset(0 0 0 0);transform:translateY(0)}}
 @keyframes hudPulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+@keyframes hudDash{to{stroke-dashoffset:-34}}
 @keyframes statGlitch{0%{opacity:0;transform:translate(0,0);clip-path:inset(0 0 0 0)}8%{opacity:1;transform:translate(-5px,0);clip-path:inset(22% 0 48% 0)}20%{transform:translate(6px,0);clip-path:inset(58% 0 8% 0)}32%{transform:translate(-4px,0);clip-path:inset(8% 0 66% 0)}46%{transform:translate(3px,0);clip-path:inset(38% 0 30% 0)}62%{transform:translate(-2px,0);clip-path:inset(0 0 0 0)}100%{opacity:1;transform:translate(0,0);clip-path:inset(0 0 0 0)}}
 
 body{margin:0;background:#04070a;font-family:'Chakra Petch',sans-serif;overflow-x:clip}
@@ -45,11 +46,36 @@ a:hover{color:#7fe9f7}
   #work [data-om-label="Carousel Shadow"]{opacity:.21 !important}
   #work [data-om-label="Shadow fade"]{display:none !important}
   #work [data-om-label="Shadow fade mobile"]{display:block !important}
+  #aiprod [data-om-label="AI Carousel Shadow"]{opacity:.21 !important}
+  #aiprod [data-om-label="AI Shadow fade"]{display:none !important}
+  #aiprod [data-om-label="AI Shadow fade mobile"]{display:block !important}
   /* Banners header: stack title+close on top, tabs on their own row with breathing room */
   [data-om-label="Banner header"]{grid-template-columns:1fr auto !important;grid-template-areas:"info close" "tabs tabs" !important;align-items:start !important;row-gap:18px !important}
   [data-om-label="Banner header"] > div:nth-child(1){grid-area:info}
   [data-om-label="Banner header"] > div:nth-child(2){grid-area:tabs;justify-self:start !important;flex-wrap:wrap !important}
   [data-om-label="Banner header"] > button{grid-area:close}
+  [data-pipe-shot]{margin-left:auto !important;margin-right:auto !important}
+  [data-pipe-chips]{justify-content:center !important}
+  /* Cluster header: title and module count on their own centred lines */
+  [data-pipe-cl-head]{flex-direction:column !important;align-items:center !important;gap:6px !important;padding-bottom:11px !important;margin-bottom:16px !important}
+  [data-pipe-cl-head] > div:last-child{white-space:normal !important}
+  /* Module chips: two per row, roomier */
+  [data-pipe-chips]{display:grid !important;grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:12px !important;max-width:420px;margin-left:auto;margin-right:auto}
+  [data-pipe-chips] > div{padding:12px 14px !important;text-align:center;display:flex;align-items:center;justify-content:center}
+  /* Pipeline & Tooling: centre everything on phone/tablet */
+  #pipeline, [data-pipe-modal]{text-align:center}
+  #pipeline [style*="flex-wrap: wrap"], [data-pipe-modal] [style*="flex-wrap: wrap"]{justify-content:center !important}
+  [data-pipe-modal] [style*="align-items: baseline"]{justify-content:center !important}
+  [data-pipe-modal] [style*="margin-left: auto"]{margin-left:0 !important}
+  /* Step flow: stack vertically, arrow points down */
+  [data-pipe-flow]{flex-direction:column !important;align-items:center !important;flex-wrap:nowrap !important}
+  [data-pipe-step]{flex:0 0 auto !important;width:100% !important;max-width:340px;flex-direction:column !important;align-items:stretch !important}
+  [data-pipe-arrow]{flex:0 0 16px !important;height:16px;align-self:center;transform:rotate(90deg)}
+  [data-pipe-mod]{grid-template-columns:1fr !important;gap:4px !important}
+  [data-about-text]{text-align:center}
+  [data-pipe-spot-lbl]{white-space:pre-line}
+  /* Case-study block headings: centre the label, rule on both sides */
+  [data-pipe-head]::before{content:"";flex:1;height:1px;background:rgba(45,215,240,.16)}
 }
 @media (max-width:768px){
   html,body{overflow-x:clip}
@@ -79,12 +105,149 @@ a:hover{color:#7fe9f7}
   #hero [data-om-label="Portray"] > div > div{transform:scale(1.14) !important}
   #hero [data-om-label="Slogan"] > div{font-size:clamp(15px,3.4vh,30px) !important}
 }
+/* Nav: 7 links need more room — tighten type & gaps until the header fits */
+@media (min-width:769px) and (max-width:1180px){
+  nav{padding:16px clamp(16px,2.4vw,28px) !important}
+  nav > div:first-child > div:last-child{font-size:14px !important;white-space:nowrap}
+  nav > div:last-child{gap:clamp(10px,1.5vw,18px) !important}
+  nav a{font-size:10px !important;letter-spacing:.06em !important}
+}
+@media (min-width:769px) and (max-width:880px){
+  nav > div:first-child > div:last-child{font-size:12px !important}
+  nav > div:last-child{gap:8px !important}
+  nav a{font-size:9.5px !important;letter-spacing:.02em !important}
+  nav button{padding:5px 8px !important}
+}
 /* Contact form: stack fields into one column on narrow screens */
 @media (max-width:600px){
   [data-cf-grid]{grid-template-columns:1fr !important}
 }
+/* AI Production deck strip: thin cyan scrollbar (all breakpoints) */
+[data-ai-deck]{scrollbar-width:thin;scrollbar-color:#2dd7f0 rgba(45,215,240,.10)}
+[data-ai-deck]::-webkit-scrollbar{height:4px}
+[data-ai-deck]::-webkit-scrollbar-track{background:rgba(45,215,240,.10);border-radius:2px}
+[data-ai-deck]::-webkit-scrollbar-thumb{background:#2dd7f0;border-radius:2px}
+/* Phone/tablet: stack the AI carousel control pill (title → arrows → mini disc) */
+@media (max-width:1024px){
+  [data-om-label="AI Control pill"] > div{flex-direction:column !important;gap:10px !important}
+  [data-om-label="AI Control pill"] > div > div:first-child{width:210px !important;flex:0 0 auto !important}
+}
+/* Phone: centre the AI project card content */
+@media (max-width:768px){
+  [data-ai-info]{padding-right:0 !important;text-align:center !important}
+  [data-ai-info] button{margin-left:auto !important;margin-right:auto !important}
+}
 </style>
 </helmet>
+
+<meta name="ext-resource-dependency" content="uploads/Hologram_BG remove04.png" data-resource-id="asset1" />
+<meta name="ext-resource-dependency" content="uploads/deep-collect-panel.png" data-resource-id="asset2" />
+<meta name="ext-resource-dependency" content="uploads/master-panel.png" data-resource-id="asset3" />
+<meta name="ext-resource-dependency" content="uploads/pm-blank-grid.png" data-resource-id="asset4" />
+<meta name="ext-resource-dependency" content="uploads/pm-error-dialog.png" data-resource-id="asset5" />
+<meta name="ext-resource-dependency" content="uploads/C4_EN_SNAP_s9x16_IMG_010673_R1.png" data-resource-id="asset6" />
+<meta name="ext-resource-dependency" content="uploads/FB_C1_IMG_1x1_15s_006686_R3_00084.png" data-resource-id="asset7" />
+<meta name="ext-resource-dependency" content="uploads/Julibee.jpg" data-resource-id="asset8" />
+<meta name="ext-resource-dependency" content="uploads/IMG1x1_005274_R0_00465.png" data-resource-id="asset9" />
+<meta name="ext-resource-dependency" content="uploads/IMG16x9_005274_R0_00465_00465.png" data-resource-id="asset10" />
+<meta name="ext-resource-dependency" content="uploads/01 Asus Zenbook Duo_00789.jpg" data-resource-id="asset11" />
+<meta name="ext-resource-dependency" content="uploads/02 BIC Pen_00097.jpg" data-resource-id="asset12" />
+<meta name="ext-resource-dependency" content="uploads/03 HART Tools_00097.jpg" data-resource-id="asset13" />
+<meta name="ext-resource-dependency" content="uploads/04 Neat_00408.jpg" data-resource-id="asset14" />
+<meta name="ext-resource-dependency" content="uploads/05 Del Mar_00079.jpg" data-resource-id="asset15" />
+<meta name="ext-resource-dependency" content="uploads/06 Yelp_00405.jpg" data-resource-id="asset16" />
+<meta name="ext-resource-dependency" content="uploads/07 COX_00500.jpg" data-resource-id="asset17" />
+<meta name="ext-resource-dependency" content="uploads/08 Brumate.jpg" data-resource-id="asset18" />
+<meta name="ext-resource-dependency" content="uploads/Port 01_00511.jpg" data-resource-id="asset19" />
+<meta name="ext-resource-dependency" content="uploads/Port 02_00197.jpg" data-resource-id="asset20" />
+<meta name="ext-resource-dependency" content="uploads/Port 03_00253.jpg" data-resource-id="asset21" />
+<meta name="ext-resource-dependency" content="uploads/Port 04_00314.jpg" data-resource-id="asset22" />
+<meta name="ext-resource-dependency" content="uploads/Port 05_00498.jpg" data-resource-id="asset23" />
+<meta name="ext-resource-dependency" content="uploads/Port 06_00973.jpg" data-resource-id="asset24" />
+<meta name="ext-resource-dependency" content="uploads/Port 07_01282.jpg" data-resource-id="asset25" />
+<meta name="ext-resource-dependency" content="uploads/Port 08_01282.jpg" data-resource-id="asset26" />
+<meta name="ext-resource-dependency" content="uploads/Capcut logo.png" data-resource-id="asset27" />
+<meta name="ext-resource-dependency" content="uploads/Blender logo.png" data-resource-id="asset28" />
+<meta name="ext-resource-dependency" content="uploads/VEO 3 logo.png" data-resource-id="asset29" />
+<meta name="ext-resource-dependency" content="uploads/Claude logo.png" data-resource-id="asset30" />
+<meta name="ext-resource-dependency" content="uploads/Gemini logo.png" data-resource-id="asset31" />
+<meta name="ext-resource-dependency" content="uploads/Elevenlabs logo.png" data-resource-id="asset32" />
+<meta name="ext-resource-dependency" content="uploads/bytedance-color.svg" data-resource-id="asset34" />
+<meta name="ext-resource-dependency" content="uploads/kling-ai-seeklogo.svg" data-resource-id="asset35" />
+<meta name="ext-resource-dependency" content="uploads/chatgpt-white.svg" data-resource-id="asset36" />
+<meta name="ext-resource-dependency" content="uploads/Icon.jpeg" data-resource-id="asset37" />
+<meta name="ext-resource-dependency" content="uploads/Port 05_00498-4f8801b5.jpg" data-resource-id="asset33" />
+<meta name="ext-resource-dependency" content="uploads/ai/air6-deck-01.png" data-resource-id="aiasset1" />
+<meta name="ext-resource-dependency" content="uploads/ai/air6-deck-02.png" data-resource-id="aiasset2" />
+<meta name="ext-resource-dependency" content="uploads/ai/air6-deck-03.png" data-resource-id="aiasset3" />
+<meta name="ext-resource-dependency" content="uploads/ai/air6-deck-04.png" data-resource-id="aiasset4" />
+<meta name="ext-resource-dependency" content="uploads/ai/air6-deck-05.png" data-resource-id="aiasset5" />
+<meta name="ext-resource-dependency" content="uploads/ai/air6-deck-06.png" data-resource-id="aiasset6" />
+<meta name="ext-resource-dependency" content="uploads/ai/air6-deck-07.png" data-resource-id="aiasset7" />
+<meta name="ext-resource-dependency" content="uploads/ai/air6-deck-08.png" data-resource-id="aiasset8" />
+<meta name="ext-resource-dependency" content="uploads/ai/air6-deck-09.png" data-resource-id="aiasset9" />
+<meta name="ext-resource-dependency" content="uploads/ai/air6-deck-10.png" data-resource-id="aiasset10" />
+<meta name="ext-resource-dependency" content="uploads/ai/air6-deck-11.png" data-resource-id="aiasset11" />
+<meta name="ext-resource-dependency" content="uploads/ai/air6-deck-12.png" data-resource-id="aiasset12" />
+<meta name="ext-resource-dependency" content="uploads/ai/air6-tvc.mp4" data-resource-id="aiassetvid" />
+<meta name="ext-resource-dependency" content="uploads/ai/sb-deck-01.png" data-resource-id="sbdeck1" />
+<meta name="ext-resource-dependency" content="uploads/ai/sb-deck-02.png" data-resource-id="sbdeck2" />
+<meta name="ext-resource-dependency" content="uploads/ai/sb-deck-03.png" data-resource-id="sbdeck3" />
+<meta name="ext-resource-dependency" content="uploads/ai/sb-deck-04.png" data-resource-id="sbdeck4" />
+<meta name="ext-resource-dependency" content="uploads/ai/sb-deck-05.png" data-resource-id="sbdeck5" />
+<meta name="ext-resource-dependency" content="uploads/ai/sb-deck-06.png" data-resource-id="sbdeck6" />
+<meta name="ext-resource-dependency" content="uploads/ai/sb-deck-07.png" data-resource-id="sbdeck7" />
+<meta name="ext-resource-dependency" content="uploads/ai/sb-deck-08.png" data-resource-id="sbdeck8" />
+<meta name="ext-resource-dependency" content="uploads/ai/sb-deck-09.png" data-resource-id="sbdeck9" />
+<meta name="ext-resource-dependency" content="uploads/ai/sb-deck-10.png" data-resource-id="sbdeck10" />
+<meta name="ext-resource-dependency" content="uploads/ai/sb-deck-11.png" data-resource-id="sbdeck11" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-01.png" data-resource-id="odeck1" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-02.png" data-resource-id="odeck2" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-03.png" data-resource-id="odeck3" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-04.png" data-resource-id="odeck4" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-05.png" data-resource-id="odeck5" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-06.png" data-resource-id="odeck6" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-07.png" data-resource-id="odeck7" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-08.png" data-resource-id="odeck8" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-09.png" data-resource-id="odeck9" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-10.png" data-resource-id="odeck10" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-11.png" data-resource-id="odeck11" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-12.png" data-resource-id="odeck12" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-13.png" data-resource-id="odeck13" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-14.png" data-resource-id="odeck14" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-15.png" data-resource-id="odeck15" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-16.png" data-resource-id="odeck16" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-01.png" data-resource-id="aistill1" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-02.png" data-resource-id="aistill2" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-03.png" data-resource-id="aistill3" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-04.png" data-resource-id="aistill4" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-05.png" data-resource-id="aistill5" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-06.png" data-resource-id="aistill6" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-07.png" data-resource-id="aistill7" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-08.png" data-resource-id="aistill8" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-09.png" data-resource-id="aistill9" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-10.png" data-resource-id="aistill10" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-11.png" data-resource-id="aistill11" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-12.png" data-resource-id="aistill12" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-13.png" data-resource-id="aistill13" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-14.png" data-resource-id="aistill14" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-15.png" data-resource-id="aistill15" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-16.png" data-resource-id="aistill16" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-17.png" data-resource-id="aistill17" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-18.png" data-resource-id="aistill18" />
+
+<template id="__bundler_thumbnail" data-bg-color="#04070a">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="0" width="1200" height="800" fill="#04070a"></rect>
+    <g stroke="#2dd7f0" fill="none" stroke-width="9">
+      <path d="M300 220h-70v70"></path>
+      <path d="M900 220h70v70"></path>
+      <path d="M300 580h-70v-70"></path>
+      <path d="M900 580h70v-70"></path>
+    </g>
+    <text x="600" y="450" text-anchor="middle" font-family="Orbitron, sans-serif" font-size="170" font-weight="700" fill="#2dd7f0">KT</text>
+  </svg>
+</template>
 
 <div ref="{{ setRootRef }}" style="position:relative;background:#04070a;color:#eaf6f8;min-height:100vh">
 
@@ -94,11 +257,11 @@ a:hover{color:#7fe9f7}
     <div style="width:10px;height:10px;border-radius:50%;background:#2dd7f0;box-shadow:0 0 10px 2px #2dd7f0;animation:blink 2s ease-in-out infinite"></div>
     <div style="font-family:'Orbitron',sans-serif;font-weight:700;letter-spacing:.12em;font-size:16px;color:#eaf6f8">Khai (Daniel)<span style="color:#2dd7f0">.</span> Tran</div>
   </div>
-  <div style="display:flex;align-items:center;gap:clamp(14px,2.4vw,34px)">
-    <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
-      <a href="{{ item.href }}" onClick="{{ onNavClick }}" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.15em;color:rgba(234,246,248,.75);padding:6px 2px;border-bottom:2px solid transparent">{{ item.label }}</a>
+  <div style="display:flex;align-items:center;flex-wrap:wrap;justify-content:flex-end;min-width:0;row-gap:8px;gap:clamp(10px,1.7vw,34px)">
+    <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="7">
+      <a href="{{ item.href }}" onClick="{{ onNavClick }}" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.15em;color:rgba(234,246,248,.75);padding:6px 2px;border-bottom:2px solid transparent;white-space:nowrap">{{ item.label }}</a>
     </sc-for>
-    <button onClick="{{ toggleLang }}" style-hover="box-shadow:0 0 16px rgba(45,215,240,.55)" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.1em;background:rgba(45,215,240,.08);border:1px solid rgba(45,215,240,.4);color:#2dd7f0;transition:box-shadow .2s;padding:6px 12px;border-radius:2px;cursor:pointer">{{ langLabel }}</button>
+    <button onClick="{{ toggleLang }}" style-hover="box-shadow:0 0 16px rgba(45,215,240,.55)" style="display:none;font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.1em;background:rgba(45,215,240,.08);border:1px solid rgba(45,215,240,.4);color:#2dd7f0;transition:box-shadow .2s;padding:6px 12px;border-radius:2px;cursor:pointer">{{ langLabel }}</button>
   </div>
 </nav>
 
@@ -182,14 +345,13 @@ a:hover{color:#7fe9f7}
       </div>
     </div>
     <div data-om-label="Shadow fade" style="position: absolute; left: -90px; right: 0; top: 75%; bottom: 0%; background: linear-gradient(180deg, #00000000, #04070a 88%); pointer-events: none; z-index: 3; height: 287px; width: 2500px"></div>
-    <div style="position:absolute;left:50%;top:calc(50% + clamp(6px,1vw,16px));width:clamp(300px,40vw,540px);height:2px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,rgba(45,215,240,.35),transparent);filter:blur(1px);pointer-events:none;z-index:4"></div>
   </div>
 
   <div data-om-label="Shadow fade mobile" style="position: absolute; left: 50%; bottom: 0; z-index: 3; pointer-events: none; transform: translateX(-50%); width: 100%; height: 40%; background: linear-gradient(180deg, #00000000, #010101)"></div>
 
   <div style="display: flex; justify-content: center; margin-top: 12px; position: relative; z-index: 4" data-om-label="Control pill">
     <div style="display:flex;align-items:center;gap:14px;padding:9px 12px;border:1px solid rgba(45,215,240,.28);background:rgba(7,13,17,.72);backdrop-filter:blur(10px);border-radius:6px;box-shadow:0 12px 40px rgba(0,0,0,.5)">
-      <div ref="{{ setPillTitle }}" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.12em;color:#eaf6f8;min-width:150px;text-align:center;white-space:nowrap">—</div>
+      <div ref="{{ setPillTitle }}" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.12em;color:#eaf6f8;width:210px;flex:0 0 210px;text-align:center;white-space:nowrap">—</div>
       <div style="display:flex;gap:6px">
         <button onClick="{{ workPrev }}" aria-label="Previous" style-hover="box-shadow:0 0 16px rgba(45,215,240,.55);background:rgba(45,215,240,.14)" style="width:38px;height:34px;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.05);color:#2dd7f0;font-size:15px;border-radius:3px;transition:box-shadow .2s,background .2s;display:flex;align-items:center;justify-content:center;cursor:pointer">←</button>
         <button onClick="{{ workNext }}" aria-label="Next" style-hover="box-shadow:0 0 16px rgba(45,215,240,.55);background:rgba(45,215,240,.14)" style="width:38px;height:34px;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.05);color:#2dd7f0;font-size:15px;border-radius:3px;transition:box-shadow .2s,background .2s;display:flex;align-items:center;justify-content:center;cursor:pointer">→</button>
@@ -237,6 +399,124 @@ a:hover{color:#7fe9f7}
   </div>
 </section>
 
+<section id="aiprod" ref="{{ setAiRef }}" style="position:relative;padding:min(12vw,120px) clamp(20px,6vw,80px);border-bottom:1px solid rgba(45,215,240,.12)" data-om-label="AI Production">
+  <div style="text-align:center;margin-bottom:48px">
+    <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.25em;color:#2dd7f0;margin-bottom:10px">// {{ copy.aiLabel }}</div>
+    <h2 style="font-family:'Orbitron',sans-serif;font-size:calc(clamp(26px,3.4vw,42px) * var(--type-scale,1));margin:0;color:#eaf6f8;text-wrap:pretty">{{ copy.aiTitle }}</h2>
+  </div>
+  <div ref="{{ setAiStageWrap }}" onClick="{{ onAiClick }}" style="position:relative;height:clamp(340px,46vw,520px);perspective:1400px;perspective-origin:50% 42%;z-index:2;cursor:pointer" data-om-label="AI Carousel">
+    <div ref="{{ setAiStage }}" style="position:absolute;left:0;right:0;top:50%;height:0;transform-style:preserve-3d" data-om-label="AI Main Carousel">
+      <sc-for list="{{ aiCards }}" as="item" hint-placeholder-count="2">
+        <div ref="{{ item.setSlide }}" style="position:absolute;left:50%;top:0;width:clamp(230px,30vw,360px);aspect-ratio:16/9;margin:calc(clamp(230px,30vw,360px) * -0.281) 0 0 calc(clamp(230px,30vw,360px) * -0.5);pointer-events:none">
+          <div ref="{{ item.setFloat }}" style="position:absolute;inset:0;border:1px solid rgba(45,215,240,.3);background:#070d11;overflow:hidden;box-shadow:0 0 0 1px rgba(45,215,240,.08),0 18px 46px rgba(0,0,0,.55);will-change:transform;backface-visibility:hidden">
+            <sc-if value="{{ item.hasVideo }}" hint-placeholder-val="{{ true }}">
+              <video ref="{{ item.setVideo }}" muted playsinline preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block"></video>
+            </sc-if>
+            <sc-if value="{{ item.noMedia }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background-image:repeating-linear-gradient(135deg,rgba(45,215,240,.06) 0 10px,transparent 10px 20px)"><span style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.18em;color:rgba(45,215,240,.75)">{{ copy.aiNoMedia }}</span></div>
+            </sc-if>
+            <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(4,7,10,.85),rgba(4,7,10,0) 45%)"></div>
+            <div style="position:absolute;top:12px;left:12px;font-family:'Orbitron',sans-serif;font-size:9.5px;letter-spacing:.12em;color:rgba(45,215,240,.85);border:1px solid rgba(45,215,240,.45);padding:3px 9px;background:rgba(4,7,10,.5);display:inline-flex;align-items:center;gap:6px"><span style="width:5px;height:5px;border-radius:50%;background:#2dd7f0;box-shadow:0 0 7px 1px #2dd7f0"></span>{{ item.status }}</div>
+            <div ref="{{ item.setPlay }}" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(.9);width:60px;height:60px;border-radius:50%;border:1px solid rgba(45,215,240,.7);background:rgba(4,7,10,.35);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .4s,transform .4s;box-shadow:0 0 24px rgba(45,215,240,.4)"><div style="width:0;height:0;border-left:15px solid #2dd7f0;border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:4px"></div></div>
+            <div style="position:absolute;left:14px;right:14px;bottom:12px">
+              <div style="font-family:'Orbitron',sans-serif;font-size:14px;letter-spacing:.04em;color:#eaf6f8">{{ item.name }}</div>
+              <div style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.12em;color:rgba(45,215,240,.9);margin-top:4px">{{ item.typeLine }}</div>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div data-om-label="AI Carousel Shadow" style="position:absolute;left:0;right:0;top:80%;height:0;perspective:1400px;perspective-origin:50% 42%;pointer-events:none;z-index:0;transform:translateY(clamp(8px,1.4vw,20px)) scaleY(-1);opacity:.2;filter:blur(3px)">
+      <div ref="{{ setAiStageR }}" style="position:absolute;left:0;right:0;top:-40px;height:0;transform-style:preserve-3d">
+        <sc-for list="{{ aiCards }}" as="item" hint-placeholder-count="2">
+          <div ref="{{ item.setSlideR }}" style="position:absolute;left:50%;top:0;width:clamp(230px,30vw,360px);aspect-ratio:16/9;margin:calc(clamp(230px,30vw,360px) * -0.281) 0 0 calc(clamp(230px,30vw,360px) * -0.5)">
+            <div ref="{{ item.setFloatR }}" style="position:absolute;inset:0;overflow:hidden;border:1px solid rgba(45,215,240,.16);will-change:transform">
+              <img ref="{{ item.setImgR }}" alt="" aria-hidden="true" style="width:100%;height:100%;object-fit:cover;display:block">
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div data-om-label="AI Shadow fade" style="position:absolute;left:-90px;right:0;top:75%;bottom:0%;background:linear-gradient(180deg,#00000000,#04070a 88%);pointer-events:none;z-index:3;height:287px;width:2500px"></div>
+  </div>
+
+  <div data-om-label="AI Shadow fade mobile" style="position:absolute;left:50%;bottom:0;z-index:3;pointer-events:none;transform:translateX(-50%);width:100%;height:40%;background:linear-gradient(180deg,#00000000,#010101);display:none"></div>
+
+  <div style="display:flex;justify-content:center;margin-top:12px;position:relative;z-index:4" data-om-label="AI Control pill">
+    <div style="display:flex;align-items:center;gap:14px;padding:9px 12px;border:1px solid rgba(45,215,240,.28);background:rgba(7,13,17,.72);backdrop-filter:blur(10px);border-radius:6px;box-shadow:0 12px 40px rgba(0,0,0,.5);flex-wrap:wrap;justify-content:center">
+      <div ref="{{ setAiPillTitle }}" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.12em;color:#eaf6f8;width:210px;flex:0 0 210px;text-align:center;white-space:nowrap">—</div>
+      <div style="display:flex;gap:6px">
+        <button onClick="{{ aiPrev }}" aria-label="Previous" style-hover="box-shadow:0 0 16px rgba(45,215,240,.55);background:rgba(45,215,240,.14)" style="width:38px;height:34px;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.05);color:#2dd7f0;font-size:15px;border-radius:3px;transition:box-shadow .2s,background .2s;display:flex;align-items:center;justify-content:center;cursor:pointer">←</button>
+        <button onClick="{{ aiNext }}" aria-label="Next" style-hover="box-shadow:0 0 16px rgba(45,215,240,.55);background:rgba(45,215,240,.14)" style="width:38px;height:34px;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.05);color:#2dd7f0;font-size:15px;border-radius:3px;transition:box-shadow .2s,background .2s;display:flex;align-items:center;justify-content:center;cursor:pointer">→</button>
+      </div>
+      <div style="width:54px;height:54px;border-radius:50%;border:1px solid rgba(45,215,240,.35);position:relative;overflow:hidden;flex:0 0 auto;background:radial-gradient(circle,rgba(45,215,240,.1),transparent 70%);perspective:90px;perspective-origin:50% 50%">
+        <div ref="{{ setAiMiniDisc }}" style="position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d">
+          <sc-for list="{{ aiCards }}" as="item" hint-placeholder-count="2">
+            <div ref="{{ item.setMini }}" style="position:absolute;left:50%;top:50%;width:22px;height:13px;margin:-6.5px 0 0 -11px;border-radius:2px;overflow:hidden;border:1px solid rgba(45,215,240,.4)"><img ref="{{ item.setImgM }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+          </sc-for>
+        </div>
+        <div style="position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 0 16px rgba(4,7,10,.95);pointer-events:none"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<sc-if value="{{ aiOpen }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ closeAi }}" style="position:fixed;inset:0;z-index:145;background:rgba(4,7,10,.92);backdrop-filter:blur(7px);display:flex;align-items:flex-start;justify-content:center;padding:clamp(14px,3.5vw,38px);overflow-y:auto;animation:modalIn .3s ease">
+  <div onClick="{{ stop }}" style="position:relative;width:min(96vw,1120px);border:1px solid rgba(45,215,240,.35);background:#070d11;box-shadow:0 0 0 1px rgba(45,215,240,.1),0 40px 120px rgba(0,0,0,.7);padding:clamp(20px,3vw,32px)">
+    <div style="position:absolute;top:-1px;left:-1px;width:22px;height:22px;border-top:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+    <div style="position:absolute;bottom:-1px;right:-1px;width:22px;height:22px;border-bottom:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+    <button onClick="{{ closeAi }}" aria-label="Close" style-hover="box-shadow:0 0 14px rgba(45,215,240,.6)" style="position:absolute;top:14px;right:14px;z-index:3;width:32px;height:32px;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.08);color:#2dd7f0;font-family:'Orbitron',sans-serif;font-size:13px;cursor:pointer;transition:box-shadow .2s">✕</button>
+    <div style="display:flex;flex-wrap:wrap;gap:clamp(18px,2.6vw,30px)">
+      <div style="flex:1 1 min(100%,540px);min-width:0">
+        <sc-if value="{{ aiItem.showVideo }}" hint-placeholder-val="{{ false }}">
+          <video ref="{{ aiItem.setVideo }}" controls playsinline preload="metadata" style="width:100%;aspect-ratio:16/9;display:block;background:#050b0f;border:1px solid rgba(45,215,240,.18)"></video>
+        </sc-if>
+        <sc-if value="{{ aiItem.showStill }}" hint-placeholder-val="{{ false }}">
+          <img ref="{{ aiItem.setStage }}" alt="" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#050b0f;border:1px solid rgba(45,215,240,.18)">
+        </sc-if>
+        <sc-if value="{{ aiItem.showPending }}" hint-placeholder-val="{{ false }}">
+          <div style="position:relative;width:100%;aspect-ratio:16/9;background:#050b0f;border:1px solid rgba(45,215,240,.18);display:flex;align-items:center;justify-content:center;background-image:repeating-linear-gradient(135deg,rgba(45,215,240,.06) 0 10px,transparent 10px 20px)"><span style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.18em;color:rgba(45,215,240,.75)">{{ copy.aiNoMedia }}</span></div>
+        </sc-if>
+      </div>
+      <div data-ai-info style="flex:1 1 280px;min-width:0;padding-right:30px">
+        <div style="font-family:'Orbitron',sans-serif;font-size:calc(clamp(18px,2.2vw,24px) * var(--type-scale,1));letter-spacing:.03em;color:#eaf6f8;margin-bottom:10px">{{ aiItem.name }}</div>
+        <div style="font-family:'Orbitron',sans-serif;font-size:11.5px;letter-spacing:.14em;color:rgba(45,215,240,.9)">{{ aiItem.typeLine }}</div>
+        <div style="height:1px;background:rgba(45,215,240,.22);margin:18px 0"></div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <sc-for list="{{ aiItem.rows }}" as="r" hint-placeholder-count="3">
+            <div style="font-family:'Orbitron',sans-serif;font-size:12px;line-height:1.6;letter-spacing:.1em;color:#eaf6f8;text-wrap:pretty">{{ r.v }}</div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ aiItem.hasVideo }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ aiItem.watchVideo }}" style-hover="box-shadow:0 0 18px rgba(45,215,240,.5)" style="margin-top:20px;font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.14em;padding:11px 18px;border:1px solid rgba(45,215,240,.5);background:rgba(45,215,240,.08);color:#2dd7f0;cursor:pointer;transition:opacity .25s,box-shadow .2s;opacity:{{ aiItem.watchOpacity }}">▶ {{ copy.aiWatchVideo }}</button>
+        </sc-if>
+      </div>
+    </div>
+    <sc-if value="{{ aiItem.hasDeck }}" hint-placeholder-val="{{ true }}">
+      <div style="margin-top:28px">
+        <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.25em;color:#2dd7f0;margin-bottom:12px">// {{ copy.aiDeckLabel }}</div>
+        <div data-ai-deck style="display:flex;gap:12px;overflow-x:auto;padding-bottom:8px">
+          <sc-for list="{{ aiItem.deck }}" as="d" hint-placeholder-count="0">
+            <img onClick="{{ d.open }}" ref="{{ d.setImg }}" alt="" style="width:min(42vw,210px);flex-shrink:0;aspect-ratio:16/9;object-fit:cover;display:block;border:1px solid rgba(45,215,240,.25);cursor:pointer">
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ aiItem.hasStills }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:26px">
+        <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.25em;color:#2dd7f0;margin-bottom:12px">// {{ copy.aiStillsLabel }}</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,180px),1fr));gap:12px">
+          <sc-for list="{{ aiItem.stills }}" as="s" hint-placeholder-count="0">
+            <img onClick="{{ s.open }}" ref="{{ s.setImg }}" alt="" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;border:1px solid rgba(45,215,240,.25);cursor:pointer">
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+</div>
+</sc-if>
+
 <section id="about" ref="{{ setAboutRef }}" style="position: relative; padding: min(14vw,140px) clamp(20px,6vw,80px); display: flex; flex-wrap: wrap; gap: 60px; align-items: center; justify-content: center; border-bottom: 1px solid rgba(45,215,240,.12)">
   <div style="flex:1 1 340px;max-width:420px">
     <div ref="{{ setCareerPanel }}" style="border:1px solid rgba(45,215,240,.35);background:rgba(45,215,240,.04);border-radius:2px;overflow:hidden;transform:scaleY(0);transform-origin:top center">
@@ -272,7 +552,7 @@ a:hover{color:#7fe9f7}
       </sc-for>
     </div>
   </div>
-  <div ref="{{ setAboutTextCol }}" style="flex:1 1 380px;max-width:520px">
+  <div ref="{{ setAboutTextCol }}" data-about-text="" style="flex:1 1 380px;max-width:520px">
     <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.25em;color:#2dd7f0;margin-bottom:14px">// {{ copy.aboutLabel }}</div>
     <h2 ref="{{ setAboutTitleRef }}" style="font-family:'Orbitron',sans-serif;font-size:calc(clamp(26px,3.4vw,42px) * var(--type-scale,1));line-height:1.2;margin:0 0 18px;color:#eaf6f8"><sc-for list="{{ aboutTitleWords }}" as="w" hint-placeholder-count="6"><span style="display:inline-block;white-space:nowrap;margin-right:.32em"><sc-for list="{{ w.chars }}" as="c" hint-placeholder-count="4"><span class="tchar" style="display:inline-block;opacity:0;filter:blur(6px)">{{ c.ch }}</span></sc-for></span></sc-for><span class="hud-caret" style="display:inline-block;width:3px;height:.85em;margin-left:3px;background:#2dd7f0;box-shadow:0 0 10px #2dd7f0;vertical-align:-.1em;opacity:0"></span></h2>
     <p data-about-p="" style="opacity:0;transform:translateY(-18px);font-size:calc(15.5px * var(--type-scale,1));line-height:1.9;color:rgba(234,246,248,.7);margin:0 0 16px;text-wrap:pretty">{{ copy.aboutP1 }}</p>
@@ -281,6 +561,288 @@ a:hover{color:#7fe9f7}
     </sc-if>
   </div>
 </section>
+
+<section id="pipeline" ref="{{ setPipelineRef }}" style="position:relative;padding:min(12vw,120px) clamp(20px,6vw,80px);border-bottom:1px solid rgba(45,215,240,.12)">
+  <div style="text-align:center;margin-bottom:52px">
+    <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.25em;color:#2dd7f0;margin-bottom:10px">// {{ copy.pipelineLabel }}</div>
+    <h2 ref="{{ setPipelineTitleRef }}" style="font-family:'Orbitron',sans-serif;font-size:calc(clamp(26px,3.4vw,42px) * var(--type-scale,1));margin:0;color:#eaf6f8"><sc-for list="{{ pipelineTitleWords }}" as="w" hint-placeholder-count="6"><sc-if value="{{ w.br }}"><br class="wbrk"></sc-if><span style="display:inline-block;white-space:nowrap;margin-right:.32em"><sc-for list="{{ w.chars }}" as="c" hint-placeholder-count="4"><span class="tchar" style="display:inline-block;opacity:0;filter:blur(6px)">{{ c.ch }}</span></sc-for></span></sc-for><span class="hud-caret" style="display:inline-block;width:3px;height:.85em;margin-left:3px;background:#2dd7f0;box-shadow:0 0 10px #2dd7f0;vertical-align:-.1em;opacity:0"></span></h2>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:22px;justify-content:center;align-items:stretch;max-width:1180px;margin:0 auto">
+    <div data-pipe-card="" onClick="{{ openPipeline }}" style-hover="border-color:rgba(45,215,240,.65);box-shadow:0 0 30px rgba(45,215,240,.2)" style="flex:1 1 320px;max-width:380px;position:relative;display:flex;flex-direction:column;padding:26px 22px 22px;border:1px solid rgba(45,215,240,.32);background:linear-gradient(160deg,rgba(45,215,240,.07),rgba(45,215,240,.01));opacity:0;cursor:pointer;transition:border-color .25s,box-shadow .25s">
+      <div style="position:absolute;top:-1px;left:-1px;width:16px;height:16px;border-top:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+      <div style="position:absolute;bottom:-1px;right:-1px;width:16px;height:16px;border-bottom:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px">
+        <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.15em;color:rgba(45,215,240,.7)">01</div>
+        <div style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.12em;color:#2dd7f0;padding:4px 9px;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.07);display:inline-flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:#2dd7f0;box-shadow:0 0 7px 1px #2dd7f0"></span>{{ copy.pipeStatusShipped }}</div>
+      </div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:calc(19px * var(--type-scale,1));letter-spacing:.02em;color:#eaf6f8;margin-bottom:8px">DEEP COLLECT</div>
+      <div style="font-size:calc(15.5px * var(--type-scale,1));line-height:1.6;color:rgba(234,246,248,.85);margin-bottom:10px;text-wrap:pretty">{{ copy.pipeC1Title }}</div>
+      <p style="font-size:calc(14.5px * var(--type-scale,1));line-height:1.75;color:rgba(234,246,248,.68);margin:0 0 18px;text-wrap:pretty">{{ copy.pipeC1Sub }}</p>
+      <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:20px">
+        <sc-for list="{{ pipeC1Tags }}" as="t" hint-placeholder-count="3">
+          <span style="font-family:'Orbitron',sans-serif;font-size:10.5px;letter-spacing:.09em;color:rgba(45,215,240,.9);padding:5px 9px;border:1px solid rgba(45,215,240,.28);background:rgba(45,215,240,.04)">{{ t.v }}</span>
+        </sc-for>
+      </div>
+      <div style="margin-top:auto;font-family:'Orbitron',sans-serif;font-size:11.5px;letter-spacing:.14em;color:#2dd7f0;border-top:1px solid rgba(45,215,240,.18);padding-top:14px">{{ copy.pipeReadCase }} →</div>
+    </div>
+    <div data-pipe-card="" onClick="{{ openPipeline2 }}" style-hover="border-color:rgba(45,215,240,.65);box-shadow:0 0 30px rgba(45,215,240,.2)" style="flex:1 1 320px;max-width:380px;position:relative;display:flex;flex-direction:column;padding:26px 22px 22px;border:1px solid rgba(45,215,240,.32);background:linear-gradient(160deg,rgba(45,215,240,.07),rgba(45,215,240,.01));opacity:0;cursor:pointer;transition:border-color .25s,box-shadow .25s">
+      <div style="position:absolute;top:-1px;left:-1px;width:16px;height:16px;border-top:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+      <div style="position:absolute;bottom:-1px;right:-1px;width:16px;height:16px;border-bottom:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px">
+        <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.15em;color:rgba(45,215,240,.7)">02</div>
+        <div style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.12em;color:#2dd7f0;padding:4px 9px;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.07);display:inline-flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:#2dd7f0;box-shadow:0 0 7px 1px #2dd7f0"></span>{{ copy.pipeStatusShipped }}</div>
+      </div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:calc(19px * var(--type-scale,1));letter-spacing:.02em;color:#eaf6f8;margin-bottom:8px">MASTER PANEL</div>
+      <div style="font-size:calc(15.5px * var(--type-scale,1));line-height:1.6;color:rgba(234,246,248,.85);margin-bottom:10px;text-wrap:pretty">{{ pipeCard2.title }}</div>
+      <p style="font-size:calc(14.5px * var(--type-scale,1));line-height:1.75;color:rgba(234,246,248,.68);margin:0 0 18px;text-wrap:pretty">{{ pipeCard2.sub }}</p>
+      <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:20px">
+        <sc-for list="{{ pipeC2Tags }}" as="t" hint-placeholder-count="3">
+          <span style="font-family:'Orbitron',sans-serif;font-size:10.5px;letter-spacing:.09em;color:rgba(45,215,240,.9);padding:5px 9px;border:1px solid rgba(45,215,240,.28);background:rgba(45,215,240,.04)">{{ t.v }}</span>
+        </sc-for>
+      </div>
+      <div style="margin-top:auto;font-family:'Orbitron',sans-serif;font-size:11.5px;letter-spacing:.14em;color:#2dd7f0;border-top:1px solid rgba(45,215,240,.18);padding-top:14px">{{ copy.pipeReadCase }} →</div>
+    </div>
+    <div data-pipe-card="" onClick="{{ openPipeline3 }}" style-hover="border-color:rgba(45,215,240,.65);box-shadow:0 0 30px rgba(45,215,240,.2)" style="flex:1 1 320px;max-width:380px;position:relative;display:flex;flex-direction:column;padding:26px 22px 22px;border:1px solid rgba(45,215,240,.32);background:linear-gradient(160deg,rgba(45,215,240,.07),rgba(45,215,240,.01));opacity:0;cursor:pointer;transition:border-color .25s,box-shadow .25s">
+      <div style="position:absolute;top:-1px;left:-1px;width:16px;height:16px;border-top:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+      <div style="position:absolute;bottom:-1px;right:-1px;width:16px;height:16px;border-bottom:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px">
+        <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.15em;color:rgba(45,215,240,.7)">03</div>
+        <div style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.12em;color:#2dd7f0;padding:4px 9px;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.07);display:inline-flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:#2dd7f0;box-shadow:0 0 7px 1px #2dd7f0"></span>{{ copy.pipeStatusShipped }}</div>
+      </div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:calc(19px * var(--type-scale,1));letter-spacing:.02em;color:#eaf6f8;margin-bottom:8px">PRESET MANAGER</div>
+      <div style="font-size:calc(15.5px * var(--type-scale,1));line-height:1.6;color:rgba(234,246,248,.85);margin-bottom:10px;text-wrap:pretty">{{ pipeCard3.title }}</div>
+      <p style="font-size:calc(14.5px * var(--type-scale,1));line-height:1.75;color:rgba(234,246,248,.68);margin:0 0 18px;text-wrap:pretty">{{ pipeCard3.sub }}</p>
+      <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:20px">
+        <sc-for list="{{ pipeC3Tags }}" as="t" hint-placeholder-count="3">
+          <span style="font-family:'Orbitron',sans-serif;font-size:10.5px;letter-spacing:.09em;color:rgba(45,215,240,.9);padding:5px 9px;border:1px solid rgba(45,215,240,.28);background:rgba(45,215,240,.04)">{{ t.v }}</span>
+        </sc-for>
+      </div>
+      <div style="margin-top:auto;font-family:'Orbitron',sans-serif;font-size:11.5px;letter-spacing:.14em;color:#2dd7f0;border-top:1px solid rgba(45,215,240,.18);padding-top:14px">{{ copy.pipeReadCase }} →</div>
+    </div>
+  </div>
+</section>
+
+<sc-if value="{{ pipelineOpen }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ closePipeline }}" style="position:fixed;inset:0;z-index:135;background:rgba(4,7,10,.9);backdrop-filter:blur(7px);display:flex;align-items:center;justify-content:center;padding:clamp(14px,3.5vw,38px);animation:modalIn .3s ease">
+  <div onClick="{{ stop }}" data-pipe-modal="" style="position:relative;width:min(94vw,880px);max-height:88vh;display:flex;flex-direction:column;border:1px solid rgba(45,215,240,.35);background:#070d11;box-shadow:0 0 0 1px rgba(45,215,240,.1),0 40px 120px rgba(0,0,0,.7)">
+    <div style="position:absolute;top:-1px;left:-1px;width:22px;height:22px;border-top:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+    <div style="position:absolute;bottom:-1px;right:-1px;width:22px;height:22px;border-bottom:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 18px;border-bottom:1px solid rgba(45,215,240,.2);background:rgba(45,215,240,.05);flex-shrink:0">
+      <div>
+        <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.16em;color:rgba(45,215,240,.75);margin-bottom:5px">{{ copy.pipelineLabel }} / {{ pipeCase.num }}</div>
+        <div style="font-family:'Orbitron',sans-serif;font-size:clamp(15px,2.1vw,20px);letter-spacing:.03em;color:#eaf6f8">{{ pipeCase.code }}</div>
+      </div>
+      <button onClick="{{ closePipeline }}" aria-label="Close" style-hover="box-shadow:0 0 14px rgba(45,215,240,.6)" style="width:32px;height:32px;flex-shrink:0;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.06);color:#eaf6f8;font-size:15px;line-height:1;cursor:pointer;transition:box-shadow .2s">✕</button>
+    </div>
+    <div style="overflow-y:auto;padding:26px clamp(18px,3.4vw,34px) 30px">
+      <div style="font-size:calc(18.5px * var(--type-scale,1));line-height:1.55;color:#eaf6f8;margin-bottom:8px;text-wrap:pretty">{{ pipeCase.title }}</div>
+      <p style="font-size:calc(15px * var(--type-scale,1));line-height:1.75;color:rgba(234,246,248,.68);margin:0 0 26px;text-wrap:pretty">{{ pipeCase.sub }}</p>
+      <sc-if value="{{ pipeHasMedia }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:18px;margin-bottom:28px">
+          <div>
+            <div style="position:relative;border:1px solid rgba(45,215,240,.45);background:linear-gradient(160deg,rgba(45,215,240,.1),rgba(45,215,240,.02));padding:10px;box-shadow:0 0 30px rgba(45,215,240,.2),inset 0 0 22px rgba(45,215,240,.05)">
+              <div style="position:absolute;top:-1px;left:-1px;width:13px;height:13px;border-top:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+              <div style="position:absolute;bottom:-1px;right:-1px;width:13px;height:13px;border-bottom:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+              <img src="uploads/deep-collect-panel.png" alt="Deep_Collecting 3.1 — After Effects panel" style="display:block;width:100%;height:auto;border:1px solid rgba(45,215,240,.24)">
+            </div>
+            <div style="font-family:'Orbitron',sans-serif;font-size:10.5px;letter-spacing:.12em;color:rgba(234,246,248,.6);margin-top:9px">{{ pipeCapUI }}</div>
+          </div>
+          <div>
+            <div style="position:relative;border:1px solid rgba(45,215,240,.45);background:linear-gradient(160deg,rgba(45,215,240,.1),rgba(45,215,240,.02));padding:10px;box-shadow:0 0 30px rgba(45,215,240,.2),inset 0 0 22px rgba(45,215,240,.05)">
+              <div style="position:absolute;top:-1px;right:-1px;width:13px;height:13px;border-top:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+              <div style="position:absolute;bottom:-1px;left:-1px;width:13px;height:13px;border-bottom:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+              <video ref="{{ setPipeVideoRef }}" src="uploads/deep-collect-2.mp4" autoplay="{{ true }}" loop="{{ true }}" muted="{{ true }}" playsInline="{{ true }}" controls="{{ true }}" aria-label="Deep Collect demo" style="display:block;width:100%;height:auto;border:1px solid rgba(45,215,240,.24);background:#0a0f13"></video>
+            </div>
+            <div style="font-family:'Orbitron',sans-serif;font-size:10.5px;letter-spacing:.12em;color:rgba(234,246,248,.6);margin-top:9px">{{ pipeCapDemo }}</div>
+          </div>
+        </div>
+      </sc-if>
+      <sc-for list="{{ pipeCaseBlocks }}" as="b" hint-placeholder-count="4">
+        <div style="margin-bottom:24px">
+          <div data-pipe-head="" style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+            <div style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.16em;color:#2dd7f0">{{ b.h }}</div>
+            <div style="flex:1;height:1px;background:rgba(45,215,240,.16)"></div>
+          </div>
+          <sc-for list="{{ b.ps }}" as="p" hint-placeholder-count="1">
+            <p style="font-size:calc(15.5px * var(--type-scale,1));line-height:1.8;color:rgba(234,246,248,.8);margin:0 0 12px;text-wrap:pretty">{{ p.v }}</p>
+          </sc-for>
+          <sc-if value="{{ b.hasBullets }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:12px;margin-top:4px">
+              <sc-for list="{{ b.bullets }}" as="li" hint-placeholder-count="2">
+                <div style="display:flex;gap:12px;align-items:flex-start;padding:13px 15px;border:1px solid rgba(45,215,240,.16);background:rgba(45,215,240,.03)">
+                  <span style="font-family:'Orbitron',sans-serif;font-size:11.5px;color:#2dd7f0;flex-shrink:0;margin-top:3px">{{ li.n }}</span>
+                  <p style="font-size:calc(15px * var(--type-scale,1));line-height:1.75;color:rgba(234,246,248,.78);margin:0;text-wrap:pretty">{{ li.v }}</p>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+      </sc-for>
+      <sc-if value="{{ pipeHasPanel }}" hint-placeholder-val="{{ false }}">
+        <div ref="{{ setPipeLinkWrap }}" style="position:relative;margin-bottom:24px">
+          <div data-pipe-head="" style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+            <div style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.16em;color:#2dd7f0">{{ pipeWhatHead }}</div>
+            <div style="flex:1;height:1px;background:rgba(45,215,240,.16)"></div>
+          </div>
+          <sc-if value="{{ pipeHasHotspots }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:calc(12.5px * var(--type-scale,1));line-height:1.6;color:rgba(234,246,248,.48);margin:-4px 0 16px;text-wrap:pretty">{{ pipeHintLine }}</div>
+          </sc-if>
+          <sc-if value="{{ pipeHotOn }}" hint-placeholder-val="{{ false }}">
+            <div ref="{{ setPipeHud }}" style="position:fixed;left:0;top:0;z-index:200;width:min(80vw,320px);pointer-events:none;opacity:0;text-align:left;border:1px solid #2dd7f0;background:rgba(5,11,15,.97);box-shadow:0 0 38px rgba(45,215,240,.34),inset 0 0 26px rgba(45,215,240,.06);padding:15px 17px">
+              <div data-pipe-hud-corner="tl" style="position:absolute;top:-1px;left:-1px;width:14px;height:14px;border-top:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+              <div data-pipe-hud-corner="tr" style="position:absolute;top:-1px;right:-1px;width:14px;height:14px;border-top:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+              <div data-pipe-hud-corner="bl" style="position:absolute;bottom:-1px;left:-1px;width:14px;height:14px;border-bottom:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+              <div data-pipe-hud-corner="br" style="position:absolute;bottom:-1px;right:-1px;width:14px;height:14px;border-bottom:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+              <div data-pipe-hud-body="">
+                <div style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.12em;color:rgba(234,246,248,.5);margin-bottom:7px">{{ pipeHotCluster }}</div>
+                <div style="font-family:'Orbitron',sans-serif;font-size:13px;letter-spacing:.08em;color:#2dd7f0;margin-bottom:8px">{{ pipeHotName }}</div>
+                <div style="font-size:calc(14px * var(--type-scale,1));line-height:1.7;color:rgba(234,246,248,.8);text-wrap:pretty">{{ pipeHotDesc }}</div>
+              </div>
+            </div>
+          </sc-if>
+          <div style="display:flex;flex-wrap:wrap;gap:22px;align-items:flex-start">
+            <sc-if value="{{ pipeShotWide }}" hint-placeholder-val="{{ false }}">
+            <div data-pipe-shot="" style="flex:0 1 300px;min-width:240px;position:relative;border:1px solid rgba(45,215,240,.45);background:linear-gradient(160deg,rgba(45,215,240,.1),rgba(45,215,240,.02));padding:11px;box-shadow:0 0 34px rgba(45,215,240,.22),inset 0 0 24px rgba(45,215,240,.05)">
+              <div style="position:absolute;top:-1px;left:-1px;width:14px;height:14px;border-top:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+              <div style="position:absolute;top:-1px;right:-1px;width:14px;height:14px;border-top:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+              <div style="position:absolute;bottom:-1px;left:-1px;width:14px;height:14px;border-bottom:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+              <div style="position:absolute;bottom:-1px;right:-1px;width:14px;height:14px;border-bottom:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+              <div ref="{{ setPipeZoomBase }}" style="position:relative;cursor:pointer">
+                <video ref="{{ setPipeVideoRef }}" src="uploads/preset-manager.mp4" autoplay="{{ true }}" loop="{{ true }}" muted="{{ true }}" playsInline="{{ true }}" aria-label="My Preset Manager — Auto Render + pack browser" style="display:block;width:100%;height:auto;max-height:504px;object-fit:contain;border:1px solid rgba(45,215,240,.28);background:#0a0f13"></video>
+              </div>
+              <div ref="{{ setPipeZoom }}" style="position:fixed;left:0;top:0;z-index:210;width:min(84vw,340px);height:300px;pointer-events:none;opacity:0;overflow:hidden;border:1px solid #2dd7f0;background:#070d11;box-shadow:0 0 42px rgba(45,215,240,.36),inset 0 0 30px rgba(45,215,240,.06)">
+                <video ref="{{ setPipeZoomVid }}" src="uploads/preset-manager.mp4" loop="{{ true }}" muted="{{ true }}" playsInline="{{ true }}" aria-hidden="true" style="position:absolute;left:0;top:0;display:block;max-width:none"></video>
+                <div style="position:absolute;top:0;left:0;width:15px;height:15px;border-top:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+                <div style="position:absolute;top:0;right:0;width:15px;height:15px;border-top:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+                <div style="position:absolute;bottom:0;left:0;width:15px;height:15px;border-bottom:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+                <div style="position:absolute;bottom:0;right:0;width:15px;height:15px;border-bottom:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+                <div style="position:absolute;left:0;right:0;bottom:0;font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:.16em;color:#2dd7f0;background:rgba(4,7,10,.74);border-top:1px solid rgba(45,215,240,.3);padding:5px 7px;text-align:center">ZOOM 160%</div>
+              </div>
+              <div style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.14em;color:#2dd7f0;margin-top:10px;text-align:center">{{ pipeShotCap }}</div>
+            </div>
+            </sc-if>
+            <sc-if value="{{ pipeShotNarrow }}" hint-placeholder-val="{{ false }}">
+            <div data-pipe-shot="" style="width:min(100%,345px);margin:0 auto;position:relative;border:1px solid rgba(45,215,240,.45);background:linear-gradient(160deg,rgba(45,215,240,.1),rgba(45,215,240,.02));padding:11px;box-shadow:0 0 34px rgba(45,215,240,.22),inset 0 0 24px rgba(45,215,240,.05)">
+              <div style="position:absolute;top:-1px;left:-1px;width:14px;height:14px;border-top:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+              <div style="position:absolute;top:-1px;right:-1px;width:14px;height:14px;border-top:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+              <div style="position:absolute;bottom:-1px;left:-1px;width:14px;height:14px;border-bottom:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+              <div style="position:absolute;bottom:-1px;right:-1px;width:14px;height:14px;border-bottom:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+              <div style="position:relative">
+                <img src="uploads/master-panel.png" alt="Master Panel 9 — After Effects script panel" style="display:block;width:100%;height:auto;border:1px solid rgba(45,215,240,.28)">
+                <sc-for list="{{ pipeHotspots }}" as="h" hint-placeholder-count="6">
+                  <div ref="{{ h.setEl }}" onClick="{{ h.tap }}" onMouseEnter="{{ h.enter }}" onMouseLeave="{{ h.leave }}" style="position:absolute;left:4.6%;width:90.6%;top:{{ h.top }};height:{{ h.height }};border:1px solid rgba(45,215,240,.28);background:rgba(45,215,240,.02);cursor:pointer;transition:border-color .2s,background .2s,box-shadow .2s,opacity .2s"></div>
+                </sc-for>
+              </div>
+              <div style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.14em;color:#2dd7f0;margin-top:10px;text-align:center">{{ pipeShotCap }}</div>
+            </div>
+            </sc-if>
+            <sc-if value="{{ pipeHasHotspots }}" hint-placeholder-val="{{ false }}">
+            <div style="width:100%;display:flex;flex-direction:column;gap:18px">
+              <sc-for list="{{ pipeClusters }}" as="c" hint-placeholder-count="2">
+                <div>
+                  <div data-pipe-cl-head="" style="display:flex;align-items:baseline;gap:10px;border-bottom:1px solid rgba(45,215,240,.16);padding-bottom:7px;margin-bottom:11px">
+                    <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.14em;color:#2dd7f0;text-transform:uppercase">{{ c.h }}</div>
+                    <div style="margin-left:auto;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.08em;color:rgba(234,246,248,.5);white-space:nowrap">{{ c.meta }}</div>
+                  </div>
+                  <div data-pipe-chips="" style="display:flex;flex-wrap:wrap;gap:8px">
+                    <sc-for list="{{ c.mods }}" as="md" hint-placeholder-count="3">
+                      <div ref="{{ md.setEl }}" onClick="{{ md.tap }}" onMouseEnter="{{ md.enter }}" onMouseLeave="{{ md.leave }}" style="font-family:'Orbitron',sans-serif;font-size:11.5px;letter-spacing:.06em;color:#eaf6f8;padding:8px 12px;border:1px solid rgba(45,215,240,.3);background:rgba(45,215,240,.04);cursor:pointer;transition:border-color .2s,background .2s,box-shadow .2s,opacity .2s">{{ md.name }}</div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            </sc-if>
+            <sc-if value="{{ pipeListMode }}" hint-placeholder-val="{{ true }}">
+            <div style="flex:1 1 300px;min-width:250px;align-self:center;display:flex;flex-direction:column;gap:34px">
+              <sc-for list="{{ pipeClusters }}" as="c" hint-placeholder-count="2">
+                <div>
+                  <div data-pipe-cl-head="" style="display:flex;align-items:baseline;gap:10px;border-bottom:1px solid rgba(45,215,240,.16);padding-bottom:7px;margin-bottom:11px">
+                    <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.14em;color:#2dd7f0;text-transform:uppercase">{{ c.h }}</div>
+                    <div style="margin-left:auto;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.08em;color:rgba(234,246,248,.5);white-space:nowrap">{{ c.meta }}</div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:9px">
+                    <sc-for list="{{ c.mods }}" as="md" hint-placeholder-count="3">
+                      <div data-pipe-mod="" style="display:grid;grid-template-columns:auto 1fr;gap:11px;align-items:baseline">
+                        <div style="font-family:'Orbitron',sans-serif;font-size:calc(12.5px * var(--type-scale,1));letter-spacing:.04em;color:#2dd7f0;white-space:nowrap">▸ {{ md.name }}</div>
+                        <div style="font-size:calc(14px * var(--type-scale,1));line-height:1.7;color:rgba(234,246,248,.8);text-wrap:pretty">{{ md.desc }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            </sc-if>
+          </div>
+          <sc-if value="{{ pipeHasHotspots }}" hint-placeholder-val="{{ false }}">
+            <div style="height:38px"></div>
+            <svg ref="{{ setPipeLink }}" aria-hidden="true" style="position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible;pointer-events:none;opacity:0;z-index:2"></svg>
+          </sc-if>
+          <div ref="{{ setPipeSpot }}" style="position:relative;margin-top:22px;border:1px solid rgba(45,215,240,.16);border-left:2px solid #2dd7f0;background:rgba(45,215,240,.05);padding:15px 16px">
+            <div data-pipe-spot-lbl="" style="font-family:'Orbitron',sans-serif;font-size:11.5px;letter-spacing:.16em;color:#2dd7f0;text-transform:uppercase;margin-bottom:9px">★ {{ pipeSpotLbl }}</div>
+            <p style="font-size:calc(15px * var(--type-scale,1));line-height:1.8;color:rgba(234,246,248,.82);margin:0;text-wrap:pretty">{{ pipeSpotP }}</p>
+            <sc-if value="{{ pipeHasSpotShots }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;align-items:stretch;gap:10px;margin-top:18px">
+                <div>
+                  <div style="position:relative;border:1px solid rgba(45,215,240,.3);background:rgba(45,215,240,.04);padding:8px">
+                    <div style="position:absolute;top:-1px;left:-1px;width:12px;height:12px;border-top:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+                    <div style="position:absolute;bottom:-1px;right:-1px;width:12px;height:12px;border-bottom:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+                    <img src="uploads/pm-blank-grid.png" alt="Preset Manager grid with black preview thumbnails" style="display:block;width:100%;height:auto;border:1px solid rgba(45,215,240,.16)">
+                  </div>
+                  <div style="font-family:'Orbitron',sans-serif;font-size:10.5px;letter-spacing:.12em;color:rgba(234,246,248,.6);margin-top:9px">{{ pipeSpotCapA }}</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:2px 0">
+                  <div style="width:1px;height:11px;background:linear-gradient(180deg,rgba(45,215,240,.15),#2dd7f0)"></div>
+                  <div style="width:0;height:0;border-top:6px solid #2dd7f0;border-left:4px solid transparent;border-right:4px solid transparent"></div>
+                </div>
+                <div>
+                  <div style="position:relative;border:1px solid rgba(226,60,60,.4);background:rgba(226,60,60,.06);padding:8px">
+                    <div style="position:absolute;top:-1px;left:-1px;width:12px;height:12px;border-top:2px solid #e23c3c;border-left:2px solid #e23c3c"></div>
+                    <div style="position:absolute;bottom:-1px;right:-1px;width:12px;height:12px;border-bottom:2px solid #e23c3c;border-right:2px solid #e23c3c"></div>
+                    <img src="uploads/pm-error-dialog.png" alt="Preset Manager error dialog listing files with special characters" style="display:block;width:100%;height:auto;border:1px solid rgba(226,60,60,.2)">
+                  </div>
+                  <div style="font-family:'Orbitron',sans-serif;font-size:10.5px;letter-spacing:.12em;color:rgba(234,246,248,.6);margin-top:9px">{{ pipeSpotCapB }}</div>
+                </div>
+              </div>
+            </sc-if>
+            <div style="font-family:'Orbitron',sans-serif;font-size:10.5px;letter-spacing:.1em;color:rgba(234,246,248,.55);margin-top:18px">{{ pipeFlowcap }}</div>
+            <div data-pipe-flow="" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:11px">
+              <sc-for list="{{ pipeSteps }}" as="s" hint-placeholder-count="3">
+                <div data-pipe-step="" style="flex:1 1 190px;min-width:170px;display:flex;align-items:stretch;gap:10px">
+                  <div style="flex:1;border:1px solid rgba(45,215,240,.18);background:rgba(45,215,240,.04);padding:10px 12px">
+                    <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.14em;color:#2dd7f0">{{ s.n }}</div>
+                    <div style="font-size:calc(14px * var(--type-scale,1));line-height:1.6;color:rgba(234,246,248,.8);margin-top:5px;text-wrap:pretty">{{ s.txt }}</div>
+                  </div>
+                  <sc-if value="{{ s.notLast }}" hint-placeholder-val="{{ true }}">
+                    <div data-pipe-arrow="" style="flex:0 0 18px;display:flex;align-items:center;justify-content:center;gap:2px;color:#2dd7f0">
+                      <div style="width:10px;height:1px;background:linear-gradient(90deg,rgba(45,215,240,.15),#2dd7f0)"></div>
+                      <div style="width:0;height:0;border-left:5px solid #2dd7f0;border-top:3.5px solid transparent;border-bottom:3.5px solid transparent"></div>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+      <sc-for list="{{ pipeCaseBlocksAfter }}" as="b" hint-placeholder-count="0">
+        <div style="margin-bottom:24px">
+          <div data-pipe-head="" style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+            <div style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.16em;color:#2dd7f0">{{ b.h }}</div>
+            <div style="flex:1;height:1px;background:rgba(45,215,240,.16)"></div>
+          </div>
+          <sc-for list="{{ b.ps }}" as="p" hint-placeholder-count="1">
+            <p style="font-size:calc(15.5px * var(--type-scale,1));line-height:1.8;color:rgba(234,246,248,.8);margin:0 0 12px;text-wrap:pretty">{{ p.v }}</p>
+          </sc-for>
+        </div>
+      </sc-for>
+      <div style="margin-top:26px;padding:14px 16px;border-left:2px solid rgba(45,215,240,.5);background:rgba(45,215,240,.04)">
+        <p style="font-size:calc(14px * var(--type-scale,1));line-height:1.8;color:rgba(234,246,248,.68);margin:0;text-wrap:pretty">{{ pipeCase.note }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+</sc-if>
 
 <section id="services" ref="{{ setServicesRef }}" style="position:relative;padding:min(12vw,120px) clamp(20px,6vw,80px);border-bottom:1px solid rgba(45,215,240,.12)">
   <div style="text-align:center;margin-bottom:56px">
@@ -589,10 +1151,49 @@ a:hover{color:#7fe9f7}
 
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;typeScale&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.9,&quot;min&quot;:0.85,&quot;max&quot;:1.35,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Feel&quot;},&quot;motionDepth&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0.3,&quot;max&quot;:2,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Feel&quot;},&quot;contentDensity&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;full&quot;,&quot;options&quot;:[&quot;full&quot;,&quot;minimal&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Feel&quot;}}">
+const AI_PROJECTS = [
+  {
+    name: 'SEE BEYOND',
+    featured: false,
+    status: 'shipped',
+    typeLine: 'TVC · CONCEPT',
+    meta: ['AI-DIRECTED'],
+    disclaimerEn: 'PERSONAL PROJECT — ORIGINAL CONCEPT',
+    disclaimerVi: 'DỰ ÁN CÁ NHÂN — CONCEPT GỐC',
+    video: 'uploads/ai/seebeyond-tvc.mp4',
+    deck: ['uploads/ai/sb-deck-01.png','uploads/ai/sb-deck-02.png','uploads/ai/sb-deck-03.png','uploads/ai/sb-deck-04.png','uploads/ai/sb-deck-05.png','uploads/ai/sb-deck-06.png','uploads/ai/sb-deck-07.png','uploads/ai/sb-deck-08.png','uploads/ai/sb-deck-09.png','uploads/ai/sb-deck-10.png','uploads/ai/sb-deck-11.png'],
+    stills: ['uploads/ai/sb-still-01.png','uploads/ai/sb-still-02.png','uploads/ai/sb-still-03.png','uploads/ai/sb-still-04.png','uploads/ai/sb-still-05.png','uploads/ai/sb-still-06.png','uploads/ai/sb-still-07.png','uploads/ai/sb-still-08.jpg','uploads/ai/sb-still-09.jpg']
+  },
+  {
+    name: 'SOUNDPEATS AIR6 HS',
+    featured: true,
+    status: 'shipped',
+    typeLine: 'TVC 15s · CONCEPT',
+    meta: ['AI-DIRECTED'],
+    disclaimerEn: 'PERSONAL PROJECT — NOT COMMISSIONED BY SOUNDPEATS',
+    disclaimerVi: 'DỰ ÁN CÁ NHÂN — KHÔNG DO SOUNDPEATS ĐẶT HÀNG',
+    video: 'uploads/ai/air6-tvc.mp4',
+    deck: ['uploads/ai/air6-deck-01.png','uploads/ai/air6-deck-02.png','uploads/ai/air6-deck-03.png','uploads/ai/air6-deck-04.png','uploads/ai/air6-deck-05.png','uploads/ai/air6-deck-06.png','uploads/ai/air6-deck-07.png','uploads/ai/air6-deck-08.png','uploads/ai/air6-deck-09.png','uploads/ai/air6-deck-10.png','uploads/ai/air6-deck-11.png','uploads/ai/air6-deck-12.png'],
+    stills: ['uploads/ai/still-02.png','uploads/ai/still-03.png','uploads/ai/still-07.png','uploads/ai/still-08.png','uploads/ai/still-09.png','uploads/ai/still-10.png','uploads/ai/still-11.png','uploads/ai/still-12.png','uploads/ai/still-13.png','uploads/ai/still-14.png','uploads/ai/still-15.png','uploads/ai/still-16.png','uploads/ai/still-17.png','uploads/ai/still-18.png']
+  },
+  {
+    name: 'AYN ODIN 3',
+    featured: false,
+    status: 'progress',
+    typeLine: 'TVC · CONCEPT',
+    meta: ['AI-DIRECTED'],
+    disclaimerEn: 'PERSONAL PROJECT — NOT COMMISSIONED BY AYN',
+    disclaimerVi: 'DỰ ÁN CÁ NHÂN — KHÔNG DO AYN ĐẶT HÀNG',
+    video: 'uploads/ai/odin3-tvc.mp4',
+    deck: ['uploads/ai/odin-deck-01.png','uploads/ai/odin-deck-02.png','uploads/ai/odin-deck-03.png','uploads/ai/odin-deck-04.png','uploads/ai/odin-deck-05.png','uploads/ai/odin-deck-06.png','uploads/ai/odin-deck-07.png','uploads/ai/odin-deck-08.png','uploads/ai/odin-deck-09.png','uploads/ai/odin-deck-10.png','uploads/ai/odin-deck-11.png','uploads/ai/odin-deck-12.png','uploads/ai/odin-deck-13.png','uploads/ai/odin-deck-14.png','uploads/ai/odin-deck-15.png','uploads/ai/odin-deck-16.png'],
+    stills: ['uploads/ai/odin-still-01.png','uploads/ai/odin-still-02.jpg','uploads/ai/odin-still-03.png','uploads/ai/odin-still-04.jpg','uploads/ai/odin-still-05.png']
+  }
+];
+
 const EN = {
   heroRole: 'MOTION GRAPHIC DESIGNER // VIDEO ENGINEER // STUDIO LEAD',
   heroSub: 'Khai Tran — motion designer who builds the system behind the videos, not just the videos.',
-  ctaReel: 'VIEW REEL',
+  ctaReel: 'WATCH REEL',
   ctaContact: 'CONTACT',
   profileLabel: 'PROFILE',
   timelineLabel: 'CAREER_LOG',
@@ -603,6 +1204,21 @@ const EN = {
   aboutBody: 'Motion designer and video engineer. Founding creative hire at an Australian Edtech startup — built the post-production studio from zero, then led it.',
   servicesLabel: 'ALSO BUILT',
   servicesTitle: 'Graphics. Banners. 3D Modeling / Animation.',
+  pipelineLabel: 'PIPELINE & TOOLING',
+  pipelineTitle: 'Tools that keep the studio from breaking.',
+  aiLabel: 'AI PRODUCTION',
+  aiTitle: 'One person. Full Production',
+  aiStatusShipped: 'SHIPPED',
+  aiStatusProgress: 'IN PROGRESS',
+  aiDeckLabel: 'DECK',
+  aiStillsLabel: 'STILLS',
+  aiNoMedia: 'STILL PENDING',
+  aiWatchVideo: 'WATCH VIDEO',
+  pipeStatusShipped: 'SHIPPED',
+  pipeReadCase: 'READ CASE STUDY',
+  pipeC1Title: 'Fixing broken file handoffs in After Effects',
+  pipeC1Sub: 'A pipeline tool I built while leading a 4-person creative studio.',
+  pipeC1Note: 'Built with AI-assisted development — the diagnosis and design were mine; AI was the implementation multiplier.',
   reelBadge: 'ACCESS GRANTED — IDENTITY VERIFIED',
   reelTitle: 'Motion Graphic Showreel',
   workLabel: 'SELECTED WORK',
@@ -633,6 +1249,21 @@ const VI = {
   aboutBody: 'Motion designer và video engineer. Nhân sự sáng tạo đầu tiên của một startup Edtech Úc — dựng studio hậu kỳ từ con số 0, rồi dẫn dắt nó.',
   servicesLabel: 'ALSO BUILT',
   servicesTitle: 'Graphics. Banners. 3D Modeling / Animation.',
+  pipelineLabel: 'PIPELINE & TOOLING',
+  pipelineTitle: 'Công cụ giữ cho studio không gãy.',
+  aiLabel: 'AI PRODUCTION',
+  aiTitle: 'One person. Full Production',
+  aiStatusShipped: 'ĐÃ HOÀN THÀNH',
+  aiStatusProgress: 'ĐANG THỰC HIỆN',
+  aiDeckLabel: 'DECK',
+  aiStillsLabel: 'STILLS',
+  aiNoMedia: 'CHƯA CÓ HÌNH',
+  aiWatchVideo: 'XEM VIDEO',
+  pipeStatusShipped: 'ĐÃ TRIỂN KHAI',
+  pipeReadCase: 'ĐỌC CASE STUDY',
+  pipeC1Title: 'Sửa dứt điểm lỗi bàn giao file trong After Effects',
+  pipeC1Sub: 'Một công cụ pipeline tôi tự xây khi dẫn dắt studio sáng tạo 4 người.',
+  pipeC1Note: 'Phát triển với sự hỗ trợ của AI — phần chẩn đoán và thiết kế là của tôi; AI là đòn bẩy khi triển khai.',
   reelBadge: 'ĐÃ XÁC THỰC — QUYỀN TRUY CẬP',
   reelTitle: 'Motion Graphic Showreel',
   workLabel: 'DỰ ÁN NỔI BẬT',
@@ -680,9 +1311,203 @@ const CAREER_VI = [
     tags: ['TEAM 4 NGƯỜI', 'SOP DESIGN', 'HỆ THỐNG ASSET', 'TRỰC TIẾP DẪN'].map(tag) },
 ];
 
+const PIPE02 = {
+  en: {
+    num: '02', code: 'MASTER PANEL',
+    title: 'One panel for every repetitive move in a project',
+    sub: 'A production toolkit I built and unified while leading the studio.',
+    note: 'Built with AI-assisted development — the problem-spotting and design were mine.',
+    tags: ['AFTER EFFECTS', 'MULTICAM KEYING', 'AI-ASSISTED'],
+    blocks: [
+      { h: 'THE PROBLEM', ps: ['Our projects were heavy — often hundreds of layers deep, cut into dozens of scene blocks, built on multicam green-screen footage that needed serious cleanup. And they were full of small, constant frictions.', 'None of these was a disaster on its own, but they happened all day, every day, across the whole team.'], bullets: [
+        'Parenting a layer to another one a few hundred rows away meant dragging the pick-whip and waiting for the timeline to crawl.',
+        'Dropping a layer into a spot buried in the middle of the stack was a fight — and every new Epidemic sound effect landed at the top and had to be hauled back into place.',
+        'Scene blocks with staggered in/out points couldn\'t be nudged with the usual shortcuts without collapsing their timing and breaking the scene.'] },
+      { h: 'MY APPROACH', ps: ['Instead of living with them, I built a small tool for each one. Over time I realised they were all the same class of problem — friction between me and the timeline — and consolidated them into a single panel the team could reach for.'], bullets: [] },
+    ],
+    after: [
+      { h: 'IMPACT', ps: ['The value is cumulative: dozens of small frictions, each a few seconds or a few clicks, taken out of every project, every day, for anyone who opened the panel. And several don\'t just save time, they remove ways to get it wrong — moving a scene block without breaking its timing, copying properties identically every pass. On their own each is trivial; but together, they change how fast, and how reliably, a heavy project moves from setup to delivery. Because it all lives in one panel the whole team reached for, that saving compounded across everyone, not just me.'], bullets: [] },
+    ],
+    panel: {
+      whatHead: 'WHAT IT DOES',
+      shot: 'uploads/master-panel.png',
+      shotCap: 'MASTER PANEL 9 — AFTER EFFECTS',
+      hotspots: true,
+      hotLabel: 'HOVER THE PANEL',
+      hotHint: 'Hover a section of the panel — or a feature name — to see what it does.',
+      hotLabelTouch: 'TAP THE PANEL',
+      hotHintTouch: 'Tap a section of the panel — or a feature name — to see what it does.',
+      clusters: [
+        { h: 'Taming a huge timeline', meta: '4 modules', mods: [
+          { name: 'Parent', t: 7.5, h: 9.2, desc: 'Parent to any layer by typing its number — no dragging the pick-whip across hundreds of rows.' },
+          { name: 'Move', t: 17.9, h: 9.8, desc: 'Send a layer above any layer number in one click; snap top-of-stack Epidemic SFX exactly where they belong.' },
+          { name: 'Block Moving', t: 29.8, h: 9.2, desc: 'Move a whole scene block to the playhead without flattening each layer\'s in/out points.' },
+          { name: 'Audio dB', t: 40.5, h: 13.8, desc: 'Set levels in bulk — presets for the values I reach for most, scoped to selection, label, or marker.' }] },
+        { h: 'Automating the green\u2011screen\u00A0pipeline', meta: 'bespoke · 2 modules', mods: [
+          { name: 'Copy Props by Marker', t: 56, h: 18.5, desc: 'Finish one camera angle, then push its keying, colour, masks & position to every same-marker layer at once.' },
+          { name: 'Insert & Trim by Marker', t: 75.9, h: 13.7, desc: 'Drop the right background behind each angle and auto-trim it to match, by marker.' }] },
+      ],
+      spot: {
+        lbl: 'The crunch-time saver',
+        mod: 'Copy Props by Marker',
+        p: 'Multicam green-screen lecture footage, poorly shot in-camera: every angle needs its own key, grade and mask, so presets are useless — the numbers that fix one clip break the next. I tag each angle with a marker, perfect one layer, and propagate. The time saved here is modest, maybe 10–15 minutes a pass, and that\'s not the point. Green-screen cleanup is the last thing I touch, after hours of motion and sound are already locked — which is exactly when hand-copying effects across a dozen constantly-switching camera angles goes wrong. This makes that step deterministic: one click per angle, identical every time, no slips at the moment I\'m most likely to make them. The real win isn\'t minutes; it\'s consistency and peace of mind at crunch time.',
+        flowcap: 'Markers tag each camera angle — R right · L left · F front',
+        steps: ['Perfect one angle\'s key, grade & mask', 'Tick what to copy — FX · Masks · Pos', 'Applies to every layer with the same marker'],
+      },
+    },
+  },
+  vi: {
+    num: '02', code: 'MASTER PANEL',
+    title: 'Một panel cho mọi tác vụ lặp lại trong dự án',
+    sub: 'Bộ công cụ sản xuất tôi tự xây và hợp nhất khi dẫn dắt studio.',
+    note: 'Phát triển với sự hỗ trợ của AI — phần phát hiện vấn đề và thiết kế là của tôi.',
+    tags: ['AFTER EFFECTS', 'MULTICAM KEYING', 'AI-ASSISTED'],
+    blocks: [
+      { h: 'VẤN ĐỀ', ps: ['Dự án của chúng tôi rất nặng — thường hàng trăm layer, chia thành hàng chục scene block, dựng trên footage green-screen multicam cần xử lý kỹ. Và đầy những ma sát nhỏ nhưng liên tục.', 'Không cái nào là thảm họa nếu đứng riêng, nhưng chúng xảy ra suốt ngày, mỗi ngày, với cả team.'], bullets: [
+        'Parent một layer vào layer cách đó vài trăm dòng nghĩa là kéo pick-whip và chờ timeline bò từng chút.',
+        'Đưa một layer vào đúng vị trí nằm sâu giữa stack là một cuộc vật lộn — và mỗi sound effect mới từ Epidemic đều rơi lên đỉnh, phải lôi ngược về chỗ của nó.',
+        'Scene block có in/out lệch nhau không thể dịch bằng shortcut thông thường mà không làm sụp timing và phá vỡ cả scene.'] },
+      { h: 'CÁCH TÔI LÀM', ps: ['Thay vì sống chung với chúng, tôi làm một công cụ nhỏ cho từng cái. Dần dần tôi nhận ra tất cả đều cùng một loại vấn đề — ma sát giữa tôi và timeline — nên hợp nhất chúng vào một panel duy nhất để cả team dùng.'], bullets: [] },
+    ],
+    after: [
+      { h: 'KẾT QUẢ', ps: ['Thời gian tiết kiệm được không nhiều, chừng 10–15 phút mỗi lượt, và đó không phải điểm chính. Xử lý green-screen là việc tôi làm cuối cùng, sau khi hàng giờ motion và âm thanh đã chốt — đúng lúc việc copy tay hiệu ứng qua cả chục góc camera liên tục đổi dễ sai nhất. Cách này biến bước đó thành tất định: một click cho mỗi góc, giống nhau tuyệt đối, không trượt ở thời điểm tôi dễ trượt nhất. Cái được thật sự không phải phút, mà là sự nhất quán và yên tâm lúc cao điểm.'], bullets: [] },
+    ],
+    panel: {
+      whatHead: 'NÓ LÀM GÌ',
+      shot: 'uploads/master-panel.png',
+      shotCap: 'MASTER PANEL 9 — AFTER EFFECTS',
+      hotspots: true,
+      hotLabel: 'ĐƯA CHUỘT VÀO PANEL',
+      hotHint: 'Đưa chuột vào một vùng của panel — hoặc một tên chức năng — để xem nó làm gì.',
+      hotLabelTouch: 'CHẠM VÀO PANEL',
+      hotHintTouch: 'Chạm vào một vùng của panel — hoặc một tên chức năng — để xem nó làm gì.',
+      clusters: [
+        { h: 'Thuần hóa timeline khổng lồ', meta: '4 module', mods: [
+          { name: 'Parent', t: 7.5, h: 9.2, desc: 'Parent vào bất kỳ layer nào bằng cách gõ số của nó — không cần kéo pick-whip qua hàng trăm dòng.' },
+          { name: 'Move', t: 17.9, h: 9.8, desc: 'Đưa một layer lên trên số layer bất kỳ trong một click; đẩy SFX Epidemic từ đỉnh stack về đúng chỗ.' },
+          { name: 'Block Moving', t: 29.8, h: 9.2, desc: 'Dịch cả scene block về playhead mà không làm phẳng in/out của từng layer.' },
+          { name: 'Audio dB', t: 40.5, h: 13.8, desc: 'Set mức âm lượng hàng loạt — preset cho các giá trị tôi dùng nhiều nhất, theo selection, label hoặc marker.' }] },
+        { h: 'Tự động hóa pipeline green-screen', meta: 'riêng biệt · 2 module', mods: [
+          { name: 'Copy Props by Marker', t: 56, h: 18.5, desc: 'Hoàn thiện một góc camera, rồi đẩy key, màu, mask & position của nó sang mọi layer cùng marker một lượt.' },
+          { name: 'Insert & Trim by Marker', t: 75.9, h: 13.7, desc: 'Đặt đúng background sau từng góc và tự trim cho khớp, theo marker.' }] },
+      ],
+      spot: {
+        lbl: 'Cứu cánh lúc cao điểm',
+        mod: 'Copy Props by Marker',
+        p: 'Footage bài giảng green-screen multicam, quay tại hiện trường không tốt: mỗi góc cần key, grade và mask riêng, nên preset vô dụng — thông số cứu được clip này lại phá clip kế tiếp. Tôi gắn marker cho từng góc, hoàn thiện một layer, rồi lan ra toàn bộ.',
+        flowcap: 'Marker gắn cho từng góc camera — R phải · L trái · F chính diện',
+        steps: ['Hoàn thiện key, grade & mask của MỘT góc', 'Tick những gì cần copy — FX · Masks · Pos', 'Áp cho mọi layer có cùng marker'],
+      },
+    },
+  },
+};
+
+const PIPE03 = {
+  en: {
+    num: '03', code: 'PRESET MANAGER',
+    title: 'Browse a whole template pack at a glance, click to place',
+    sub: 'A two-part After Effects system I built to kill the slowest part of working with template packs.',
+    note: 'Built with AI-assisted development — the problem-spotting and design were mine.',
+    tags: ['AFTER EFFECTS', 'CEP EXTENSION', 'AI-ASSISTED'],
+    blocks: [
+      { h: 'THE PROBLEM', ps: ['Downloading a big template pack should save time — but first you have to find the one comp you actually want, and there\'s no fast way to do it. Open a comp, wait for it to load, hit play, wait for the RAM preview to cache, watch it, go back, open the next.', 'Across a pack of dozens of comps, just deciding what to use burns half an hour before any real work starts — and you repeat it every time you come back to that pack.'], bullets: [] },
+      { h: 'MY APPROACH', ps: ['Pay the previewing cost once instead of every time. The system comes in two parts: a batch renderer that turns every template comp into a lightweight preview video, and a browser that lays those previews out as a grid of looping thumbnails. Browsing and placing collapse into a single click.'], bullets: [] },
+    ],
+    after: [
+      { h: 'IMPACT', ps: ['What used to be a stop-start ritual of open–play–wait–go-back became a glance and a click. And the gain compounds on packs I reuse: render the previews once, and from then on choosing and placing a template is instant.'], bullets: [] },
+    ],
+    panel: {
+      whatHead: 'WHAT IT DOES',
+      shot: 'uploads/preset-manager.png', shotWide: true,
+      shotCap: 'PRESET MANAGER — AUTO RENDER + PACK BROWSER',
+      clusters: [
+        { h: 'Auto Render extension', meta: 'pass 1 · once per pack', mods: [
+          { name: 'Batch render', desc: 'Take any set of template comps, point them at an output folder, and render them all unattended.' },
+          { name: 'Preview render setting', desc: 'A dedicated lightweight preset — previews stay fast to make and fast to play.' }] },
+        { h: 'Preset Manager', meta: 'pass 2 · every time', mods: [
+          { name: 'Pack grid', desc: 'Reads the rendered previews and lays the whole pack out as looping thumbnails, organised by pack.' },
+          { name: 'Click to place', desc: 'Click a thumbnail and the matching comp drops straight onto the selected layer at the playhead.' }] },
+      ],
+      spot: {
+        lbl: 'The problem I hit\n—\nand how it fails',
+        p: 'Once real packs went through it, previews started showing up blank. I traced it to the comp names: some authors use special characters (#, %, &) in them, and those characters broke the preview file references — so the grid silently rendered black. Handling the failure well mattered as much as the happy path.',
+        shots: true,
+        capA: 'THE SYMPTOM — PREVIEWS RENDER BLACK',
+        capB: 'THE HANDLING — NAMES THE FILES, OPENS THE FOLDER',
+        flowcap: 'Instead of failing quietly, the tool walks you to the fix',
+        steps: ['Flags the offending files', 'Lists them by name', 'One button opens the exact folder — rename, reload'],
+      },
+    },
+  },
+  vi: {
+    num: '03', code: 'PRESET MANAGER',
+    title: 'Xem cả bộ template trong một lượt, click là đặt vào comp',
+    sub: 'Hệ thống hai phần trong After Effects tôi làm để xử lý khâu chậm nhất khi dùng template pack.',
+    note: 'Phát triển với sự hỗ trợ của AI — phần phát hiện vấn đề và thiết kế là của tôi.',
+    tags: ['AFTER EFFECTS', 'CEP EXTENSION', 'AI-ASSISTED'],
+    blocks: [
+      { h: 'VẤN ĐỀ', ps: ['Tải một template pack lớn lẽ ra để tiết kiệm thời gian — nhưng trước đó bạn phải tìm được đúng comp mình cần, và không có cách nào nhanh. Mở comp, chờ load, bấm play, chờ RAM preview cache, xem, quay lại, mở cái tiếp theo.', 'Với một pack vài chục comp, chỉ riêng việc quyết định dùng cái nào đã mất nửa tiếng trước khi bắt đầu làm thật — và lặp lại mỗi lần quay lại pack đó.'], bullets: [] },
+      { h: 'CÁCH TÔI LÀM', ps: ['Trả cái giá preview một lần, thay vì mỗi lần. Hệ thống gồm hai phần: một trình render hàng loạt biến mọi comp template thành video preview nhẹ, và một trình duyệt bày các preview đó thành lưới thumbnail chạy loop. Duyệt và đặt vào gộp lại thành một click.'], bullets: [] },
+    ],
+    after: [
+      { h: 'KẾT QUẢ', ps: ['Cái nghi thức mở–play–chờ–quay lại giờ chỉ còn một cái nhìn và một click. Và lợi ích tích lũy với những pack tôi dùng lại: render preview một lần, từ đó về sau việc chọn và đặt template là tức thì.'], bullets: [] },
+    ],
+    panel: {
+      whatHead: 'NÓ LÀM GÌ',
+      shot: 'uploads/preset-manager.png', shotWide: true,
+      shotCap: 'PRESET MANAGER — AUTO RENDER + PACK BROWSER',
+      clusters: [
+        { h: 'Auto Render extension', meta: 'lượt 1 · một lần cho mỗi pack', mods: [
+          { name: 'Batch render', desc: 'Chọn bất kỳ nhóm comp template, trỏ vào một folder output, và render toàn bộ không cần trông.' },
+          { name: 'Preview render setting', desc: 'Một preset nhẹ riêng cho preview — nhanh khi render và nhanh khi phát.' }] },
+        { h: 'Preset Manager', meta: 'lượt 2 · mỗi lần dùng', mods: [
+          { name: 'Lưới theo pack', desc: 'Đọc các preview đã render và bày cả pack thành lưới thumbnail chạy loop, phân theo pack.' },
+          { name: 'Click là đặt', desc: 'Click một thumbnail, comp tương ứng được đưa thẳng vào layer đang chọn tại playhead.' }] },
+      ],
+      spot: {
+        lbl: 'Vấn đề tôi gặp\n—\nvà cách nó báo lỗi',
+        p: 'Khi các pack thật đi qua nó, preview bắt đầu bị đen. Tôi truy ra là do tên comp: một số tác giả dùng ký tự đặc biệt (#, %, &), và những ký tự đó làm hỏng đường dẫn tới file preview — nên lưới render đen mà không báo gì. Xử lý phần thất bại cho tử tế quan trọng không kém phần chạy đúng.',
+        shots: true,
+        capA: 'TRIỆU CHỨNG — PREVIEW RENDER RA ĐEN',
+        capB: 'CÁCH XỬ LÝ — GỌI ĐÚNG TÊN FILE, MỞ ĐÚNG FOLDER',
+        flowcap: 'Thay vì gãy im lặng, tool dẫn bạn tới chỗ sửa',
+        steps: ['Đánh dấu các file gây lỗi', 'Liệt kê chúng theo tên', 'Một nút mở đúng folder — đổi tên, reload'],
+      },
+    },
+  },
+};
+
 class Component extends DCLogic {
-  state = { lang: 'en', modalOpen: false, modalItem: 0, careerOpen: false, careerItem: 0, contactOpen: false, emailOpen: false, graphicsOpen: false, gfxIndex: 0, bannersOpen: false, bannerProject: 0, model3dOpen: false };
+  state = { lang: 'en', pipeIndex: 0, pipeHot: null, modalOpen: false, modalItem: 0, careerOpen: false, careerItem: 0, contactOpen: false, emailOpen: false, pipelineOpen: false, aiOpen: false, aiIndex: 0, aiStageSrc: null, graphicsOpen: false, gfxIndex: 0, bannersOpen: false, bannerProject: 0, model3dOpen: false };
   _gfxEls = [];
+  _setPipeHud = (el) => { this._pipeHudEl = el; };
+  _setPipeLink = (el) => { this._pipeLinkEl = el; };
+  _setPipeLinkWrap = (el) => { this._pipeLinkWrap = el; };
+  _setPipeSpot = (el) => { this._pipeSpotEl = el; };
+  _setPipeZoom = (el) => { this._pipeZoomEl = el; };
+  _setPipeZoomVid = (el) => { this._pipeZoomVid = el; };
+  _setPipeZoomBase = (el) => {
+    this._pipeZoomBase = el;
+    if (!el || el._zoomBound) return;
+    el._zoomBound = true;
+    const coarse = () => window.matchMedia('(pointer: coarse)').matches;
+    el.addEventListener('mouseenter', (e) => { if (!coarse()) this._pipeZoomMove(e, true); });
+    el.addEventListener('mousemove', (e) => { if (!coarse()) this._pipeZoomMove(e, false); });
+    el.addEventListener('mouseleave', () => { if (!coarse()) this._pipeZoomHide(); });
+    // Touch: tap the panel to open the loupe on that spot, drag to pan, tap again to dismiss.
+    let sx = 0, sy = 0, moved = false;
+    el.addEventListener('touchstart', (t) => { const p = t.touches[0]; sx = p.clientX; sy = p.clientY; moved = false; }, { passive: true });
+    el.addEventListener('touchmove', (t) => {
+      const p = t.touches[0];
+      if (Math.abs(p.clientX - sx) > 8 || Math.abs(p.clientY - sy) > 8) moved = true;
+      if (this._pipeZoomOn) this._pipeZoomMove(p, false);
+    }, { passive: true });
+    el.addEventListener('touchend', () => {
+      if (moved) return;
+      if (this._pipeZoomOn) this._pipeZoomHide();
+      else this._pipeZoomMove({ clientX: sx, clientY: sy }, true);
+    });
+  };
   _modelSlides = [];
   modelIndex = 0;
   _modelRot = 0;
@@ -694,6 +1519,12 @@ class Component extends DCLogic {
   _toolBtns = [];
   workIndex = 0;
   _workRot = 0;
+  aiCar = 1;
+  _aiRot = 1;
+  _aiSlides = [];
+  _aiReflects = [];
+  _aiMinis = [];
+  _aiPlays = [];
 
   componentDidMount() {
     this._setupFavicon();
@@ -702,9 +1533,10 @@ class Component extends DCLogic {
     this._workRadius = 0;
     this._workIntroSpin = -380;
     requestAnimationFrame(() => this.layoutCarousel(false));
-    this._onKey = (e) => { if (e.key === 'Escape') { if (this.state.model3dOpen) this.closeModel3d(); else if (this.state.bannersOpen) this.closeBanners(); else if (this.state.graphicsOpen) this.closeGraphics(); else if (this.state.emailOpen) this.closeEmail(); else if (this.state.contactOpen) this.closeContact(); else if (this.state.careerOpen) this.closeCareer(); else if (this.state.modalOpen) this.closeModal(); } };
+    requestAnimationFrame(() => this._aiLayoutRetry(0));
+    this._onKey = (e) => { if (e.key === 'Escape') { if (this.state.aiStageSrc) this.setState({ aiStageSrc: null }); else if (this.state.aiOpen) this.closeAi(); else if (this.state.model3dOpen) this.closeModel3d(); else if (this.state.bannersOpen) this.closeBanners(); else if (this.state.graphicsOpen) this.closeGraphics(); else if (this.state.pipelineOpen) this.closePipeline(); else if (this.state.emailOpen) this.closeEmail(); else if (this.state.contactOpen) this.closeContact(); else if (this.state.careerOpen) this.closeCareer(); else if (this.state.modalOpen) this.closeModal(); } };
     window.addEventListener('keydown', this._onKey);
-    this._sections = [this.aboutEl, this.servicesEl, this.reelEl, this.workEl, this.skillsEl, this.contactEl].filter(Boolean);
+    this._sections = [this.aboutEl, this.pipelineEl, this.servicesEl, this.reelEl, this.aiEl, this.workEl, this.skillsEl, this.contactEl].filter(Boolean);
     this._onScroll = () => {
       if (this._raf) return;
       this._raf = requestAnimationFrame(() => {
@@ -713,10 +1545,11 @@ class Component extends DCLogic {
       });
     };
     window.addEventListener('scroll', this._onScroll, { passive: true });
-    this._onResize = () => { this.measureChars(); this.layoutCarousel(false); if (this.state.model3dOpen) this.layoutModelCarousel(false); };
+    this._onResize = () => { this.measureChars(); this.layoutCarousel(false); this.layoutAiCarousel(false); if (this.state.model3dOpen) this.layoutModelCarousel(false); };
     window.addEventListener('resize', this._onResize);
     requestAnimationFrame(() => { this.measureChars(); this.tick(); });
     this._startInteractHints();
+    this._startHotspotHints();
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { this.measureChars(); this.tick(); });
     this._introTimer = setTimeout(() => { this.measureChars(); this.tick(); }, 3300);
     this.applyTypeScale();
@@ -736,9 +1569,9 @@ class Component extends DCLogic {
     this._curSection = 0;
     this._snapping = false;
     this._cooldownUntil = 0;
-    this._snapDelays = [0, 0, 0, 0, 0, 0, 0];
+    this._snapDelays = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     this._buildSnapTargets = () => {
-      this._snapTargets = [null, this.workEl, this.reelEl, this.aboutEl, this.servicesEl, this.skillsEl, this.contactEl];
+      this._snapTargets = [null, this.workEl, this.reelEl, this.aiEl, this.aboutEl, this.pipelineEl, this.servicesEl, this.skillsEl, this.contactEl];
     };
     this._buildSnapTargets();
     // On tablets/phones (touch or narrow viewport) use native scrolling instead of
@@ -747,7 +1580,7 @@ class Component extends DCLogic {
     this._isPhoneOrTablet = () => window.innerWidth <= 1024 || window.matchMedia('(pointer:coarse)').matches;
     this._enableSnap = () => {
       this._onWheel = (e) => {
-        if (this.state.modalOpen || this.state.careerOpen || this.state.contactOpen || this.state.emailOpen || this.state.graphicsOpen || this.state.bannersOpen || this.state.model3dOpen) return;
+        if (this.state.aiOpen || this.state.modalOpen || this.state.careerOpen || this.state.contactOpen || this.state.emailOpen || this.state.pipelineOpen || this.state.graphicsOpen || this.state.bannersOpen || this.state.model3dOpen) return;
         e.preventDefault();
         if (this._snapping || performance.now() < this._cooldownUntil) return;
         this.snap(e.deltaY > 0 ? 1 : -1);
@@ -755,7 +1588,7 @@ class Component extends DCLogic {
       window.addEventListener('wheel', this._onWheel, { passive: false });
       this._onTouchStart = (e) => { this._touchY = e.touches[0].clientY; };
       this._onTouchMove = (e) => {
-        if (this.state.modalOpen || this.state.careerOpen || this.state.contactOpen || this.state.emailOpen || this.state.graphicsOpen || this.state.bannersOpen || this.state.model3dOpen) return;
+        if (this.state.aiOpen || this.state.modalOpen || this.state.careerOpen || this.state.contactOpen || this.state.emailOpen || this.state.pipelineOpen || this.state.graphicsOpen || this.state.bannersOpen || this.state.model3dOpen) return;
         if (this._snapping) { e.preventDefault(); return; }
         const dy = this._touchY - e.touches[0].clientY;
         if (Math.abs(dy) > 28 && performance.now() >= this._cooldownUntil) { e.preventDefault(); this.snap(dy > 0 ? 1 : -1); }
@@ -772,7 +1605,7 @@ class Component extends DCLogic {
     };
     // Native scroll: reveal each section's entrance animation once as it scrolls into
     // view (IntersectionObserver is unreliable in some embedded webviews).
-    const secList = [[this.workEl, 1], [this.reelEl, 2], [this.aboutEl, 3], [this.servicesEl, 4], [this.skillsEl, 5], [this.contactEl, 6]];
+    const secList = [[this.workEl, 1], [this.reelEl, 2], [this.aiEl, 3], [this.aboutEl, 4], [this.pipelineEl, 5], [this.servicesEl, 6], [this.skillsEl, 7], [this.contactEl, 8]];
     this._nativeTriggered = {};
     this._nativeCheck = () => {
       const vh = window.innerHeight;
@@ -812,7 +1645,7 @@ class Component extends DCLogic {
     this._heroLeft = false;
     this._heroTouchY = 0;
     this._atHeroGate = () => this._nativeScroll && !this._heroOutDone
-      && !this.state.modalOpen && !this.state.careerOpen && !this.state.contactOpen && !this.state.emailOpen && !this.state.graphicsOpen && !this.state.bannersOpen && !this.state.model3dOpen
+      && !this.state.modalOpen && !this.state.careerOpen && !this.state.contactOpen && !this.state.emailOpen && !this.state.pipelineOpen && !this.state.graphicsOpen && !this.state.bannersOpen && !this.state.model3dOpen
       && window.scrollY <= 4;
     this._heroExit = (delta) => {
       if (!this._heroIntroDone || this._heroOutPlaying || delta <= 6) return;
@@ -835,13 +1668,61 @@ class Component extends DCLogic {
     this._onKeyNav = (e) => {
       if (this.state.model3dOpen) { if (e.key === 'ArrowLeft') { e.preventDefault(); this.moveModel(-1); } else if (e.key === 'ArrowRight') { e.preventDefault(); this.moveModel(1); } return; }
       if (this.state.graphicsOpen) { if (e.key === 'ArrowLeft') { e.preventDefault(); this.gfxGo(this.state.gfxIndex - 1); } else if (e.key === 'ArrowRight') { e.preventDefault(); this.gfxGo(this.state.gfxIndex + 1); } return; }
-      if (this.state.modalOpen || this.state.careerOpen || this.state.contactOpen || this.state.emailOpen || this.state.graphicsOpen || this.state.bannersOpen || this.state.model3dOpen) return;
+      if (this.state.aiOpen || this.state.modalOpen || this.state.careerOpen || this.state.contactOpen || this.state.emailOpen || this.state.pipelineOpen || this.state.graphicsOpen || this.state.bannersOpen || this.state.model3dOpen) return;
       if (this._nativeScroll) return;
       if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); this.snap(1); }
       else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); this.snap(-1); }
     };
     window.addEventListener('keydown', this._onKeyNav);
     setTimeout(() => this.heroSideIn(), 900);
+
+    // Fallback so the AI cards can never be stuck at scale 0 if the snap trigger misses.
+    this._armAiObserver = () => {
+      if (this._aiObserver || !this.aiEl) return;
+      // Measured against the VIEWPORT, not the section's own height — the section can be
+      // taller than the viewport, so intersectionRatio alone never reaches a high threshold.
+      this._aiVisibleEnough = () => {
+        if (!this.aiEl) return false;
+        const r = this.aiEl.getBoundingClientRect();
+        const vh = window.innerHeight || 1;
+        const vis = Math.max(0, Math.min(r.bottom, vh) - Math.max(r.top, 0));
+        const frac = vis / Math.min(vh, r.height || vh);
+        // Desktop snaps onto the section, so wait until it mostly fills the viewport.
+        return frac >= (this._nativeScroll ? 0.25 : 0.9);
+      };
+      this._aiObserver = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) this._aiTryEnter(); });
+      }, { threshold: [0.05, 0.2, 0.5, 0.8, 1] });
+      this._aiObserver.observe(this.aiEl);
+    };
+    // Desktop: the section is snap-scrolled, so hold the entrance until the section fills
+    // the viewport AND scrolling has actually stopped. Native scroll fires as soon as it's in view.
+    this._aiTryEnter = () => {
+      if (this._aiInPlayed || !this._aiVisibleEnough || !this._aiVisibleEnough()) return;
+      if (this._nativeScroll) { this.playAiIn(); return; }
+      const idle = performance.now() - (this._lastScrollAt || 0);
+      if (idle < 0) {
+        clearTimeout(this._aiEnterT);
+        this._aiEnterT = setTimeout(() => this._aiTryEnter(), -idle);
+        return;
+      }
+      this.playAiIn();
+    };
+    this._armAiObserver();
+    setTimeout(() => this._armAiObserver(), 300);
+    setTimeout(() => this._armAiObserver(), 1200);
+    // Scroll-side safety net: the observer only reports ratio changes, this re-checks the
+    // viewport-relative test on every scroll so the cards can never stay at scale 0.
+    this._aiScrollCheck = () => { this._lastScrollAt = performance.now(); this._aiTryEnter(); };
+    window.addEventListener('scroll', this._aiScrollCheck, { passive: true });
+    // Poll as well: in some embedded webviews neither window scroll events nor the
+    // observer's threshold crossings reach us reliably, and the entrance must not be lost.
+    this._aiPoll = setInterval(() => {
+      if (this._aiInPlayed) { clearInterval(this._aiPoll); this._aiPoll = null; return; }
+      const y = window.scrollY || 0;
+      if (y !== this._aiPollY) { this._aiPollY = y; this._lastScrollAt = performance.now(); }
+      this._aiTryEnter();
+    }, 180);
 
     this._reelObserver = new IntersectionObserver((entries) => {
       entries.forEach((e) => { if (!e.isIntersecting) this.stopReel(); });
@@ -1218,13 +2099,15 @@ class Component extends DCLogic {
   }
 
   triggerSection(i) {
-    const titles = { 1: this.workTitleEl, 2: this.reelTitleEl, 3: this.aboutTitleEl, 4: this.servicesTitleEl, 5: this.skillsTitleEl, 6: this.contactTitleEl };
-    if (titles[i]) this.typeTitle(titles[i], i === 6 ? () => this.playContact() : undefined);
+    const titles = { 1: this.workTitleEl, 2: this.reelTitleEl, 4: this.aboutTitleEl, 5: this.pipelineTitleEl, 6: this.servicesTitleEl, 7: this.skillsTitleEl, 8: this.contactTitleEl };
+    if (titles[i]) this.typeTitle(titles[i], i === 8 ? () => this.playContact() : undefined);
     if (i === 1) this.playWorkIn();
     if (i === 2) this.playReelIn();
-    if (i === 3) { this.playCareerLog(); this.playAboutParas(); }
-    if (i === 4) this.playServices();
-    if (i === 5) this.playSkills();
+    if (i === 3 && this._aiTryEnter) this._aiTryEnter();
+    if (i === 4) { this.playCareerLog(); this.playAboutParas(); }
+    if (i === 5) this.playPipeline();
+    if (i === 6) this.playServices();
+    if (i === 7) this.playSkills();
   }
 
   resetContact() {
@@ -1288,7 +2171,7 @@ class Component extends DCLogic {
     // contact section's in-animation instead of waiting for the viewer to scroll there.
     if (!this._isTouch()) {
       clearTimeout(this._skillsToContactT);
-      this._skillsToContactT = setTimeout(() => this.triggerSection(6), total + 950);
+      this._skillsToContactT = setTimeout(() => this.triggerSection(8), total + 950);
     }
   }
 
@@ -1457,8 +2340,46 @@ class Component extends DCLogic {
     });
   }
 
+  playPipeline() {
+    if (this._pipePlayed) return;
+    const sec = this.pipelineEl; if (!sec) return;
+    const cards = Array.from(sec.querySelectorAll('[data-pipe-card]'));
+    if (!cards.length) return;
+    this._pipePlayed = true;
+    cards.forEach((card, k) => {
+      card.style.transition = 'none';
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(22px)';
+      void card.offsetHeight;
+      setTimeout(() => {
+        card.style.transition = 'opacity .5s ease, transform .6s cubic-bezier(.2,.85,.25,1), border-color .25s, box-shadow .25s';
+        card.style.opacity = '1';
+        card.style.transform = 'none';
+      }, 120 + k * 170);
+    });
+  }
+
+  openAi(i) {
+    this._aiScrollY = window.scrollY || window.pageYOffset || 0;
+    this.setState({ aiOpen: true, aiIndex: i || 0, aiStageSrc: null });
+    try { document.body.style.overflow = 'hidden'; } catch (e) {}
+  }
+  closeAi() {
+    const y = this._aiScrollY || 0;
+    this.setState({ aiOpen: false, aiStageSrc: null });
+    try { document.body.style.overflow = ''; } catch (e) {}
+    // Locking body scroll can drop the page position on phone/tablet — put it back.
+    const restore = () => window.scrollTo(0, y);
+    restore();
+    requestAnimationFrame(restore);
+    setTimeout(restore, 60);
+  }
+
+  openPipeline(i) { this.setState({ pipelineOpen: true, pipeIndex: i || 0, pipeHot: null }); [80, 320, 900].forEach((t) => setTimeout(() => this._drawPipeLink(), t)); }
+  closePipeline() { this._pipeZoomHide(); this.setState({ pipelineOpen: false }); }
+
   navTo(href) {
-    const map = { '#hero': 0, '#top': 0, '#work': 1, '#reel': 2, '#about': 3, '#services': 4, '#skills': 5, '#contact': 6 };
+    const map = { '#hero': 0, '#top': 0, '#work': 1, '#reel': 2, '#aiprod': 3, '#about': 4, '#pipeline': 5, '#services': 6, '#skills': 7, '#contact': 8 };
     const i = map[href];
     if (i == null) return;
     const el = i === 0 ? null : this._snapTargets[i];
@@ -1588,8 +2509,14 @@ class Component extends DCLogic {
     else this.moveWork(1);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(pp, ps) {
+    if (!ps || ps.pipeHot !== this.state.pipeHot) { this._syncPipeHot(); if (this.state.pipeHot != null) this._showPipeHud(); }
+    if (this.state.pipelineOpen) {
+      requestAnimationFrame(() => this._drawPipeLink());
+      if (!this._pipeLinkBound) { this._pipeLinkBound = true; window.addEventListener('resize', () => this._drawPipeLink()); }
+    }
     this.applyTypeScale();
+    this.layoutAiCarousel(false);
     this.applyModal();
     this.finalizeCareer();
     this.finalizeAboutParas();
@@ -1685,16 +2612,151 @@ class Component extends DCLogic {
     this.layoutCarousel(true);
   }
 
+  layoutAiCarousel(animate) {
+    const n = this._aiSlides.length; if (!n || !this._aiStage) return;
+    // Few projects → a shallow coverflow arc instead of a full 360° ring
+    // (with n=2 a 180° step would hide the back card behind the front one).
+    const step = n < 4 ? 52 : 360 / n;
+    const stageW = this._aiStage.offsetWidth || 900;
+    const slideW = Math.max(230, Math.min(360, stageW * 0.30));
+    this._aiSlideW = slideW;
+    const radius = n < 4 ? slideW * 1.32 : (slideW / 2) / Math.tan(Math.PI / n) * 1.18;
+    const trans = animate ? 'transform .8s cubic-bezier(.33,.72,.2,1),filter .6s' : 'none';
+    const dimOf = (i) => Math.abs(i - this.aiCar);
+    for (let i = 0; i < n; i++) {
+      const el = this._aiSlides[i]; if (!el) continue;
+      const dist = dimOf(i);
+      const sc = dist < 0.5 ? 1.18 : Math.max(0.7, 0.95 - (dist - 1) * 0.1);
+      el.style.scale = '';
+      el.style.transform = `rotateY(${i * step}deg) translateZ(${radius}px) scale(${sc * this._aiEnterScale(i)})`;
+      el.style.transition = trans;
+      el.style.filter = `saturate(.9) contrast(1.05) brightness(${Math.max(0.32, 1 - dist * 0.34)})`;
+      el.style.zIndex = String(200 - Math.round(dist * 10));
+      if (this._aiPlays[i]) {
+        this._aiPlays[i].style.opacity = dist < 0.5 ? '1' : '0';
+        this._aiPlays[i].style.transform = dist < 0.5 ? 'translate(-50%,-50%) scale(1)' : 'translate(-50%,-50%) scale(.9)';
+      }
+    }
+    for (let i = 0; i < this._aiReflects.length; i++) {
+      const el = this._aiReflects[i]; if (!el) continue;
+      const rdist = dimOf(i);
+      const rsc = rdist < 0.5 ? 1.18 : Math.max(0.7, 0.95 - (rdist - 1) * 0.1);
+      el.style.scale = '';
+      el.style.transform = `rotateY(${i * step}deg) translateZ(${radius}px) scale(${rsc * this._aiEnterScale(i)})`;
+      el.style.transition = trans;
+      el.style.filter = `saturate(.8) contrast(1) brightness(${Math.max(0.28, 1 - dimOf(i) * 0.34)})`;
+    }
+    const stageT = `translateZ(${-radius}px) rotateX(7deg) rotateY(${-this._aiRot * step}deg)`;
+    const stageTrans = animate ? 'transform .8s cubic-bezier(.33,.72,.2,1)' : 'none';
+    this._aiStage.style.transition = stageTrans;
+    this._aiStage.style.transform = stageT;
+    if (this._aiStageR) { this._aiStageR.style.transition = stageTrans; this._aiStageR.style.transform = stageT; }
+    // Mini disc mirrors the main carousel: same angular step, same radius/width ratio, same scaling
+    const miniStep = step;
+    const miniR = 22 * 1.32;
+    for (let i = 0; i < this._aiMinis.length; i++) {
+      const el = this._aiMinis[i]; if (!el) continue;
+      const dist = dimOf(i);
+      const msc = dist < 0.5 ? 1.18 : Math.max(0.7, 0.95 - (dist - 1) * 0.1);
+      el.style.transition = stageTrans;
+      el.style.transform = `rotateY(${i * miniStep}deg) translateZ(${miniR}px) scale(${msc})`;
+      el.style.zIndex = String(200 - Math.round(dist * 10));
+      el.style.filter = `brightness(${Math.max(0.3, 1 - dist * 0.32)})`;
+    }
+    if (this._aiMiniDisc) {
+      this._aiMiniDisc.style.transition = stageTrans;
+      this._aiMiniDisc.style.transform = `translateZ(${-miniR}px) rotateY(${-this._aiRot * miniStep}deg)`;
+    }
+    const d = AI_PROJECTS[this.aiCar];
+    if (this._aiPillTitle && d) this._aiPillTitle.textContent = d.name;
+  }
+
+  // Entrance: cards scale 0 → 1, centre card first, then the two flanking ones.
+  _aiEnterScale(i) {
+    if (this._aiInDone) return 1;
+    const v = this._aiIn && this._aiIn[i];
+    return v == null ? 0 : v;
+  }
+
+  playAiIn() {
+    if (this._aiInPlayed) return;
+    const n = this._aiSlides.length;
+    if (!n || !this._aiStage) { setTimeout(() => this.playAiIn(), 120); return; }
+    this._aiInPlayed = true;
+    const c = Math.round(this.aiCar || 0);
+    const order = [c];
+    for (let d = 1; d < n; d++) {
+      if (c - d >= 0) order.push(c - d);
+      if (c + d < n) order.push(c + d);
+    }
+    // Hand-tweened with rAF: every frame writes the transform directly (no CSS transition,
+    // no WAAPI), so the animation can never be swallowed by jank or left stranded.
+    this._aiIn = order.map(() => 0);
+    this.layoutAiCarousel(false);
+    const dur = 620, stagger = 230, lead = 0;
+    const t0 = performance.now();
+    const backOut = (p) => { const s = 1.9; const q = p - 1; return 1 + q * q * ((s + 1) * q + s); };
+    const settle = () => { this._aiInDone = true; this.layoutAiCarousel(false); };
+    const frame = () => {
+      const now = performance.now();
+      let done = true;
+      order.forEach((idx, k) => {
+        const p = Math.min(1, Math.max(0, (now - t0 - lead - k * stagger) / dur));
+        this._aiIn[idx] = p <= 0 ? 0 : backOut(p);
+        if (p < 1) done = false;
+      });
+      this.layoutAiCarousel(false);
+      if (done) { settle(); return; }
+      this._aiRaf = requestAnimationFrame(frame);
+    };
+    frame();
+    // Hard stop: if rAF is throttled (background tab), settle anyway.
+    clearTimeout(this._aiInSafety);
+    this._aiInSafety = setTimeout(() => { if (!this._aiInDone) { cancelAnimationFrame(this._aiRaf); settle(); } },
+      lead + (order.length - 1) * stagger + dur + 900);
+  }
+
+  _aiLayoutRetry(n) {
+    if ((n || 0) > 40) return;
+    if (this._aiStage && this._aiSlides.length === AI_PROJECTS.length && this._aiSlides.every(Boolean)) {
+      this.layoutAiCarousel(false);
+      return;
+    }
+    requestAnimationFrame(() => this._aiLayoutRetry((n || 0) + 1));
+  }
+
+  moveAi(dir) {
+    const n = this._aiSlides.length; if (!n) return;
+    // Clamped, non-looping: at either end the carousel simply doesn't move.
+    const next = Math.min(n - 1, Math.max(0, this._aiRot + dir));
+    if (next === this._aiRot) return;
+    this._aiRot = next;
+    this.aiCar = next;
+    this.layoutAiCarousel(true);
+  }
+
+  onAiClick(e) {
+    if (this._swipeEndAt && performance.now() - this._swipeEndAt < 360) return;
+    if (!this._aiStage) return;
+    const vp = this._aiStage.parentElement.getBoundingClientRect();
+    const cx = vp.left + vp.width / 2;
+    const touch = this._isTouch();
+    const dead = touch ? Math.min((this._aiSlideW || 280) * 0.44, vp.width * 0.30) : (this._aiSlideW || 280) * 0.44;
+    if (Math.abs(e.clientX - cx) < dead) this.openAi(this.aiCar);
+    else if (e.clientX > cx) this.moveAi(1);
+    else this.moveAi(-1);
+  }
+
   // Touch swipe rotation for the 3D carousels — phone/tablet only (≤1024px).
   // Drag follows the finger; on release it snaps to the nearest card.
   _bindCarouselSwipe(el, kind) {
     if (!el || el._swipeBound) return;
     el._swipeBound = true;
     const isTouch = () => this._isTouch();
-    const rotRef = kind === 'work' ? '_workRot' : '_modelRot';
-    const idxRef = kind === 'work' ? 'workIndex' : 'modelIndex';
-    const relayout = (anim) => (kind === 'work' ? this.layoutCarousel(anim) : this.layoutModelCarousel(anim));
-    const nOf = () => (kind === 'work' ? this._slides.length : this._modelSlides.length);
+    const rotRef = kind === 'work' ? '_workRot' : (kind === 'ai' ? '_aiRot' : '_modelRot');
+    const idxRef = kind === 'work' ? 'workIndex' : (kind === 'ai' ? 'aiCar' : 'modelIndex');
+    const relayout = (anim) => (kind === 'work' ? this.layoutCarousel(anim) : (kind === 'ai' ? this.layoutAiCarousel(anim) : this.layoutModelCarousel(anim)));
+    const nOf = () => (kind === 'work' ? this._slides.length : (kind === 'ai' ? this._aiSlides.length : this._modelSlides.length));
     let sx = 0, sy = 0, startRot = 0, active = false, decided = false, moved = false, pxPer = 90;
     el.addEventListener('touchstart', (e) => {
       if (!isTouch() || e.touches.length !== 1) { active = false; return; }
@@ -1715,6 +2777,7 @@ class Component extends DCLogic {
       moved = true;
       const n = nOf(); if (!n) return;
       this[rotRef] = startRot - dx / pxPer; // content follows the finger
+      if (kind === 'ai') this[rotRef] = Math.min(n - 1, Math.max(0, this[rotRef]));
       this[idxRef] = ((Math.round(this[rotRef]) % n) + n) % n;
       relayout(false);
     }, { passive: false });
@@ -1724,6 +2787,7 @@ class Component extends DCLogic {
       if (!moved) return;
       const n = nOf(); if (!n) return;
       this[rotRef] = Math.round(this[rotRef]);
+      if (kind === 'ai') this[rotRef] = Math.min(n - 1, Math.max(0, this[rotRef]));
       this[idxRef] = ((this[rotRef] % n) + n) % n;
       this._swipeEndAt = performance.now();
       relayout(true);
@@ -1732,29 +2796,144 @@ class Component extends DCLogic {
     el.addEventListener('touchcancel', end, { passive: true });
   }
 
+  // Master Panel feature readout: the hovered/tapped module lights up, the rest dim to 50%.
+  _syncPipeHot() {
+    const act = this.state.pipeHot, anyOn = act != null;
+    const paint = (el, on, baseBorder, baseBg) => {
+      if (!el) return;
+      el.style.opacity = anyOn && !on ? '.5' : '1';
+      el.style.borderColor = on ? '#2dd7f0' : baseBorder;
+      el.style.background = on ? 'rgba(45,215,240,.16)' : baseBg;
+      el.style.boxShadow = on ? '0 0 20px rgba(45,215,240,.5),inset 0 0 14px rgba(45,215,240,.2)' : 'none';
+    };
+    (this._pipeHotEls || []).forEach((el, i) => paint(el, i === act, 'rgba(45,215,240,.28)', 'rgba(45,215,240,.02)'));
+    (this._pipeChipEls || []).forEach((el, i) => paint(el, i === act, 'rgba(45,215,240,.3)', 'rgba(45,215,240,.04)'));
+  }
+
+  _placePipeHud() {
+    const el = this._pipeHudEl, a = this._pipeAnchor;
+    if (!el || !a || !a.isConnected) return;
+    const r = a.getBoundingClientRect(), w = el.offsetWidth, h = el.offsetHeight, M = 12, G = 16;
+    let left = r.right + G;
+    if (left + w > innerWidth - M) left = r.left - w - G;
+    if (left < M) left = Math.min(Math.max(M, r.left + r.width / 2 - w / 2), Math.max(M, innerWidth - w - M));
+    let top = Math.max(M, Math.min(r.top + r.height / 2 - h / 2, Math.max(M, innerHeight - h - M)));
+    el.style.left = Math.round(left) + 'px';
+    el.style.top = Math.round(top) + 'px';
+  }
+
+  // HUD reveal: same scale-in + corners-converging-from-centre beat as the Also-Built cards.
+  _showPipeHud() {
+    const el = this._pipeHudEl;
+    if (!el) return;
+    this._placePipeHud();
+    if (!this._pipeHudTracking) {
+      this._pipeHudTracking = true;
+      const track = () => { if (this.state.pipeHot != null) this._placePipeHud(); };
+      window.addEventListener('scroll', track, true);
+      window.addEventListener('resize', track);
+    }
+    el.style.opacity = '1';
+    const DUR = 460, EASE = 'cubic-bezier(.2,.8,.25,1)';
+    try { el.animate([{ transform: 'scale(.6)', opacity: 0 }, { transform: 'scale(.78)', opacity: 1, offset: .3 }, { transform: 'none', opacity: 1 }], { duration: DUR, easing: EASE }); } catch (e) {}
+    const w = el.offsetWidth, h = el.offsetHeight;
+    const dir = { tl: [1, 1], tr: [-1, 1], bl: [1, -1], br: [-1, -1] };
+    el.querySelectorAll('[data-pipe-hud-corner]').forEach((c) => {
+      const d = dir[c.getAttribute('data-pipe-hud-corner')] || [0, 0];
+      const dx = d[0] * (w / 2 - 7), dy = d[1] * (h / 2 - 7);
+      try { c.animate([{ transform: 'translate(' + dx + 'px,' + dy + 'px) scale(0)', opacity: 0 }, { transform: 'translate(' + dx * 0.28 + 'px,' + dy * 0.28 + 'px) scale(1)', opacity: 1, offset: .3 }, { transform: 'none', opacity: 1 }], { duration: DUR, easing: EASE }); } catch (e) {}
+    });
+    const body = el.querySelector('[data-pipe-hud-body]');
+    if (body) try { body.animate([{ opacity: 0 }, { opacity: 0, offset: .45 }, { opacity: 1 }], { duration: 540, easing: 'ease' }); } catch (e) {}
+  }
+
+  // HUD tether: elbow line from the Copy Props by Marker chip down into the spotlight block.
+  _drawPipeLink() {
+    const svg = this._pipeLinkEl, wrap = this._pipeLinkWrap, chip = this._pipeLinkChip, box = this._pipeSpotEl;
+    if (!svg || !wrap || !chip || !box || !chip.isConnected || !box.isConnected) return;
+    const w = wrap.getBoundingClientRect(), c = chip.getBoundingClientRect(), b = box.getBoundingClientRect();
+    const x1 = Math.round(c.left + c.width / 2 - w.left), y1 = Math.round(c.bottom - w.top) + 1;
+    const y2 = Math.round(b.top - w.top);
+    if (y2 - y1 < 26) { svg.style.opacity = '0'; return; }
+    const target = b.left - w.left + 30;
+    const x2 = Math.round(Math.min(Math.max(Math.abs(target - x1) > 120 ? x1 + (target < x1 ? -120 : 120) : target, 14), w.width - 14));
+    const midY = Math.round(y1 + (y2 - y1) * 0.55);
+    const pts = x1 + ',' + y1 + ' ' + x1 + ',' + midY + ' ' + x2 + ',' + midY + ' ' + x2 + ',' + (y2 - 7);
+    svg.innerHTML =
+      '<polyline points="' + pts + '" fill="none" stroke="rgba(45,215,240,.2)" stroke-width="5"/>' +
+      '<polyline points="' + pts + '" fill="none" stroke="#2dd7f0" stroke-width="1.1"/>' +
+      '<polyline points="' + pts + '" fill="none" stroke="#a8f6ff" stroke-width="1.6" stroke-dasharray="5 13" style="animation:hudDash 1.1s linear infinite"/>' +
+      '<circle cx="' + x1 + '" cy="' + y1 + '" r="3" fill="#070d11" stroke="#2dd7f0" stroke-width="1.3"/>' +
+      '<polygon points="' + (x2 - 5) + ',' + (y2 - 8) + ' ' + (x2 + 5) + ',' + (y2 - 8) + ' ' + x2 + ',' + (y2 - 1) + '" fill="#2dd7f0"/>';
+    svg.style.opacity = '1';
+  }
+
+  // Preset Manager loupe: hovering the panel opens a HUD window on that spot at 160%.
+  _pipeZoomMove(e, first) {
+    const pop = this._pipeZoomEl, vid = this._pipeZoomVid, base = this._pipeZoomBase;
+    if (!pop || !vid || !base) return;
+    const r = base.getBoundingClientRect(), Z = 1.6, W = pop.offsetWidth, H = pop.offsetHeight, M = 12;
+    const zw = r.width * Z, zh = r.height * Z;
+    vid.style.width = zw + 'px';
+    vid.style.height = zh + 'px';
+    const px = e.clientX - r.left, py = e.clientY - r.top;
+    const lx = zw > W ? Math.min(0, Math.max(W - zw, W / 2 - px * Z)) : (W - zw) / 2;
+    const ty = zh > H ? Math.min(0, Math.max(H - zh, H / 2 - py * Z)) : (H - zh) / 2;
+    vid.style.left = Math.round(lx) + 'px';
+    vid.style.top = Math.round(ty) + 'px';
+    let left = e.clientX + 24;
+    if (left + W > innerWidth - M) left = e.clientX - W - 24;
+    left = Math.max(M, Math.min(left, Math.max(M, innerWidth - W - M)));
+    const top = Math.max(M, Math.min(e.clientY - H / 2, Math.max(M, innerHeight - H - M)));
+    pop.style.left = Math.round(left) + 'px';
+    pop.style.top = Math.round(top) + 'px';
+    if (first) {
+      this._pipeZoomOn = true;
+      pop.style.opacity = '1';
+      const src = base.querySelector('video');
+      if (src) { try { vid.currentTime = src.currentTime; } catch (err) {} }
+      const p = vid.play(); if (p && p.catch) p.catch(() => {});
+      try { pop.animate([{ transform: 'scale(.72)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 260, easing: 'cubic-bezier(.2,.8,.25,1)' }); } catch (err) {}
+    }
+  }
+
+  _pipeZoomHide() { this._pipeZoomOn = false; if (this._pipeZoomEl) this._pipeZoomEl.style.opacity = '0'; }
+
+  _pulseGlow(el) {
+    if (!el || el._pulsing) return;
+    el._pulsing = true;
+    const base = getComputedStyle(el).borderColor;
+    const anim = el.animate([
+      { boxShadow: '0 0 0 rgba(45,215,240,0)', borderColor: base },
+      { boxShadow: '0 0 22px rgba(45,215,240,.55)', borderColor: 'rgba(45,215,240,.9)', offset: 0.5 },
+      { boxShadow: '0 0 0 rgba(45,215,240,0)', borderColor: base },
+    ], { duration: 1150, easing: 'ease-in-out' });
+    anim.onfinish = anim.oncancel = () => { el._pulsing = false; };
+    setTimeout(() => { el._pulsing = false; }, 1250);
+  }
+
+  // Master Panel hotspots: idle glow on a random section (all viewports) to hint they're interactive.
+  _startHotspotHints() {
+    this._hotHintTimer = setInterval(() => {
+      if (!this.state.pipelineOpen || this.state.pipeHot != null) return;
+      const els = (this._pipeHotEls || []).filter((el) => el && el.isConnected && !el._pulsing);
+      if (els.length) this._pulseGlow(els[Math.floor(Math.random() * els.length)]);
+    }, 1400);
+  }
+
   // Phone/tablet only: with no hover to reveal affordance, randomly pulse a glow on the
   // Toolset chips and the Also-Built cards to hint that they're tappable.
   _startInteractHints() {
     if (!this._isTouch()) return;
     const inView = (el) => { const r = el.getBoundingClientRect(); return r.top < innerHeight - 40 && r.bottom > 40; };
     const ready = (el) => parseFloat(getComputedStyle(el).opacity) > 0.5;
-    const pulse = (el) => {
-      if (!el || el._pulsing) return;
-      el._pulsing = true;
-      const base = getComputedStyle(el).borderColor;
-      const anim = el.animate([
-        { boxShadow: '0 0 0 rgba(45,215,240,0)', borderColor: base },
-        { boxShadow: '0 0 22px rgba(45,215,240,.55)', borderColor: 'rgba(45,215,240,.9)', offset: 0.5 },
-        { boxShadow: '0 0 0 rgba(45,215,240,0)', borderColor: base },
-      ], { duration: 1150, easing: 'ease-in-out' });
-      anim.onfinish = anim.oncancel = () => { el._pulsing = false; };
-    };
+    const pulse = (el) => this._pulseGlow(el);
     const pick = (arr, n) => {
       const cands = arr.filter((el) => el && inView(el) && ready(el) && !el._pulsing);
       for (let k = 0; k < n && cands.length; k++) pulse(cands.splice(Math.floor(Math.random() * cands.length), 1)[0]);
     };
     this._hintTimer = setInterval(() => {
-      if (this.state.graphicsOpen || this.state.bannersOpen || this.state.model3dOpen || this.state.modalOpen) return;
+      if (this.state.graphicsOpen || this.state.bannersOpen || this.state.model3dOpen || this.state.modalOpen || this.state.pipelineOpen) return;
       pick(this._toolBtns, 1);
       if (this.servicesEl) pick(Array.from(this.servicesEl.querySelectorAll('[data-svc-card]')), 1);
     }, 1500);
@@ -1986,11 +3165,14 @@ class Component extends DCLogic {
   }
 
   componentWillUnmount() {
+    if (this._aiPoll) clearInterval(this._aiPoll);
+    if (this._aiScrollCheck) window.removeEventListener('scroll', this._aiScrollCheck);
     window.removeEventListener('scroll', this._onScroll);
     if (this._onResize) window.removeEventListener('resize', this._onResize);
     if (this._raf) cancelAnimationFrame(this._raf);
     if (this._introTimer) clearTimeout(this._introTimer);
     if (this._hintTimer) clearInterval(this._hintTimer);
+    if (this._hotHintTimer) clearInterval(this._hotHintTimer);
     if (this._titleObserver) this._titleObserver.disconnect();
     if (this._onKey) window.removeEventListener('keydown', this._onKey);
     if (this._onWheel) window.removeEventListener('wheel', this._onWheel);
@@ -2146,8 +3328,8 @@ class Component extends DCLogic {
     const copy = lang === 'en' ? EN : VI;
 
     const navItems = lang === 'en'
-      ? [{ label: 'ABOUT', href: '#about' }, { label: 'SERVICES', href: '#services' }, { label: 'REEL', href: '#reel' }, { label: 'WORK', href: '#work' }, { label: 'CONTACT', href: '#contact' }]
-      : [{ label: 'GIỚI THIỆU', href: '#about' }, { label: 'DỊCH VỤ', href: '#services' }, { label: 'REEL', href: '#reel' }, { label: 'DỰ ÁN', href: '#work' }, { label: 'LIÊN HỆ', href: '#contact' }];
+      ? [{ label: 'ABOUT', href: '#about' }, { label: 'REEL', href: '#reel' }, { label: 'WORK', href: '#work' }, { label: 'AI PRODUCTION', href: '#aiprod' }, { label: 'PROBLEM SOLVING', href: '#pipeline' }, { label: 'ALSO BUILT', href: '#services' }, { label: 'TOOLSET', href: '#skills' }, { label: 'CONTACT', href: '#contact' }]
+      : [{ label: 'GIỚI THIỆU', href: '#about' }, { label: 'REEL', href: '#reel' }, { label: 'DỰ ÁN', href: '#work' }, { label: 'AI PRODUCTION', href: '#aiprod' }, { label: 'GIẢI QUYẾT VẤN ĐỀ', href: '#pipeline' }, { label: 'ALSO BUILT', href: '#services' }, { label: 'CÔNG CỤ', href: '#skills' }, { label: 'LIÊN HỆ', href: '#contact' }];
 
     const stats = [
       { value: '5+', label: lang === 'en' ? 'YEARS' : 'NĂM' },
@@ -2298,6 +3480,10 @@ class Component extends DCLogic {
       { name: 'CLAUDE', mono: 'Cl', color: '#e6a07c', logo: 'uploads/Claude%20logo.png', en: 'Scripting, workflow / SOP writing & production logic.', vi: 'Viết script, quy trình / SOP & logic sản xuất.' },
       { name: 'GEMINI', mono: 'Gm', color: '#7aa6ff', logo: 'uploads/Gemini%20logo.png', en: 'Research, ideation & asset prompting.', vi: 'Nghiên cứu, lên ý tưởng & prompt tạo asset.' },
       { name: 'ELEVENLABS', mono: '11', color: '#e8eef2', logo: 'uploads/Elevenlabs%20logo.png', en: 'AI voiceover drafts & sound design scratch.', vi: 'Bản nháp VO bằng AI & scratch cho sound design.' },
+      { name: 'SEEDANCE', mono: 'Sd', color: '#4e7cff', logo: 'uploads/bytedance-color.svg', en: 'AI video generation for shot drafts & motion tests.', vi: 'Sinh video AI cho bản nháp shot & test chuyển động.' },
+      { name: 'KLING AI', mono: 'Kl', color: '#9fb4c8', logo: 'uploads/kling-ai-seeklogo.svg', en: 'AI video generation & image-to-motion sequences.', vi: 'Sinh video AI & chuyển ảnh thành chuyển động.' },
+      { name: 'CHATGPT', mono: 'Gp', color: '#74d0b4', logo: 'uploads/chatgpt-white.svg', en: 'Concepting, prompt writing & script iteration.', vi: 'Lên concept, viết prompt & chỉnh script.' },
+      { name: 'SUNO', mono: 'Su', color: '#ff7a3c', logo: 'uploads/Icon.jpeg', en: 'AI music & scratch tracks for edit timing.', vi: 'Nhạc AI & track scratch để canh nhịp dựng.' },
     ];
     const tools = toolDefs.map((t, i) => ({
       name: t.name, mono: t.mono, color: t.color, logo: t.logo, use: lang === 'en' ? t.en : t.vi,
@@ -2321,7 +3507,124 @@ class Component extends DCLogic {
     const detailsLabel = lang === 'en' ? 'DETAILS ›' : 'CHI TIẾT ›';
     const careerEntries = careerBase.map((e, i) => ({ ...e, detailsLabel, open: () => this.openCareer(i) }));
     const careerSel = careerEntries[this.state.careerItem] || careerEntries[0];
+
+    const pipeC1Tags = [{ v: 'AFTER EFFECTS' }, { v: 'WINDOWS MAX_PATH' }, { v: 'AI-ASSISTED' }];
+    const dcBlocks = (lang === 'en' ? [
+      { h: 'THE PROBLEM', ps: ['On a team, everyone opens everyone else\'s project files. And every single time, After Effects greeted us with a wall of missing-asset errors — sometimes one or two files, sometimes an entire morning lost hunting down and relinking assets one by one before any real work could start.'], bullets: [] },
+      { h: 'DIGGING INTO WHY', ps: ['Instead of relinking by hand forever, I traced it to the root — and found two causes stacked on top of each other:'], bullets: [
+        'Our shared assets lived on a synced Google Drive, but third-party plugins like Motion Bro quietly stored their assets in local folders on the C: drive. Those never traveled with the file — so they broke on every other machine.',
+        'And AE\'s own Collect Files made it worse. It nested assets into deep subfolder trees, pushing file paths past Windows\' 260-character limit (MAX_PATH). Past that limit, Windows silently ignores the file — so the tool meant to prevent missing assets was causing them.'] },
+      { h: 'THE FIX', ps: ['I built a collector that flattens everything — every asset, including the ones stranded on local C: drives — into a single folder on the shared drive. Short paths, nothing left behind. And because everything sits together, if a path ever does break, relinking one file auto-relinks the entire project.'], bullets: [] },
+      { h: 'IMPACT', ps: ['A recurring failure that cost up to half a day of relinking dropped to essentially zero. File handoffs across the team just… worked.'], bullets: [] },
+    ] : [
+      { h: 'VẤN ĐỀ', ps: ['Trong một team, ai cũng phải mở file dự án của người khác. Và lần nào cũng vậy, After Effects chào chúng tôi bằng một bức tường lỗi missing asset — có khi một hai file, có khi mất nguyên buổi sáng đi tìm và relink từng asset một trước khi bắt đầu làm việc thật.'], bullets: [] },
+      { h: 'TRUY TẬN GỐC', ps: ['Thay vì relink tay mãi mãi, tôi truy về tận gốc — và tìm ra hai nguyên nhân chồng lên nhau:'], bullets: [
+        'Asset chung của nhóm nằm trên Google Drive đồng bộ, nhưng các plugin bên thứ ba như Motion Bro lặng lẽ lưu asset của chúng trong thư mục cục bộ ở ổ C:. Những file đó không bao giờ đi theo dự án — nên gãy trên mọi máy khác.',
+        'Và chính Collect Files của AE còn làm tệ hơn. Nó lồng asset vào cây thư mục sâu, đẩy đường dẫn vượt giới hạn 260 ký tự của Windows (MAX_PATH). Vượt ngưỡng đó, Windows âm thầm bỏ qua file — công cụ lẽ ra để chống missing asset lại chính là thủ phạm.'] },
+      { h: 'GIẢI PHÁP', ps: ['Tôi xây một collector làm phẳng tất cả — mọi asset, kể cả những file mắc kẹt trên ổ C: cục bộ — vào một thư mục duy nhất trên ổ chung. Đường dẫn ngắn, không bỏ sót gì. Và vì mọi thứ nằm cùng một chỗ, nếu có đường dẫn nào gãy thì relink một file sẽ tự relink toàn bộ dự án.'], bullets: [] },
+      { h: 'KẾT QUẢ', ps: ['Một lỗi lặp đi lặp lại từng ngốn đến nửa ngày relink giảm về gần như bằng không. Việc bàn giao file trong team cứ thế… chạy.'], bullets: [] },
+    ]);
+    const mapBlocks = (arr) => arr.map((b) => ({ ...b, hasBullets: b.bullets.length > 0, ps: b.ps.map((v, k) => ({ v, k })), bullets: b.bullets.map((v, k) => ({ v, k, n: '0' + (k + 1) })) }));
+    const pipeCard2 = PIPE02[lang === 'vi' ? 'vi' : 'en'];
+    const pipeC2Tags = pipeCard2.tags.map((v) => ({ v }));
+    const pipeCard3 = PIPE03[lang === 'vi' ? 'vi' : 'en'];
+    const pipeC3Tags = pipeCard3.tags.map((v) => ({ v }));
+    const pipeCases = [
+      { num: '01', code: 'DEEP COLLECT', title: copy.pipeC1Title, sub: copy.pipeC1Sub, note: copy.pipeC1Note, blocks: dcBlocks, after: [], panel: null, media: true,
+        capUI: lang === 'vi' ? 'PANEL — SCOPE, ACTION, OUTPUT TRONG BA BƯỚC' : 'THE PANEL — SCOPE, ACTION, OUTPUT IN THREE STEPS',
+        capDemo: lang === 'vi' ? 'DEMO — MỘT LƯỢT TỪ PROJECT RỐI SANG BỘ FILE SẠCH' : 'DEMO — ONE PASS FROM MESSY PROJECT TO CLEAN HANDOFF' },
+      pipeCard2,
+      pipeCard3,
+    ];
+    const pipeCase = pipeCases[this.state.pipeIndex] || pipeCases[0];
+    const pipeCaseBlocks = mapBlocks(pipeCase.blocks);
+    const pipeCaseBlocksAfter = mapBlocks(pipeCase.after || []);
+    const panel = pipeCase.panel;
+    const pipeHasPanel = !!panel;
+    let gidx = 0;
+    const spotMod = panel && panel.spot ? panel.spot.mod : null;
+    if (!this._pipeChipEls) this._pipeChipEls = [];
+    const pipeClusters = panel ? panel.clusters.map((c, k) => ({ ...c, k, mods: c.mods.map((m, j) => {
+      const gi = gidx++;
+      return { ...m, k: j, gi,
+        setEl: (el) => { if (el) { this._pipeChipEls[gi] = el; if (spotMod && m.name === spotMod) this._pipeLinkChip = el; } },
+        enter: (e) => { if (!this._isTouch()) { this._pipeAnchor = e && e.currentTarget; this.setState({ pipeHot: gi }); } },
+        leave: () => { if (!this._isTouch() && this.state.pipeHot === gi) this.setState({ pipeHot: null }); },
+        tap: (e) => { if (this._isTouch()) { this._pipeAnchor = e && e.currentTarget; this.setState((st) => ({ pipeHot: st.pipeHot === gi ? null : gi })); } } };
+    }) })) : [];
+    const flatMods = pipeClusters.reduce((acc, c) => acc.concat(c.mods.map((m) => ({ ...m, cluster: c.h }))), []);
+    const pipeHasHotspots = !!(panel && panel.hotspots);
+    const pipeListMode = pipeHasPanel && !pipeHasHotspots;
+    if (!this._pipeHotEls) this._pipeHotEls = [];
+    const pipeHotspots = pipeHasHotspots ? flatMods.map((m, hi) => ({ name: m.name, top: m.t + '%', height: m.h + '%', enter: m.enter, leave: m.leave, tap: m.tap, setEl: (el) => { this._pipeHotEls[hi] = el; } })) : [];
+    const hotCur = pipeHasHotspots && this.state.pipeHot != null ? flatMods[this.state.pipeHot] : null;
+    const hotTouch = pipeHasHotspots && this._isTouch();
+    const pipeHotName = hotCur ? hotCur.name : (panel ? ((hotTouch && panel.hotLabelTouch) || panel.hotLabel || '') : '');
+    const pipeHotDesc = hotCur ? hotCur.desc : (panel ? ((hotTouch && panel.hotHintTouch) || panel.hotHint || '') : '');
+    const pipeHotCluster = hotCur ? hotCur.cluster : '';
+    const pipeHotOn = !!hotCur;
+    const pipeHintLine = pipeHasHotspots && panel ? ((hotTouch && panel.hotHintTouch) || panel.hotHint || '') : '';
+    const pipeSteps = panel ? panel.spot.steps.map((txt, k, a) => ({ txt, k, n: '0' + (k + 1), notLast: k < a.length - 1 })) : [];
+    const pipeWhatHead = panel ? panel.whatHead : '';
+    const pipeShotCap = panel ? panel.shotCap : '';
+    const pipeShotWide = !!(panel && panel.shot && panel.shotWide);
+    const pipeShotNarrow = !!(panel && panel.shot && !panel.shotWide);
+    const pipeSpotLbl = panel ? panel.spot.lbl : '';
+    const pipeSpotP = panel ? panel.spot.p : '';
+    const pipeFlowcap = panel ? panel.spot.flowcap : '';
+    const pipeHasSpotShots = !!(panel && panel.spot.shots);
+    const pipeHasMedia = !!pipeCase.media;
+    const pipeCapUI = pipeCase.capUI || '';
+    const pipeCapDemo = pipeCase.capDemo || '';
+    const pipeSpotCapA = panel && panel.spot.capA ? panel.spot.capA : '';
+    const pipeSpotCapB = panel && panel.spot.capB ? panel.spot.capB : '';
+    const aiAll = AI_PROJECTS.map((p, i) => ({
+      name: p.name,
+      typeLine: p.typeLine,
+      status: p.status === 'shipped' ? copy.aiStatusShipped : copy.aiStatusProgress,
+      hasVideo: !!p.video,
+      noMedia: !p.video,
+      setVideo: (el) => { if (el) { if (p.video && el.src !== p.video) el.src = p.video; el.muted = true; el.loop = true; const go = () => { const q = el.play(); if (q && q.catch) q.catch(() => {}); }; go(); if (!el._aiPlayBound) { el._aiPlayBound = true; el.addEventListener('canplay', go); el.addEventListener('loadeddata', go); } } },
+      setSlide: (el) => { this._aiSlides[i] = el; if (el) requestAnimationFrame(() => this.layoutAiCarousel(false)); },
+      setSlideR: (el) => { this._aiReflects[i] = el; },
+      setMini: (el) => { this._aiMinis[i] = el; if (el) requestAnimationFrame(() => this.layoutAiCarousel(false)); },
+      setPlay: (el) => { this._aiPlays[i] = el; },
+      setImgR: (el) => { const s = (p.stills && p.stills[0]) || (p.deck && p.deck[0]); if (el && s && el.src !== s) el.src = s; },
+      setImgM: (el) => { const s = (p.stills && p.stills[0]) || (p.deck && p.deck[0]); if (el && s && el.src !== s) el.src = s; },
+      open: () => this.openAi(i)
+    }));
+    const aiP = AI_PROJECTS[this.state.aiIndex] || AI_PROJECTS[0];
+    const aiStage = this.state.aiStageSrc;
+    const aiShowStill = (src) => this.setState({ aiStageSrc: src });
+    const aiItem = {
+      name: aiP.name,
+      typeLine: aiP.typeLine,
+      hasVideo: !!aiP.video,
+      showVideo: !!aiP.video && !aiStage,
+      showStill: !!aiStage,
+      showPending: !aiP.video && !aiStage,
+      watchDim: !aiStage,
+      watchOpacity: aiStage ? '1' : '.4',
+      watchVideo: () => { this.setState({ aiStageSrc: null }); setTimeout(() => { if (this._aiVid) { const q = this._aiVid.play(); if (q && q.catch) q.catch(() => {}); } }, 80); },
+      setVideo: (el) => { this._aiVid = el || null; if (el) { el.controls = true; if (aiP.video && el.src !== aiP.video) el.src = aiP.video; } },
+      setStage: (el) => { if (el && aiStage && el.src !== aiStage) el.src = aiStage; },
+      rows: aiP.meta.concat([lang === 'en' ? aiP.disclaimerEn : aiP.disclaimerVi]).map((v) => ({ v })),
+      deck: aiP.deck.map((src) => ({ setImg: (el) => { if (el && el.src !== src) el.src = src; }, open: () => aiShowStill(src) })),
+      hasDeck: aiP.deck.length > 0,
+      stills: aiP.stills.map((src) => ({ setImg: (el) => { if (el && el.src !== src) el.src = src; }, open: () => aiShowStill(src) })),
+      hasStills: aiP.stills.length > 0
+    };
     return {
+      aiCards: aiAll, aiItem,
+      setAiStage: (el) => { this._aiStage = el; if (el) requestAnimationFrame(() => this.layoutAiCarousel(false)); },
+      setAiStageR: (el) => { this._aiStageR = el; if (el) requestAnimationFrame(() => this.layoutAiCarousel(false)); },
+      setAiStageWrap: (el) => { if (el) this._bindCarouselSwipe(el, 'ai'); },
+      setAiMiniDisc: (el) => { this._aiMiniDisc = el; },
+      setAiPillTitle: (el) => { this._aiPillTitle = el; if (el) requestAnimationFrame(() => this.layoutAiCarousel(false)); },
+      aiPrev: () => this.moveAi(-1), aiNext: () => this.moveAi(1),
+      onAiClick: (e) => this.onAiClick(e),
+      aiOpen: this.state.aiOpen, closeAi: () => this.closeAi(),
+      setAiRef: (el) => { this.aiEl = el; if (el && this._armAiObserver) this._armAiObserver(); },
       copy, navItems, stats, services, projects, tools, socials, showDetail, workItems,
       careerEntries, careerSel, careerOpen: this.state.careerOpen,
       closeCareer: () => this.closeCareer(),
@@ -2425,6 +3728,21 @@ class Component extends DCLogic {
       setHeroRoleRef: (el) => { this.heroRoleEl = el; },
       setHeroCtaRef: (el) => { this.heroCtaEl = el; },
       aboutTitleWords: toWords(copy.aboutTitle),
+      pipelineTitleWords: withBreak(toWords(copy.pipelineTitle), 3),
+      setPipelineRef: (el) => { this.pipelineEl = el; },
+      setPipelineTitleRef: (el) => { this.pipelineTitleEl = el; },
+      pipelineOpen: this.state.pipelineOpen,
+      openPipeline: () => this.openPipeline(0),
+      openPipeline2: () => this.openPipeline(1),
+      closePipeline: () => this.closePipeline(),
+      pipeC1Tags, pipeCaseBlocks, pipeCaseBlocksAfter, pipeCase, pipeCard2, pipeC2Tags, pipeCard3, pipeC3Tags,
+      pipeHasPanel, pipeClusters, pipeSteps, pipeWhatHead, pipeShotCap, pipeSpotLbl, pipeSpotP, pipeFlowcap,
+      pipeShotWide, pipeShotNarrow, pipeHasSpotShots, pipeSpotCapA, pipeSpotCapB,
+      pipeHasHotspots, pipeListMode, pipeHotspots, pipeHotName, pipeHotDesc, pipeHotCluster, pipeHotOn, pipeHintLine, setPipeHud: this._setPipeHud,
+      setPipeLink: this._setPipeLink, setPipeLinkWrap: this._setPipeLinkWrap, setPipeSpot: this._setPipeSpot,
+      setPipeZoom: this._setPipeZoom, setPipeZoomVid: this._setPipeZoomVid, setPipeZoomBase: this._setPipeZoomBase,
+      pipeHasMedia, pipeCapUI, pipeCapDemo,
+      setPipeVideoRef: (el) => { if (el) { el.muted = true; el.loop = true; const p = el.play(); if (p && p.catch) p.catch(() => {}); } }, openPipeline3: () => this.openPipeline(2),
       servicesTitleWords: withBreak(toWords(copy.servicesTitle), 2),
       reelTitleWords: toWords(copy.reelTitle),
       workTitleWords: toWords(copy.workTitle),
