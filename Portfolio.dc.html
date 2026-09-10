@@ -2482,13 +2482,18 @@ class Component extends DCLogic {
 
   syncCurSection() {
     if (!this._snapTargets) return;
-    const probe = window.scrollY + window.innerHeight * 0.4;
-    let best = 0, bd = Infinity;
+    // Which section CONTAINS the probe line — not the nearest section top. Nearest-top
+    // mis-reports the current section whenever a section is shorter than the viewport
+    // (e.g. About), which made the next snap skip a section.
+    const vh = window.innerHeight;
+    const probe = window.scrollY + vh * 0.25;
+    let best = 0;
     this._snapTargets.forEach((el, i) => {
-      const y = i === 0 ? window.innerHeight * 0.4 : el.offsetTop + window.innerHeight * 0.1;
-      const d = Math.abs(probe - y);
-      if (d < bd) { bd = d; best = i; }
+      if (i === 0 || !el) return;
+      if (el.offsetTop <= probe) best = i;
     });
+    const doc = document.documentElement;
+    if (window.scrollY + vh >= doc.scrollHeight - 2) best = this._snapTargets.length - 1;
     if (best !== this._curSection) { this._curSection = best; this.triggerSection(best); }
   }
 
