@@ -46,6 +46,9 @@ a:hover{color:#7fe9f7}
   #work [data-om-label="Carousel Shadow"]{opacity:.21 !important}
   #work [data-om-label="Shadow fade"]{display:none !important}
   #work [data-om-label="Shadow fade mobile"]{display:block !important}
+  #aiprod [data-om-label="AI Carousel Shadow"]{opacity:.21 !important}
+  #aiprod [data-om-label="AI Shadow fade"]{display:none !important}
+  #aiprod [data-om-label="AI Shadow fade mobile"]{display:block !important}
   /* Banners header: stack title+close on top, tabs on their own row with breathing room */
   [data-om-label="Banner header"]{grid-template-columns:1fr auto !important;grid-template-areas:"info close" "tabs tabs" !important;align-items:start !important;row-gap:18px !important}
   [data-om-label="Banner header"] > div:nth-child(1){grid-area:info}
@@ -69,6 +72,7 @@ a:hover{color:#7fe9f7}
   [data-pipe-step]{flex:0 0 auto !important;width:100% !important;max-width:340px;flex-direction:column !important;align-items:stretch !important}
   [data-pipe-arrow]{flex:0 0 16px !important;height:16px;align-self:center;transform:rotate(90deg)}
   [data-pipe-mod]{grid-template-columns:1fr !important;gap:4px !important}
+  [data-about-text]{text-align:center}
   [data-pipe-spot-lbl]{white-space:pre-line}
   /* Case-study block headings: centre the label, rule on both sides */
   [data-pipe-head]::before{content:"";flex:1;height:1px;background:rgba(45,215,240,.16)}
@@ -101,11 +105,6 @@ a:hover{color:#7fe9f7}
   #hero [data-om-label="Portray"] > div > div{transform:scale(1.14) !important}
   #hero [data-om-label="Slogan"] > div{font-size:clamp(15px,3.4vh,30px) !important}
 }
-/* About: centre the text column on phone & tablet */
-@media (max-width:1024px){
-  #about > div:last-child{text-align:center}
-  [data-site-foot]{justify-content:center !important;text-align:center}
-}
 /* Nav: 7 links need more room — tighten type & gaps until the header fits */
 @media (min-width:769px) and (max-width:1180px){
   nav{padding:16px clamp(16px,2.4vw,28px) !important}
@@ -123,8 +122,119 @@ a:hover{color:#7fe9f7}
 @media (max-width:600px){
   [data-cf-grid]{grid-template-columns:1fr !important}
 }
+/* AI Production deck strip: thin cyan scrollbar (all breakpoints) */
+[data-ai-deck]{scrollbar-width:thin;scrollbar-color:#2dd7f0 rgba(45,215,240,.10)}
+[data-ai-deck]::-webkit-scrollbar{height:4px}
+[data-ai-deck]::-webkit-scrollbar-track{background:rgba(45,215,240,.10);border-radius:2px}
+[data-ai-deck]::-webkit-scrollbar-thumb{background:#2dd7f0;border-radius:2px}
+/* Phone/tablet: stack the AI carousel control pill (title → arrows → mini disc) */
+@media (max-width:1024px){
+  [data-om-label="AI Control pill"] > div{flex-direction:column !important;gap:10px !important}
+  [data-om-label="AI Control pill"] > div > div:first-child{width:210px !important;flex:0 0 auto !important}
+}
+/* Phone: centre the AI project card content */
+@media (max-width:768px){
+  [data-ai-info]{padding-right:0 !important;text-align:center !important}
+  [data-ai-info] button{margin-left:auto !important;margin-right:auto !important}
+}
 </style>
 </helmet>
+
+<meta name="ext-resource-dependency" content="uploads/Hologram_BG remove04.png" data-resource-id="asset1" />
+<meta name="ext-resource-dependency" content="uploads/deep-collect-panel.png" data-resource-id="asset2" />
+<meta name="ext-resource-dependency" content="uploads/master-panel.png" data-resource-id="asset3" />
+<meta name="ext-resource-dependency" content="uploads/pm-blank-grid.png" data-resource-id="asset4" />
+<meta name="ext-resource-dependency" content="uploads/pm-error-dialog.png" data-resource-id="asset5" />
+<meta name="ext-resource-dependency" content="uploads/C4_EN_SNAP_s9x16_IMG_010673_R1.png" data-resource-id="asset6" />
+<meta name="ext-resource-dependency" content="uploads/FB_C1_IMG_1x1_15s_006686_R3_00084.png" data-resource-id="asset7" />
+<meta name="ext-resource-dependency" content="uploads/Julibee.jpg" data-resource-id="asset8" />
+<meta name="ext-resource-dependency" content="uploads/IMG1x1_005274_R0_00465.png" data-resource-id="asset9" />
+<meta name="ext-resource-dependency" content="uploads/IMG16x9_005274_R0_00465_00465.png" data-resource-id="asset10" />
+<meta name="ext-resource-dependency" content="uploads/01 Asus Zenbook Duo_00789.jpg" data-resource-id="asset11" />
+<meta name="ext-resource-dependency" content="uploads/02 BIC Pen_00097.jpg" data-resource-id="asset12" />
+<meta name="ext-resource-dependency" content="uploads/03 HART Tools_00097.jpg" data-resource-id="asset13" />
+<meta name="ext-resource-dependency" content="uploads/04 Neat_00408.jpg" data-resource-id="asset14" />
+<meta name="ext-resource-dependency" content="uploads/05 Del Mar_00079.jpg" data-resource-id="asset15" />
+<meta name="ext-resource-dependency" content="uploads/06 Yelp_00405.jpg" data-resource-id="asset16" />
+<meta name="ext-resource-dependency" content="uploads/07 COX_00500.jpg" data-resource-id="asset17" />
+<meta name="ext-resource-dependency" content="uploads/08 Brumate.jpg" data-resource-id="asset18" />
+<meta name="ext-resource-dependency" content="uploads/Port 01_00511.jpg" data-resource-id="asset19" />
+<meta name="ext-resource-dependency" content="uploads/Port 02_00197.jpg" data-resource-id="asset20" />
+<meta name="ext-resource-dependency" content="uploads/Port 03_00253.jpg" data-resource-id="asset21" />
+<meta name="ext-resource-dependency" content="uploads/Port 04_00314.jpg" data-resource-id="asset22" />
+<meta name="ext-resource-dependency" content="uploads/Port 05_00498.jpg" data-resource-id="asset23" />
+<meta name="ext-resource-dependency" content="uploads/Port 06_00973.jpg" data-resource-id="asset24" />
+<meta name="ext-resource-dependency" content="uploads/Port 07_01282.jpg" data-resource-id="asset25" />
+<meta name="ext-resource-dependency" content="uploads/Port 08_01282.jpg" data-resource-id="asset26" />
+<meta name="ext-resource-dependency" content="uploads/Capcut logo.png" data-resource-id="asset27" />
+<meta name="ext-resource-dependency" content="uploads/Blender logo.png" data-resource-id="asset28" />
+<meta name="ext-resource-dependency" content="uploads/VEO 3 logo.png" data-resource-id="asset29" />
+<meta name="ext-resource-dependency" content="uploads/Claude logo.png" data-resource-id="asset30" />
+<meta name="ext-resource-dependency" content="uploads/Gemini logo.png" data-resource-id="asset31" />
+<meta name="ext-resource-dependency" content="uploads/Elevenlabs logo.png" data-resource-id="asset32" />
+<meta name="ext-resource-dependency" content="uploads/bytedance-color.svg" data-resource-id="asset34" />
+<meta name="ext-resource-dependency" content="uploads/kling-ai-seeklogo.svg" data-resource-id="asset35" />
+<meta name="ext-resource-dependency" content="uploads/chatgpt-white.svg" data-resource-id="asset36" />
+<meta name="ext-resource-dependency" content="uploads/Icon.jpeg" data-resource-id="asset37" />
+<meta name="ext-resource-dependency" content="uploads/Port 05_00498-4f8801b5.jpg" data-resource-id="asset33" />
+<meta name="ext-resource-dependency" content="uploads/ai/air6-deck-01.png" data-resource-id="aiasset1" />
+<meta name="ext-resource-dependency" content="uploads/ai/air6-deck-02.png" data-resource-id="aiasset2" />
+<meta name="ext-resource-dependency" content="uploads/ai/air6-deck-03.png" data-resource-id="aiasset3" />
+<meta name="ext-resource-dependency" content="uploads/ai/air6-deck-04.png" data-resource-id="aiasset4" />
+<meta name="ext-resource-dependency" content="uploads/ai/air6-deck-05.png" data-resource-id="aiasset5" />
+<meta name="ext-resource-dependency" content="uploads/ai/air6-deck-06.png" data-resource-id="aiasset6" />
+<meta name="ext-resource-dependency" content="uploads/ai/air6-deck-07.png" data-resource-id="aiasset7" />
+<meta name="ext-resource-dependency" content="uploads/ai/air6-deck-08.png" data-resource-id="aiasset8" />
+<meta name="ext-resource-dependency" content="uploads/ai/air6-deck-09.png" data-resource-id="aiasset9" />
+<meta name="ext-resource-dependency" content="uploads/ai/air6-deck-10.png" data-resource-id="aiasset10" />
+<meta name="ext-resource-dependency" content="uploads/ai/air6-deck-11.png" data-resource-id="aiasset11" />
+<meta name="ext-resource-dependency" content="uploads/ai/air6-deck-12.png" data-resource-id="aiasset12" />
+<meta name="ext-resource-dependency" content="uploads/ai/air6-tvc.mp4" data-resource-id="aiassetvid" />
+<meta name="ext-resource-dependency" content="uploads/ai/sb-deck-01.png" data-resource-id="sbdeck1" />
+<meta name="ext-resource-dependency" content="uploads/ai/sb-deck-02.png" data-resource-id="sbdeck2" />
+<meta name="ext-resource-dependency" content="uploads/ai/sb-deck-03.png" data-resource-id="sbdeck3" />
+<meta name="ext-resource-dependency" content="uploads/ai/sb-deck-04.png" data-resource-id="sbdeck4" />
+<meta name="ext-resource-dependency" content="uploads/ai/sb-deck-05.png" data-resource-id="sbdeck5" />
+<meta name="ext-resource-dependency" content="uploads/ai/sb-deck-06.png" data-resource-id="sbdeck6" />
+<meta name="ext-resource-dependency" content="uploads/ai/sb-deck-07.png" data-resource-id="sbdeck7" />
+<meta name="ext-resource-dependency" content="uploads/ai/sb-deck-08.png" data-resource-id="sbdeck8" />
+<meta name="ext-resource-dependency" content="uploads/ai/sb-deck-09.png" data-resource-id="sbdeck9" />
+<meta name="ext-resource-dependency" content="uploads/ai/sb-deck-10.png" data-resource-id="sbdeck10" />
+<meta name="ext-resource-dependency" content="uploads/ai/sb-deck-11.png" data-resource-id="sbdeck11" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-01.png" data-resource-id="odeck1" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-02.png" data-resource-id="odeck2" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-03.png" data-resource-id="odeck3" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-04.png" data-resource-id="odeck4" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-05.png" data-resource-id="odeck5" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-06.png" data-resource-id="odeck6" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-07.png" data-resource-id="odeck7" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-08.png" data-resource-id="odeck8" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-09.png" data-resource-id="odeck9" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-10.png" data-resource-id="odeck10" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-11.png" data-resource-id="odeck11" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-12.png" data-resource-id="odeck12" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-13.png" data-resource-id="odeck13" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-14.png" data-resource-id="odeck14" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-15.png" data-resource-id="odeck15" />
+<meta name="ext-resource-dependency" content="uploads/ai/odin-deck-16.png" data-resource-id="odeck16" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-01.png" data-resource-id="aistill1" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-02.png" data-resource-id="aistill2" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-03.png" data-resource-id="aistill3" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-04.png" data-resource-id="aistill4" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-05.png" data-resource-id="aistill5" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-06.png" data-resource-id="aistill6" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-07.png" data-resource-id="aistill7" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-08.png" data-resource-id="aistill8" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-09.png" data-resource-id="aistill9" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-10.png" data-resource-id="aistill10" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-11.png" data-resource-id="aistill11" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-12.png" data-resource-id="aistill12" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-13.png" data-resource-id="aistill13" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-14.png" data-resource-id="aistill14" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-15.png" data-resource-id="aistill15" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-16.png" data-resource-id="aistill16" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-17.png" data-resource-id="aistill17" />
+<meta name="ext-resource-dependency" content="uploads/ai/still-18.png" data-resource-id="aistill18" />
 
 <template id="__bundler_thumbnail" data-bg-color="#04070a">
   <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
@@ -147,11 +257,11 @@ a:hover{color:#7fe9f7}
     <div style="width:10px;height:10px;border-radius:50%;background:#2dd7f0;box-shadow:0 0 10px 2px #2dd7f0;animation:blink 2s ease-in-out infinite"></div>
     <div style="font-family:'Orbitron',sans-serif;font-weight:700;letter-spacing:.12em;font-size:16px;color:#eaf6f8">Khai (Daniel)<span style="color:#2dd7f0">.</span> Tran</div>
   </div>
-  <div style="display:flex;align-items:center;gap:clamp(14px,2.4vw,34px)">
+  <div style="display:flex;align-items:center;flex-wrap:wrap;justify-content:flex-end;min-width:0;row-gap:8px;gap:clamp(10px,1.7vw,34px)">
     <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="7">
       <a href="{{ item.href }}" onClick="{{ onNavClick }}" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.15em;color:rgba(234,246,248,.75);padding:6px 2px;border-bottom:2px solid transparent;white-space:nowrap">{{ item.label }}</a>
     </sc-for>
-    <button onClick="{{ toggleLang }}" style-hover="box-shadow:0 0 16px rgba(45,215,240,.55)" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.1em;background:rgba(45,215,240,.08);border:1px solid rgba(45,215,240,.4);color:#2dd7f0;transition:box-shadow .2s;padding:6px 12px;border-radius:2px;cursor:pointer">{{ langLabel }}</button>
+    <button onClick="{{ toggleLang }}" style-hover="box-shadow:0 0 16px rgba(45,215,240,.55)" style="display:none;font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.1em;background:rgba(45,215,240,.08);border:1px solid rgba(45,215,240,.4);color:#2dd7f0;transition:box-shadow .2s;padding:6px 12px;border-radius:2px;cursor:pointer">{{ langLabel }}</button>
   </div>
 </nav>
 
@@ -193,7 +303,7 @@ a:hover{color:#7fe9f7}
     
     <div ref="{{ setHeroCtaRef }}" style="display: none; gap: 14px; opacity: 0; transform: translateY(-14px)">
       <a href="#reel" style-hover="box-shadow:0 0 24px rgba(45,215,240,.65);transform:translateY(-1px)" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.15em;padding:12px 22px;background:#2dd7f0;color:#04070a;border-radius:2px;font-weight:700;transition:box-shadow .2s,transform .2s">{{ copy.ctaReel }}</a>
-      <a href="#contact" onClick="{{ onNavClick }}" style-hover="box-shadow:0 0 18px rgba(45,215,240,.45);transform:translateY(-1px)" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.15em;padding:12px 22px;border:1px solid rgba(45,215,240,.5);color:#2dd7f0;border-radius:2px;transition:box-shadow .2s,transform .2s">{{ copy.ctaContact }}</a>
+      <a href="#contact" style-hover="box-shadow:0 0 18px rgba(45,215,240,.45);transform:translateY(-1px)" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.15em;padding:12px 22px;border:1px solid rgba(45,215,240,.5);color:#2dd7f0;border-radius:2px;transition:box-shadow .2s,transform .2s">{{ copy.ctaContact }}</a>
     </div>
   </div>
 </section>
@@ -235,14 +345,13 @@ a:hover{color:#7fe9f7}
       </div>
     </div>
     <div data-om-label="Shadow fade" style="position: absolute; left: -90px; right: 0; top: 75%; bottom: 0%; background: linear-gradient(180deg, #00000000, #04070a 88%); pointer-events: none; z-index: 3; height: 287px; width: 2500px"></div>
-    <div style="position:absolute;left:50%;top:calc(50% + clamp(6px,1vw,16px));width:clamp(300px,40vw,540px);height:2px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,rgba(45,215,240,.35),transparent);filter:blur(1px);pointer-events:none;z-index:4"></div>
   </div>
 
   <div data-om-label="Shadow fade mobile" style="position: absolute; left: 50%; bottom: 0; z-index: 3; pointer-events: none; transform: translateX(-50%); width: 100%; height: 40%; background: linear-gradient(180deg, #00000000, #010101)"></div>
 
   <div style="display: flex; justify-content: center; margin-top: 12px; position: relative; z-index: 4" data-om-label="Control pill">
     <div style="display:flex;align-items:center;gap:14px;padding:9px 12px;border:1px solid rgba(45,215,240,.28);background:rgba(7,13,17,.72);backdrop-filter:blur(10px);border-radius:6px;box-shadow:0 12px 40px rgba(0,0,0,.5)">
-      <div ref="{{ setPillTitle }}" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.12em;color:#eaf6f8;min-width:150px;text-align:center;white-space:nowrap">—</div>
+      <div ref="{{ setPillTitle }}" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.12em;color:#eaf6f8;width:210px;flex:0 0 210px;text-align:center;white-space:nowrap">—</div>
       <div style="display:flex;gap:6px">
         <button onClick="{{ workPrev }}" aria-label="Previous" style-hover="box-shadow:0 0 16px rgba(45,215,240,.55);background:rgba(45,215,240,.14)" style="width:38px;height:34px;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.05);color:#2dd7f0;font-size:15px;border-radius:3px;transition:box-shadow .2s,background .2s;display:flex;align-items:center;justify-content:center;cursor:pointer">←</button>
         <button onClick="{{ workNext }}" aria-label="Next" style-hover="box-shadow:0 0 16px rgba(45,215,240,.55);background:rgba(45,215,240,.14)" style="width:38px;height:34px;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.05);color:#2dd7f0;font-size:15px;border-radius:3px;transition:box-shadow .2s,background .2s;display:flex;align-items:center;justify-content:center;cursor:pointer">→</button>
@@ -290,6 +399,124 @@ a:hover{color:#7fe9f7}
   </div>
 </section>
 
+<section id="aiprod" ref="{{ setAiRef }}" style="position:relative;padding:min(12vw,120px) clamp(20px,6vw,80px);border-bottom:1px solid rgba(45,215,240,.12)" data-om-label="AI Production">
+  <div style="text-align:center;margin-bottom:48px">
+    <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.25em;color:#2dd7f0;margin-bottom:10px">// {{ copy.aiLabel }}</div>
+    <h2 style="font-family:'Orbitron',sans-serif;font-size:calc(clamp(26px,3.4vw,42px) * var(--type-scale,1));margin:0;color:#eaf6f8;text-wrap:pretty">{{ copy.aiTitle }}</h2>
+  </div>
+  <div ref="{{ setAiStageWrap }}" onClick="{{ onAiClick }}" style="position:relative;height:clamp(340px,46vw,520px);perspective:1400px;perspective-origin:50% 42%;z-index:2;cursor:pointer" data-om-label="AI Carousel">
+    <div ref="{{ setAiStage }}" style="position:absolute;left:0;right:0;top:50%;height:0;transform-style:preserve-3d" data-om-label="AI Main Carousel">
+      <sc-for list="{{ aiCards }}" as="item" hint-placeholder-count="2">
+        <div ref="{{ item.setSlide }}" style="position:absolute;left:50%;top:0;width:clamp(230px,30vw,360px);aspect-ratio:16/9;margin:calc(clamp(230px,30vw,360px) * -0.281) 0 0 calc(clamp(230px,30vw,360px) * -0.5);pointer-events:none">
+          <div ref="{{ item.setFloat }}" style="position:absolute;inset:0;border:1px solid rgba(45,215,240,.3);background:#070d11;overflow:hidden;box-shadow:0 0 0 1px rgba(45,215,240,.08),0 18px 46px rgba(0,0,0,.55);will-change:transform;backface-visibility:hidden">
+            <sc-if value="{{ item.hasVideo }}" hint-placeholder-val="{{ true }}">
+              <video ref="{{ item.setVideo }}" muted playsinline preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block"></video>
+            </sc-if>
+            <sc-if value="{{ item.noMedia }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background-image:repeating-linear-gradient(135deg,rgba(45,215,240,.06) 0 10px,transparent 10px 20px)"><span style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.18em;color:rgba(45,215,240,.75)">{{ copy.aiNoMedia }}</span></div>
+            </sc-if>
+            <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(4,7,10,.85),rgba(4,7,10,0) 45%)"></div>
+            <div style="position:absolute;top:12px;left:12px;font-family:'Orbitron',sans-serif;font-size:9.5px;letter-spacing:.12em;color:rgba(45,215,240,.85);border:1px solid rgba(45,215,240,.45);padding:3px 9px;background:rgba(4,7,10,.5);display:inline-flex;align-items:center;gap:6px"><span style="width:5px;height:5px;border-radius:50%;background:#2dd7f0;box-shadow:0 0 7px 1px #2dd7f0"></span>{{ item.status }}</div>
+            <div ref="{{ item.setPlay }}" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(.9);width:60px;height:60px;border-radius:50%;border:1px solid rgba(45,215,240,.7);background:rgba(4,7,10,.35);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .4s,transform .4s;box-shadow:0 0 24px rgba(45,215,240,.4)"><div style="width:0;height:0;border-left:15px solid #2dd7f0;border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:4px"></div></div>
+            <div style="position:absolute;left:14px;right:14px;bottom:12px">
+              <div style="font-family:'Orbitron',sans-serif;font-size:14px;letter-spacing:.04em;color:#eaf6f8">{{ item.name }}</div>
+              <div style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.12em;color:rgba(45,215,240,.9);margin-top:4px">{{ item.typeLine }}</div>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div data-om-label="AI Carousel Shadow" style="position:absolute;left:0;right:0;top:80%;height:0;perspective:1400px;perspective-origin:50% 42%;pointer-events:none;z-index:0;transform:translateY(clamp(8px,1.4vw,20px)) scaleY(-1);opacity:.2;filter:blur(3px)">
+      <div ref="{{ setAiStageR }}" style="position:absolute;left:0;right:0;top:-40px;height:0;transform-style:preserve-3d">
+        <sc-for list="{{ aiCards }}" as="item" hint-placeholder-count="2">
+          <div ref="{{ item.setSlideR }}" style="position:absolute;left:50%;top:0;width:clamp(230px,30vw,360px);aspect-ratio:16/9;margin:calc(clamp(230px,30vw,360px) * -0.281) 0 0 calc(clamp(230px,30vw,360px) * -0.5)">
+            <div ref="{{ item.setFloatR }}" style="position:absolute;inset:0;overflow:hidden;border:1px solid rgba(45,215,240,.16);will-change:transform">
+              <img ref="{{ item.setImgR }}" alt="" aria-hidden="true" style="width:100%;height:100%;object-fit:cover;display:block">
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div data-om-label="AI Shadow fade" style="position:absolute;left:-90px;right:0;top:75%;bottom:0%;background:linear-gradient(180deg,#00000000,#04070a 88%);pointer-events:none;z-index:3;height:287px;width:2500px"></div>
+  </div>
+
+  <div data-om-label="AI Shadow fade mobile" style="position:absolute;left:50%;bottom:0;z-index:3;pointer-events:none;transform:translateX(-50%);width:100%;height:40%;background:linear-gradient(180deg,#00000000,#010101);display:none"></div>
+
+  <div style="display:flex;justify-content:center;margin-top:12px;position:relative;z-index:4" data-om-label="AI Control pill">
+    <div style="display:flex;align-items:center;gap:14px;padding:9px 12px;border:1px solid rgba(45,215,240,.28);background:rgba(7,13,17,.72);backdrop-filter:blur(10px);border-radius:6px;box-shadow:0 12px 40px rgba(0,0,0,.5);flex-wrap:wrap;justify-content:center">
+      <div ref="{{ setAiPillTitle }}" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.12em;color:#eaf6f8;width:210px;flex:0 0 210px;text-align:center;white-space:nowrap">—</div>
+      <div style="display:flex;gap:6px">
+        <button onClick="{{ aiPrev }}" aria-label="Previous" style-hover="box-shadow:0 0 16px rgba(45,215,240,.55);background:rgba(45,215,240,.14)" style="width:38px;height:34px;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.05);color:#2dd7f0;font-size:15px;border-radius:3px;transition:box-shadow .2s,background .2s;display:flex;align-items:center;justify-content:center;cursor:pointer">←</button>
+        <button onClick="{{ aiNext }}" aria-label="Next" style-hover="box-shadow:0 0 16px rgba(45,215,240,.55);background:rgba(45,215,240,.14)" style="width:38px;height:34px;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.05);color:#2dd7f0;font-size:15px;border-radius:3px;transition:box-shadow .2s,background .2s;display:flex;align-items:center;justify-content:center;cursor:pointer">→</button>
+      </div>
+      <div style="width:54px;height:54px;border-radius:50%;border:1px solid rgba(45,215,240,.35);position:relative;overflow:hidden;flex:0 0 auto;background:radial-gradient(circle,rgba(45,215,240,.1),transparent 70%);perspective:90px;perspective-origin:50% 50%">
+        <div ref="{{ setAiMiniDisc }}" style="position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d">
+          <sc-for list="{{ aiCards }}" as="item" hint-placeholder-count="2">
+            <div ref="{{ item.setMini }}" style="position:absolute;left:50%;top:50%;width:22px;height:13px;margin:-6.5px 0 0 -11px;border-radius:2px;overflow:hidden;border:1px solid rgba(45,215,240,.4)"><img ref="{{ item.setImgM }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+          </sc-for>
+        </div>
+        <div style="position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 0 16px rgba(4,7,10,.95);pointer-events:none"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<sc-if value="{{ aiOpen }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ closeAi }}" style="position:fixed;inset:0;z-index:145;background:rgba(4,7,10,.92);backdrop-filter:blur(7px);display:flex;align-items:flex-start;justify-content:center;padding:clamp(14px,3.5vw,38px);overflow-y:auto;animation:modalIn .3s ease">
+  <div onClick="{{ stop }}" style="position:relative;width:min(96vw,1120px);border:1px solid rgba(45,215,240,.35);background:#070d11;box-shadow:0 0 0 1px rgba(45,215,240,.1),0 40px 120px rgba(0,0,0,.7);padding:clamp(20px,3vw,32px)">
+    <div style="position:absolute;top:-1px;left:-1px;width:22px;height:22px;border-top:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+    <div style="position:absolute;bottom:-1px;right:-1px;width:22px;height:22px;border-bottom:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+    <button onClick="{{ closeAi }}" aria-label="Close" style-hover="box-shadow:0 0 14px rgba(45,215,240,.6)" style="position:absolute;top:14px;right:14px;z-index:3;width:32px;height:32px;border:1px solid rgba(45,215,240,.4);background:rgba(45,215,240,.08);color:#2dd7f0;font-family:'Orbitron',sans-serif;font-size:13px;cursor:pointer;transition:box-shadow .2s">✕</button>
+    <div style="display:flex;flex-wrap:wrap;gap:clamp(18px,2.6vw,30px)">
+      <div style="flex:1 1 min(100%,540px);min-width:0">
+        <sc-if value="{{ aiItem.showVideo }}" hint-placeholder-val="{{ false }}">
+          <video ref="{{ aiItem.setVideo }}" controls playsinline preload="metadata" style="width:100%;aspect-ratio:16/9;display:block;background:#050b0f;border:1px solid rgba(45,215,240,.18)"></video>
+        </sc-if>
+        <sc-if value="{{ aiItem.showStill }}" hint-placeholder-val="{{ false }}">
+          <img ref="{{ aiItem.setStage }}" alt="" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#050b0f;border:1px solid rgba(45,215,240,.18)">
+        </sc-if>
+        <sc-if value="{{ aiItem.showPending }}" hint-placeholder-val="{{ false }}">
+          <div style="position:relative;width:100%;aspect-ratio:16/9;background:#050b0f;border:1px solid rgba(45,215,240,.18);display:flex;align-items:center;justify-content:center;background-image:repeating-linear-gradient(135deg,rgba(45,215,240,.06) 0 10px,transparent 10px 20px)"><span style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.18em;color:rgba(45,215,240,.75)">{{ copy.aiNoMedia }}</span></div>
+        </sc-if>
+      </div>
+      <div data-ai-info style="flex:1 1 280px;min-width:0;padding-right:30px">
+        <div style="font-family:'Orbitron',sans-serif;font-size:calc(clamp(18px,2.2vw,24px) * var(--type-scale,1));letter-spacing:.03em;color:#eaf6f8;margin-bottom:10px">{{ aiItem.name }}</div>
+        <div style="font-family:'Orbitron',sans-serif;font-size:11.5px;letter-spacing:.14em;color:rgba(45,215,240,.9)">{{ aiItem.typeLine }}</div>
+        <div style="height:1px;background:rgba(45,215,240,.22);margin:18px 0"></div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <sc-for list="{{ aiItem.rows }}" as="r" hint-placeholder-count="3">
+            <div style="font-family:'Orbitron',sans-serif;font-size:12px;line-height:1.6;letter-spacing:.1em;color:#eaf6f8;text-wrap:pretty">{{ r.v }}</div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ aiItem.hasVideo }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ aiItem.watchVideo }}" style-hover="box-shadow:0 0 18px rgba(45,215,240,.5)" style="margin-top:20px;font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.14em;padding:11px 18px;border:1px solid rgba(45,215,240,.5);background:rgba(45,215,240,.08);color:#2dd7f0;cursor:pointer;transition:opacity .25s,box-shadow .2s;opacity:{{ aiItem.watchOpacity }}">▶ {{ copy.aiWatchVideo }}</button>
+        </sc-if>
+      </div>
+    </div>
+    <sc-if value="{{ aiItem.hasDeck }}" hint-placeholder-val="{{ true }}">
+      <div style="margin-top:28px">
+        <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.25em;color:#2dd7f0;margin-bottom:12px">// {{ copy.aiDeckLabel }}</div>
+        <div data-ai-deck style="display:flex;gap:12px;overflow-x:auto;padding-bottom:8px">
+          <sc-for list="{{ aiItem.deck }}" as="d" hint-placeholder-count="0">
+            <img onClick="{{ d.open }}" ref="{{ d.setImg }}" alt="" style="width:min(42vw,210px);flex-shrink:0;aspect-ratio:16/9;object-fit:cover;display:block;border:1px solid rgba(45,215,240,.25);cursor:pointer">
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ aiItem.hasStills }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:26px">
+        <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.25em;color:#2dd7f0;margin-bottom:12px">// {{ copy.aiStillsLabel }}</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,180px),1fr));gap:12px">
+          <sc-for list="{{ aiItem.stills }}" as="s" hint-placeholder-count="0">
+            <img onClick="{{ s.open }}" ref="{{ s.setImg }}" alt="" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;border:1px solid rgba(45,215,240,.25);cursor:pointer">
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+</div>
+</sc-if>
+
 <section id="about" ref="{{ setAboutRef }}" style="position: relative; padding: min(14vw,140px) clamp(20px,6vw,80px); display: flex; flex-wrap: wrap; gap: 60px; align-items: center; justify-content: center; border-bottom: 1px solid rgba(45,215,240,.12)">
   <div style="flex:1 1 340px;max-width:420px">
     <div ref="{{ setCareerPanel }}" style="border:1px solid rgba(45,215,240,.35);background:rgba(45,215,240,.04);border-radius:2px;overflow:hidden;transform:scaleY(0);transform-origin:top center">
@@ -325,7 +552,7 @@ a:hover{color:#7fe9f7}
       </sc-for>
     </div>
   </div>
-  <div ref="{{ setAboutTextCol }}" style="flex:1 1 380px;max-width:520px">
+  <div ref="{{ setAboutTextCol }}" data-about-text="" style="flex:1 1 380px;max-width:520px">
     <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.25em;color:#2dd7f0;margin-bottom:14px">// {{ copy.aboutLabel }}</div>
     <h2 ref="{{ setAboutTitleRef }}" style="font-family:'Orbitron',sans-serif;font-size:calc(clamp(26px,3.4vw,42px) * var(--type-scale,1));line-height:1.2;margin:0 0 18px;color:#eaf6f8"><sc-for list="{{ aboutTitleWords }}" as="w" hint-placeholder-count="6"><span style="display:inline-block;white-space:nowrap;margin-right:.32em"><sc-for list="{{ w.chars }}" as="c" hint-placeholder-count="4"><span class="tchar" style="display:inline-block;opacity:0;filter:blur(6px)">{{ c.ch }}</span></sc-for></span></sc-for><span class="hud-caret" style="display:inline-block;width:3px;height:.85em;margin-left:3px;background:#2dd7f0;box-shadow:0 0 10px #2dd7f0;vertical-align:-.1em;opacity:0"></span></h2>
     <p data-about-p="" style="opacity:0;transform:translateY(-18px);font-size:calc(15.5px * var(--type-scale,1));line-height:1.9;color:rgba(234,246,248,.7);margin:0 0 16px;text-wrap:pretty">{{ copy.aboutP1 }}</p>
@@ -480,7 +707,7 @@ a:hover{color:#7fe9f7}
               <div style="position:absolute;top:-1px;right:-1px;width:14px;height:14px;border-top:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
               <div style="position:absolute;bottom:-1px;left:-1px;width:14px;height:14px;border-bottom:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
               <div style="position:absolute;bottom:-1px;right:-1px;width:14px;height:14px;border-bottom:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
-              <div ref="{{ setPipeZoomBase }}" style="position:relative;cursor:zoom-in">
+              <div ref="{{ setPipeZoomBase }}" style="position:relative;cursor:pointer">
                 <video ref="{{ setPipeVideoRef }}" src="uploads/preset-manager.mp4" autoplay="{{ true }}" loop="{{ true }}" muted="{{ true }}" playsInline="{{ true }}" aria-label="My Preset Manager — Auto Render + pack browser" style="display:block;width:100%;height:auto;max-height:504px;object-fit:contain;border:1px solid rgba(45,215,240,.28);background:#0a0f13"></video>
               </div>
               <div ref="{{ setPipeZoom }}" style="position:fixed;left:0;top:0;z-index:210;width:min(84vw,340px);height:300px;pointer-events:none;opacity:0;overflow:hidden;border:1px solid #2dd7f0;background:#070d11;box-shadow:0 0 42px rgba(45,215,240,.36),inset 0 0 30px rgba(45,215,240,.06)">
@@ -839,8 +1066,24 @@ a:hover{color:#7fe9f7}
   </div>
 </section>
 
-<section id="contact" ref="{{ setContactRef }}" style="position: relative; padding: 0 clamp(20px,6vw,80px) 40px; display: flex; flex-direction: column; align-items: center">
-  <div data-site-foot="" style="width:100%;max-width:1100px;border-top:1px solid rgba(45,215,240,.15);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px">
+<section id="contact" ref="{{ setContactRef }}" style="position: relative; padding: min(14vw,140px) clamp(20px,6vw,80px) 60px; display: flex; flex-direction: column; align-items: center; text-align: center">
+  <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.25em;color:#2dd7f0;margin-bottom:14px">// {{ copy.contactLabel }}</div>
+  <h2 ref="{{ setContactTitleRef }}" style="font-family:'Orbitron',sans-serif;font-size:calc(clamp(28px,4vw,52px) * var(--type-scale,1));margin:0 0 20px;color:#eaf6f8;max-width:760px"><sc-for list="{{ contactTitleWords }}" as="w" hint-placeholder-count="6"><sc-if value="{{ w.br }}"><br class="wbrk"></sc-if><span style="display:inline-block;white-space:nowrap;margin-right:.32em"><sc-for list="{{ w.chars }}" as="c" hint-placeholder-count="4"><span class="tchar" style="display:inline-block;opacity:0;filter:blur(6px)">{{ c.ch }}</span></sc-for></span></sc-for><span class="hud-caret" style="display:inline-block;width:3px;height:.85em;margin-left:3px;background:#2dd7f0;box-shadow:0 0 10px #2dd7f0;vertical-align:-.1em;opacity:0"></span></h2>
+  <sc-if value="{{ showDetail }}" hint-placeholder-val="{{ true }}">
+  <p ref="{{ setContactSub }}" style="max-width:520px;font-size:calc(15px * var(--type-scale,1));line-height:1.8;color:rgba(234,246,248,.65);margin:0 0 30px">{{ copy.contactSub }}</p>
+  </sc-if>
+  <button ref="{{ setContactBtn }}" onClick="{{ openContact }}" style-hover="box-shadow:0 0 30px rgba(45,215,240,.7);transform:translateY(-1px)" style="font-family:'Orbitron',sans-serif;font-size:13px;letter-spacing:.15em;padding:16px 34px;background:#2dd7f0;color:#04070a;font-weight:700;transition:box-shadow .2s,transform .2s;border-radius:2px;margin-bottom:36px;border:0;cursor:pointer">{{ copy.contactCta }}</button>
+  <div ref="{{ setContactSocials }}" style="display:flex;gap:26px;margin-bottom:50px">
+    <sc-for list="{{ socials }}" as="soc" hint-placeholder-count="2">
+      <sc-if value="{{ soc.isEmail }}" hint-placeholder-val="{{ false }}">
+      <button onClick="{{ soc.onClick }}" style-hover="box-shadow:0 4px 14px rgba(45,215,240,.4)" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.1em;color:rgba(234,246,248,.6);border:0;border-bottom:1px solid rgba(45,215,240,.3);padding:0 0 2px;background:none;cursor:pointer;transition:box-shadow .2s">{{ soc.label }}</button>
+      </sc-if>
+      <sc-if value="{{ soc.isLink }}" hint-placeholder-val="{{ false }}">
+      <a href="{{ soc.href }}" target="_blank" rel="noopener noreferrer" style-hover="box-shadow:0 4px 14px rgba(45,215,240,.4)" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.1em;color:rgba(234,246,248,.6);border-bottom:1px solid rgba(45,215,240,.3);padding-bottom:2px;transition:box-shadow .2s">{{ soc.label }}</a>
+      </sc-if>
+    </sc-for>
+  </div>
+  <div style="width:100%;max-width:1100px;border-top:1px solid rgba(45,215,240,.15);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px">
     <span style="font-size:11px;color:rgba(234,246,248,.4);letter-spacing:.05em">© 2026 KHAI TRAN — MOTION GRAPHIC DESIGNER</span>
     <span style="font-size:11px;color:rgba(234,246,248,.4);letter-spacing:.05em;font-family:'Orbitron',sans-serif;display:inline-flex;align-items:center;gap:7px"><span style="width:7px;height:7px;border-radius:50%;background:#2dd7f0;box-shadow:0 0 8px 1px #2dd7f0;animation:blink 2s ease-in-out infinite"></span>STATUS: AVAILABLE</span>
   </div>
@@ -908,10 +1151,49 @@ a:hover{color:#7fe9f7}
 
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;typeScale&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.9,&quot;min&quot;:0.85,&quot;max&quot;:1.35,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Feel&quot;},&quot;motionDepth&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0.3,&quot;max&quot;:2,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Feel&quot;},&quot;contentDensity&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;full&quot;,&quot;options&quot;:[&quot;full&quot;,&quot;minimal&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Feel&quot;}}">
+const AI_PROJECTS = [
+  {
+    name: 'SEE BEYOND',
+    featured: false,
+    status: 'shipped',
+    typeLine: 'TVC · CONCEPT',
+    meta: ['AI-DIRECTED'],
+    disclaimerEn: 'PERSONAL PROJECT — ORIGINAL CONCEPT',
+    disclaimerVi: 'DỰ ÁN CÁ NHÂN — CONCEPT GỐC',
+    video: 'uploads/ai/seebeyond-tvc.mp4',
+    deck: ['uploads/ai/sb-deck-01.png','uploads/ai/sb-deck-02.png','uploads/ai/sb-deck-03.png','uploads/ai/sb-deck-04.png','uploads/ai/sb-deck-05.png','uploads/ai/sb-deck-06.png','uploads/ai/sb-deck-07.png','uploads/ai/sb-deck-08.png','uploads/ai/sb-deck-09.png','uploads/ai/sb-deck-10.png','uploads/ai/sb-deck-11.png'],
+    stills: ['uploads/ai/sb-still-01.png','uploads/ai/sb-still-02.png','uploads/ai/sb-still-03.png','uploads/ai/sb-still-04.png','uploads/ai/sb-still-05.png','uploads/ai/sb-still-06.png','uploads/ai/sb-still-07.png','uploads/ai/sb-still-08.jpg','uploads/ai/sb-still-09.jpg']
+  },
+  {
+    name: 'SOUNDPEATS AIR6 HS',
+    featured: true,
+    status: 'shipped',
+    typeLine: 'TVC 15s · CONCEPT',
+    meta: ['AI-DIRECTED'],
+    disclaimerEn: 'PERSONAL PROJECT — NOT COMMISSIONED BY SOUNDPEATS',
+    disclaimerVi: 'DỰ ÁN CÁ NHÂN — KHÔNG DO SOUNDPEATS ĐẶT HÀNG',
+    video: 'uploads/ai/air6-tvc.mp4',
+    deck: ['uploads/ai/air6-deck-01.png','uploads/ai/air6-deck-02.png','uploads/ai/air6-deck-03.png','uploads/ai/air6-deck-04.png','uploads/ai/air6-deck-05.png','uploads/ai/air6-deck-06.png','uploads/ai/air6-deck-07.png','uploads/ai/air6-deck-08.png','uploads/ai/air6-deck-09.png','uploads/ai/air6-deck-10.png','uploads/ai/air6-deck-11.png','uploads/ai/air6-deck-12.png'],
+    stills: ['uploads/ai/still-02.png','uploads/ai/still-03.png','uploads/ai/still-07.png','uploads/ai/still-08.png','uploads/ai/still-09.png','uploads/ai/still-10.png','uploads/ai/still-11.png','uploads/ai/still-12.png','uploads/ai/still-13.png','uploads/ai/still-14.png','uploads/ai/still-15.png','uploads/ai/still-16.png','uploads/ai/still-17.png','uploads/ai/still-18.png']
+  },
+  {
+    name: 'AYN ODIN 3',
+    featured: false,
+    status: 'progress',
+    typeLine: 'TVC · CONCEPT',
+    meta: ['AI-DIRECTED'],
+    disclaimerEn: 'PERSONAL PROJECT — NOT COMMISSIONED BY AYN',
+    disclaimerVi: 'DỰ ÁN CÁ NHÂN — KHÔNG DO AYN ĐẶT HÀNG',
+    video: 'uploads/ai/odin3-tvc.mp4',
+    deck: ['uploads/ai/odin-deck-01.png','uploads/ai/odin-deck-02.png','uploads/ai/odin-deck-03.png','uploads/ai/odin-deck-04.png','uploads/ai/odin-deck-05.png','uploads/ai/odin-deck-06.png','uploads/ai/odin-deck-07.png','uploads/ai/odin-deck-08.png','uploads/ai/odin-deck-09.png','uploads/ai/odin-deck-10.png','uploads/ai/odin-deck-11.png','uploads/ai/odin-deck-12.png','uploads/ai/odin-deck-13.png','uploads/ai/odin-deck-14.png','uploads/ai/odin-deck-15.png','uploads/ai/odin-deck-16.png'],
+    stills: ['uploads/ai/odin-still-01.png','uploads/ai/odin-still-02.jpg','uploads/ai/odin-still-03.png','uploads/ai/odin-still-04.jpg','uploads/ai/odin-still-05.png']
+  }
+];
+
 const EN = {
   heroRole: 'MOTION GRAPHIC DESIGNER // VIDEO ENGINEER // STUDIO LEAD',
   heroSub: 'Khai Tran — motion designer who builds the system behind the videos, not just the videos.',
-  ctaReel: 'VIEW REEL',
+  ctaReel: 'WATCH REEL',
   ctaContact: 'CONTACT',
   profileLabel: 'PROFILE',
   timelineLabel: 'CAREER_LOG',
@@ -924,6 +1206,14 @@ const EN = {
   servicesTitle: 'Graphics. Banners. 3D Modeling / Animation.',
   pipelineLabel: 'PIPELINE & TOOLING',
   pipelineTitle: 'Tools that keep the studio from breaking.',
+  aiLabel: 'AI PRODUCTION',
+  aiTitle: 'One person. Full Production',
+  aiStatusShipped: 'SHIPPED',
+  aiStatusProgress: 'IN PROGRESS',
+  aiDeckLabel: 'DECK',
+  aiStillsLabel: 'STILLS',
+  aiNoMedia: 'STILL PENDING',
+  aiWatchVideo: 'WATCH VIDEO',
   pipeStatusShipped: 'SHIPPED',
   pipeReadCase: 'READ CASE STUDY',
   pipeC1Title: 'Fixing broken file handoffs in After Effects',
@@ -961,6 +1251,14 @@ const VI = {
   servicesTitle: 'Graphics. Banners. 3D Modeling / Animation.',
   pipelineLabel: 'PIPELINE & TOOLING',
   pipelineTitle: 'Công cụ giữ cho studio không gãy.',
+  aiLabel: 'AI PRODUCTION',
+  aiTitle: 'One person. Full Production',
+  aiStatusShipped: 'ĐÃ HOÀN THÀNH',
+  aiStatusProgress: 'ĐANG THỰC HIỆN',
+  aiDeckLabel: 'DECK',
+  aiStillsLabel: 'STILLS',
+  aiNoMedia: 'CHƯA CÓ HÌNH',
+  aiWatchVideo: 'XEM VIDEO',
   pipeStatusShipped: 'ĐÃ TRIỂN KHAI',
   pipeReadCase: 'ĐỌC CASE STUDY',
   pipeC1Title: 'Sửa dứt điểm lỗi bàn giao file trong After Effects',
@@ -1180,7 +1478,7 @@ const PIPE03 = {
 };
 
 class Component extends DCLogic {
-  state = { lang: 'en', pipeIndex: 0, pipeHot: null, modalOpen: false, modalItem: 0, careerOpen: false, careerItem: 0, contactOpen: false, emailOpen: false, pipelineOpen: false, graphicsOpen: false, gfxIndex: 0, bannersOpen: false, bannerProject: 0, model3dOpen: false };
+  state = { lang: 'en', pipeIndex: 0, pipeHot: null, modalOpen: false, modalItem: 0, careerOpen: false, careerItem: 0, contactOpen: false, emailOpen: false, pipelineOpen: false, aiOpen: false, aiIndex: 0, aiStageSrc: null, graphicsOpen: false, gfxIndex: 0, bannersOpen: false, bannerProject: 0, model3dOpen: false };
   _gfxEls = [];
   _setPipeHud = (el) => { this._pipeHudEl = el; };
   _setPipeLink = (el) => { this._pipeLinkEl = el; };
@@ -1221,6 +1519,12 @@ class Component extends DCLogic {
   _toolBtns = [];
   workIndex = 0;
   _workRot = 0;
+  aiCar = 1;
+  _aiRot = 1;
+  _aiSlides = [];
+  _aiReflects = [];
+  _aiMinis = [];
+  _aiPlays = [];
 
   componentDidMount() {
     this._setupFavicon();
@@ -1229,9 +1533,10 @@ class Component extends DCLogic {
     this._workRadius = 0;
     this._workIntroSpin = -380;
     requestAnimationFrame(() => this.layoutCarousel(false));
-    this._onKey = (e) => { if (e.key === 'Escape') { if (this.state.model3dOpen) this.closeModel3d(); else if (this.state.bannersOpen) this.closeBanners(); else if (this.state.graphicsOpen) this.closeGraphics(); else if (this.state.pipelineOpen) this.closePipeline(); else if (this.state.emailOpen) this.closeEmail(); else if (this.state.contactOpen) this.closeContact(); else if (this.state.careerOpen) this.closeCareer(); else if (this.state.modalOpen) this.closeModal(); } };
+    requestAnimationFrame(() => this._aiLayoutRetry(0));
+    this._onKey = (e) => { if (e.key === 'Escape') { if (this.state.aiStageSrc) this.setState({ aiStageSrc: null }); else if (this.state.aiOpen) this.closeAi(); else if (this.state.model3dOpen) this.closeModel3d(); else if (this.state.bannersOpen) this.closeBanners(); else if (this.state.graphicsOpen) this.closeGraphics(); else if (this.state.pipelineOpen) this.closePipeline(); else if (this.state.emailOpen) this.closeEmail(); else if (this.state.contactOpen) this.closeContact(); else if (this.state.careerOpen) this.closeCareer(); else if (this.state.modalOpen) this.closeModal(); } };
     window.addEventListener('keydown', this._onKey);
-    this._sections = [this.aboutEl, this.pipelineEl, this.servicesEl, this.reelEl, this.workEl, this.skillsEl, this.contactEl].filter(Boolean);
+    this._sections = [this.aboutEl, this.pipelineEl, this.servicesEl, this.reelEl, this.aiEl, this.workEl, this.skillsEl, this.contactEl].filter(Boolean);
     this._onScroll = () => {
       if (this._raf) return;
       this._raf = requestAnimationFrame(() => {
@@ -1240,7 +1545,7 @@ class Component extends DCLogic {
       });
     };
     window.addEventListener('scroll', this._onScroll, { passive: true });
-    this._onResize = () => { this.measureChars(); this.layoutCarousel(false); if (this.state.model3dOpen) this.layoutModelCarousel(false); };
+    this._onResize = () => { this.measureChars(); this.layoutCarousel(false); this.layoutAiCarousel(false); if (this.state.model3dOpen) this.layoutModelCarousel(false); };
     window.addEventListener('resize', this._onResize);
     requestAnimationFrame(() => { this.measureChars(); this.tick(); });
     this._startInteractHints();
@@ -1264,9 +1569,9 @@ class Component extends DCLogic {
     this._curSection = 0;
     this._snapping = false;
     this._cooldownUntil = 0;
-    this._snapDelays = [0, 0, 0, 0, 0, 0, 0, 0];
+    this._snapDelays = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     this._buildSnapTargets = () => {
-      this._snapTargets = [null, this.workEl, this.reelEl, this.aboutEl, this.pipelineEl, this.servicesEl, this.skillsEl, this.contactEl];
+      this._snapTargets = [null, this.workEl, this.reelEl, this.aiEl, this.aboutEl, this.pipelineEl, this.servicesEl, this.skillsEl, this.contactEl];
     };
     this._buildSnapTargets();
     // On tablets/phones (touch or narrow viewport) use native scrolling instead of
@@ -1275,20 +1580,18 @@ class Component extends DCLogic {
     this._isPhoneOrTablet = () => window.innerWidth <= 1024 || window.matchMedia('(pointer:coarse)').matches;
     this._enableSnap = () => {
       this._onWheel = (e) => {
-        if (this.state.modalOpen || this.state.careerOpen || this.state.contactOpen || this.state.emailOpen || this.state.pipelineOpen || this.state.graphicsOpen || this.state.bannersOpen || this.state.model3dOpen) return;
+        if (this.state.aiOpen || this.state.modalOpen || this.state.careerOpen || this.state.contactOpen || this.state.emailOpen || this.state.pipelineOpen || this.state.graphicsOpen || this.state.bannersOpen || this.state.model3dOpen) return;
         e.preventDefault();
         if (this._snapping || performance.now() < this._cooldownUntil) return;
-        const dir = e.deltaY > 0 ? 1 : -1;
-        if (this._overflowScroll(dir)) return;
-        this.snap(dir);
+        this.snap(e.deltaY > 0 ? 1 : -1);
       };
       window.addEventListener('wheel', this._onWheel, { passive: false });
       this._onTouchStart = (e) => { this._touchY = e.touches[0].clientY; };
       this._onTouchMove = (e) => {
-        if (this.state.modalOpen || this.state.careerOpen || this.state.contactOpen || this.state.emailOpen || this.state.pipelineOpen || this.state.graphicsOpen || this.state.bannersOpen || this.state.model3dOpen) return;
+        if (this.state.aiOpen || this.state.modalOpen || this.state.careerOpen || this.state.contactOpen || this.state.emailOpen || this.state.pipelineOpen || this.state.graphicsOpen || this.state.bannersOpen || this.state.model3dOpen) return;
         if (this._snapping) { e.preventDefault(); return; }
         const dy = this._touchY - e.touches[0].clientY;
-        if (Math.abs(dy) > 28 && performance.now() >= this._cooldownUntil) { e.preventDefault(); const d = dy > 0 ? 1 : -1; if (!this._overflowScroll(d)) this.snap(d); }
+        if (Math.abs(dy) > 28 && performance.now() >= this._cooldownUntil) { e.preventDefault(); this.snap(dy > 0 ? 1 : -1); }
       };
       window.addEventListener('touchstart', this._onTouchStart, { passive: false });
       window.addEventListener('touchmove', this._onTouchMove, { passive: false });
@@ -1302,7 +1605,7 @@ class Component extends DCLogic {
     };
     // Native scroll: reveal each section's entrance animation once as it scrolls into
     // view (IntersectionObserver is unreliable in some embedded webviews).
-    const secList = [[this.workEl, 1], [this.reelEl, 2], [this.aboutEl, 3], [this.pipelineEl, 4], [this.servicesEl, 5], [this.skillsEl, 6], [this.contactEl, 7]];
+    const secList = [[this.workEl, 1], [this.reelEl, 2], [this.aiEl, 3], [this.aboutEl, 4], [this.pipelineEl, 5], [this.servicesEl, 6], [this.skillsEl, 7], [this.contactEl, 8]];
     this._nativeTriggered = {};
     this._nativeCheck = () => {
       const vh = window.innerHeight;
@@ -1310,7 +1613,7 @@ class Component extends DCLogic {
         const el = pair[0], idx = pair[1];
         if (!el || this._nativeTriggered[idx]) return;
         const r = el.getBoundingClientRect();
-        const thresh = idx === 1 ? 0.78 : 0.52;
+        const thresh = idx === 1 ? 0.78 : 0.6;
         if (r.top < vh * thresh && r.bottom > 0) { this._nativeTriggered[idx] = true; this._curSection = idx; this.triggerSection(idx); }
       });
     };
@@ -1365,13 +1668,61 @@ class Component extends DCLogic {
     this._onKeyNav = (e) => {
       if (this.state.model3dOpen) { if (e.key === 'ArrowLeft') { e.preventDefault(); this.moveModel(-1); } else if (e.key === 'ArrowRight') { e.preventDefault(); this.moveModel(1); } return; }
       if (this.state.graphicsOpen) { if (e.key === 'ArrowLeft') { e.preventDefault(); this.gfxGo(this.state.gfxIndex - 1); } else if (e.key === 'ArrowRight') { e.preventDefault(); this.gfxGo(this.state.gfxIndex + 1); } return; }
-      if (this.state.modalOpen || this.state.careerOpen || this.state.contactOpen || this.state.emailOpen || this.state.pipelineOpen || this.state.graphicsOpen || this.state.bannersOpen || this.state.model3dOpen) return;
+      if (this.state.aiOpen || this.state.modalOpen || this.state.careerOpen || this.state.contactOpen || this.state.emailOpen || this.state.pipelineOpen || this.state.graphicsOpen || this.state.bannersOpen || this.state.model3dOpen) return;
       if (this._nativeScroll) return;
       if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); this.snap(1); }
       else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); this.snap(-1); }
     };
     window.addEventListener('keydown', this._onKeyNav);
     setTimeout(() => this.heroSideIn(), 900);
+
+    // Fallback so the AI cards can never be stuck at scale 0 if the snap trigger misses.
+    this._armAiObserver = () => {
+      if (this._aiObserver || !this.aiEl) return;
+      // Measured against the VIEWPORT, not the section's own height — the section can be
+      // taller than the viewport, so intersectionRatio alone never reaches a high threshold.
+      this._aiVisibleEnough = () => {
+        if (!this.aiEl) return false;
+        const r = this.aiEl.getBoundingClientRect();
+        const vh = window.innerHeight || 1;
+        const vis = Math.max(0, Math.min(r.bottom, vh) - Math.max(r.top, 0));
+        const frac = vis / Math.min(vh, r.height || vh);
+        // Desktop snaps onto the section, so wait until it mostly fills the viewport.
+        return frac >= (this._nativeScroll ? 0.25 : 0.9);
+      };
+      this._aiObserver = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) this._aiTryEnter(); });
+      }, { threshold: [0.05, 0.2, 0.5, 0.8, 1] });
+      this._aiObserver.observe(this.aiEl);
+    };
+    // Desktop: the section is snap-scrolled, so hold the entrance until the section fills
+    // the viewport AND scrolling has actually stopped. Native scroll fires as soon as it's in view.
+    this._aiTryEnter = () => {
+      if (this._aiInPlayed || !this._aiVisibleEnough || !this._aiVisibleEnough()) return;
+      if (this._nativeScroll) { this.playAiIn(); return; }
+      const idle = performance.now() - (this._lastScrollAt || 0);
+      if (idle < 0) {
+        clearTimeout(this._aiEnterT);
+        this._aiEnterT = setTimeout(() => this._aiTryEnter(), -idle);
+        return;
+      }
+      this.playAiIn();
+    };
+    this._armAiObserver();
+    setTimeout(() => this._armAiObserver(), 300);
+    setTimeout(() => this._armAiObserver(), 1200);
+    // Scroll-side safety net: the observer only reports ratio changes, this re-checks the
+    // viewport-relative test on every scroll so the cards can never stay at scale 0.
+    this._aiScrollCheck = () => { this._lastScrollAt = performance.now(); this._aiTryEnter(); };
+    window.addEventListener('scroll', this._aiScrollCheck, { passive: true });
+    // Poll as well: in some embedded webviews neither window scroll events nor the
+    // observer's threshold crossings reach us reliably, and the entrance must not be lost.
+    this._aiPoll = setInterval(() => {
+      if (this._aiInPlayed) { clearInterval(this._aiPoll); this._aiPoll = null; return; }
+      const y = window.scrollY || 0;
+      if (y !== this._aiPollY) { this._aiPollY = y; this._lastScrollAt = performance.now(); }
+      this._aiTryEnter();
+    }, 180);
 
     this._reelObserver = new IntersectionObserver((entries) => {
       entries.forEach((e) => { if (!e.isIntersecting) this.stopReel(); });
@@ -1748,14 +2099,15 @@ class Component extends DCLogic {
   }
 
   triggerSection(i) {
-    const titles = { 1: this.workTitleEl, 2: this.reelTitleEl, 3: this.aboutTitleEl, 4: this.pipelineTitleEl, 5: this.servicesTitleEl, 6: this.skillsTitleEl, 7: this.contactTitleEl };
-    if (titles[i]) this.typeTitle(titles[i], i === 7 ? () => this.playContact() : undefined);
+    const titles = { 1: this.workTitleEl, 2: this.reelTitleEl, 4: this.aboutTitleEl, 5: this.pipelineTitleEl, 6: this.servicesTitleEl, 7: this.skillsTitleEl, 8: this.contactTitleEl };
+    if (titles[i]) this.typeTitle(titles[i], i === 8 ? () => this.playContact() : undefined);
     if (i === 1) this.playWorkIn();
     if (i === 2) this.playReelIn();
-    if (i === 3) { this.playCareerLog(); this.playAboutParas(); }
-    if (i === 4) this.playPipeline();
-    if (i === 5) this.playServices();
-    if (i === 6) this.playSkills();
+    if (i === 3 && this._aiTryEnter) this._aiTryEnter();
+    if (i === 4) { this.playCareerLog(); this.playAboutParas(); }
+    if (i === 5) this.playPipeline();
+    if (i === 6) this.playServices();
+    if (i === 7) this.playSkills();
   }
 
   resetContact() {
@@ -1819,7 +2171,7 @@ class Component extends DCLogic {
     // contact section's in-animation instead of waiting for the viewer to scroll there.
     if (!this._isTouch()) {
       clearTimeout(this._skillsToContactT);
-      this._skillsToContactT = setTimeout(() => this.triggerSection(7), total + 950);
+      this._skillsToContactT = setTimeout(() => this.triggerSection(8), total + 950);
     }
   }
 
@@ -1909,12 +2261,6 @@ class Component extends DCLogic {
       const desc = card.querySelector('[data-svc-desc]');
       if (desc) setTimeout(() => this.typeText(desc), base + 900);
     });
-    // Desktop: once the Also-Built cards finish, chain straight into the Toolset
-    // section's in-animation instead of waiting for the viewer to scroll there.
-    if (!this._isTouch()) {
-      clearTimeout(this._svcToSkillsT);
-      this._svcToSkillsT = setTimeout(() => this.triggerSection(6), (cards.length - 1) * per + 900 + 950);
-    }
   }
 
   playCareerPop(card) {
@@ -1994,10 +2340,46 @@ class Component extends DCLogic {
     });
   }
 
+  playPipeline() {
+    if (this._pipePlayed) return;
+    const sec = this.pipelineEl; if (!sec) return;
+    const cards = Array.from(sec.querySelectorAll('[data-pipe-card]'));
+    if (!cards.length) return;
+    this._pipePlayed = true;
+    cards.forEach((card, k) => {
+      card.style.transition = 'none';
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(22px)';
+      void card.offsetHeight;
+      setTimeout(() => {
+        card.style.transition = 'opacity .5s ease, transform .6s cubic-bezier(.2,.85,.25,1), border-color .25s, box-shadow .25s';
+        card.style.opacity = '1';
+        card.style.transform = 'none';
+      }, 120 + k * 170);
+    });
+  }
+
+  openAi(i) {
+    this._aiScrollY = window.scrollY || window.pageYOffset || 0;
+    this.setState({ aiOpen: true, aiIndex: i || 0, aiStageSrc: null });
+    try { document.body.style.overflow = 'hidden'; } catch (e) {}
+  }
+  closeAi() {
+    const y = this._aiScrollY || 0;
+    this.setState({ aiOpen: false, aiStageSrc: null });
+    try { document.body.style.overflow = ''; } catch (e) {}
+    // Locking body scroll can drop the page position on phone/tablet — put it back.
+    const restore = () => window.scrollTo(0, y);
+    restore();
+    requestAnimationFrame(restore);
+    setTimeout(restore, 60);
+  }
+
+  openPipeline(i) { this.setState({ pipelineOpen: true, pipeIndex: i || 0, pipeHot: null }); [80, 320, 900].forEach((t) => setTimeout(() => this._drawPipeLink(), t)); }
+  closePipeline() { this._pipeZoomHide(); this.setState({ pipelineOpen: false }); }
+
   navTo(href) {
-    // v2 has no contact section — the CONTACT nav item opens the contact modal instead.
-    if (href === '#contact') { this.openContact(); return; }
-    const map = { '#hero': 0, '#top': 0, '#work': 1, '#reel': 2, '#about': 3, '#pipeline': 4, '#services': 5, '#skills': 6, '#contact': 7 };
+    const map = { '#hero': 0, '#top': 0, '#work': 1, '#reel': 2, '#aiprod': 3, '#about': 4, '#pipeline': 5, '#services': 6, '#skills': 7, '#contact': 8 };
     const i = map[href];
     if (i == null) return;
     const el = i === 0 ? null : this._snapTargets[i];
@@ -2044,37 +2426,17 @@ class Component extends DCLogic {
       ? (((document.querySelector('nav') || {}).offsetHeight || 72) + 16)
       : 0;
     const targetY = i === 0 ? 0 : (this._snapTargets[i] ? Math.max(0, this._snapTargets[i].offsetTop - headerOffset) : 0);
-    this._smoothScrollTo(targetY, done);
-  }
-
-  _smoothScrollTo(targetY, done, dur) {
     const startY = window.scrollY;
     const dist = targetY - startY;
     if (Math.abs(dist) < 2) { window.scrollTo(0, targetY); if (done) done(); return; }
-    const d = dur || 780, t0 = performance.now();
+    const dur = 780, t0 = performance.now();
     const ease = (x) => x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
     const step = (now) => {
-      const p = Math.min(1, (now - t0) / d);
+      const p = Math.min(1, (now - t0) / dur);
       window.scrollTo(0, startY + dist * ease(p));
       if (p < 1) requestAnimationFrame(step); else if (done) done();
     };
     requestAnimationFrame(step);
-  }
-
-  // Sections taller than the viewport (Pipeline & Tooling) get intermediate stops
-  // inside themselves before the snap advances, so their lower half is never trapped.
-  _overflowScroll(dir) {
-    const el = this._snapTargets[this._curSection];
-    if (!el) return false;
-    const vh = window.innerHeight;
-    const top = el.offsetTop, h = el.offsetHeight;
-    if (h <= vh + 24) return false;
-    const y = window.scrollY, maxY = top + h - vh;
-    const next = dir > 0 ? Math.min(maxY, y + vh * 0.85) : Math.max(top, y - vh * 0.85);
-    if (Math.abs(next - y) < 8) return false;
-    this._snapping = true;
-    this._smoothScrollTo(next, () => { this._snapping = false; this._cooldownUntil = performance.now() + 220; }, 560);
-    return true;
   }
 
   playHeroOut(done) {
@@ -2120,27 +2482,19 @@ class Component extends DCLogic {
 
   syncCurSection() {
     if (!this._snapTargets) return;
-    const probe = window.scrollY + window.innerHeight * 0.4;
-    let best = 0, bd = Infinity;
+    // Which section CONTAINS the probe line — not the nearest section top. Nearest-top
+    // mis-reports the current section whenever a section is shorter than the viewport
+    // (e.g. About), which made the next snap skip a section.
+    const vh = window.innerHeight;
+    const probe = window.scrollY + vh * 0.25;
+    let best = 0;
     this._snapTargets.forEach((el, i) => {
-      const y = i === 0 ? window.innerHeight * 0.4 : el.offsetTop + window.innerHeight * 0.1;
-      const d = Math.abs(probe - y);
-      if (d < bd) { bd = d; best = i; }
+      if (i === 0 || !el) return;
+      if (el.offsetTop <= probe) best = i;
     });
-    if (best !== this._curSection) {
-      // Hold the entrance animation until the section is genuinely on screen —
-      // the nearest-section probe alone fires it while it is still below the fold.
-      if (best !== 0 && !this._sectionInView(best)) return;
-      this._curSection = best;
-      this.triggerSection(best);
-    }
-  }
-
-  _sectionInView(i) {
-    const el = this._snapTargets[i];
-    if (!el) return true;
-    const r = el.getBoundingClientRect(), vh = window.innerHeight;
-    return r.top < vh * 0.52 && r.bottom > vh * 0.18;
+    const doc = document.documentElement;
+    if (window.scrollY + vh >= doc.scrollHeight - 2) best = this._snapTargets.length - 1;
+    if (best !== this._curSection) { this._curSection = best; this.triggerSection(best); }
   }
 
   // A touch device (any phone/tablet, including tablets wider than 1024px) — not just narrow viewports.
@@ -2167,6 +2521,7 @@ class Component extends DCLogic {
       if (!this._pipeLinkBound) { this._pipeLinkBound = true; window.addEventListener('resize', () => this._drawPipeLink()); }
     }
     this.applyTypeScale();
+    this.layoutAiCarousel(false);
     this.applyModal();
     this.finalizeCareer();
     this.finalizeAboutParas();
@@ -2262,16 +2617,151 @@ class Component extends DCLogic {
     this.layoutCarousel(true);
   }
 
+  layoutAiCarousel(animate) {
+    const n = this._aiSlides.length; if (!n || !this._aiStage) return;
+    // Few projects → a shallow coverflow arc instead of a full 360° ring
+    // (with n=2 a 180° step would hide the back card behind the front one).
+    const step = n < 4 ? 52 : 360 / n;
+    const stageW = this._aiStage.offsetWidth || 900;
+    const slideW = Math.max(230, Math.min(360, stageW * 0.30));
+    this._aiSlideW = slideW;
+    const radius = n < 4 ? slideW * 1.32 : (slideW / 2) / Math.tan(Math.PI / n) * 1.18;
+    const trans = animate ? 'transform .8s cubic-bezier(.33,.72,.2,1),filter .6s' : 'none';
+    const dimOf = (i) => Math.abs(i - this.aiCar);
+    for (let i = 0; i < n; i++) {
+      const el = this._aiSlides[i]; if (!el) continue;
+      const dist = dimOf(i);
+      const sc = dist < 0.5 ? 1.18 : Math.max(0.7, 0.95 - (dist - 1) * 0.1);
+      el.style.scale = '';
+      el.style.transform = `rotateY(${i * step}deg) translateZ(${radius}px) scale(${sc * this._aiEnterScale(i)})`;
+      el.style.transition = trans;
+      el.style.filter = `saturate(.9) contrast(1.05) brightness(${Math.max(0.32, 1 - dist * 0.34)})`;
+      el.style.zIndex = String(200 - Math.round(dist * 10));
+      if (this._aiPlays[i]) {
+        this._aiPlays[i].style.opacity = dist < 0.5 ? '1' : '0';
+        this._aiPlays[i].style.transform = dist < 0.5 ? 'translate(-50%,-50%) scale(1)' : 'translate(-50%,-50%) scale(.9)';
+      }
+    }
+    for (let i = 0; i < this._aiReflects.length; i++) {
+      const el = this._aiReflects[i]; if (!el) continue;
+      const rdist = dimOf(i);
+      const rsc = rdist < 0.5 ? 1.18 : Math.max(0.7, 0.95 - (rdist - 1) * 0.1);
+      el.style.scale = '';
+      el.style.transform = `rotateY(${i * step}deg) translateZ(${radius}px) scale(${rsc * this._aiEnterScale(i)})`;
+      el.style.transition = trans;
+      el.style.filter = `saturate(.8) contrast(1) brightness(${Math.max(0.28, 1 - dimOf(i) * 0.34)})`;
+    }
+    const stageT = `translateZ(${-radius}px) rotateX(7deg) rotateY(${-this._aiRot * step}deg)`;
+    const stageTrans = animate ? 'transform .8s cubic-bezier(.33,.72,.2,1)' : 'none';
+    this._aiStage.style.transition = stageTrans;
+    this._aiStage.style.transform = stageT;
+    if (this._aiStageR) { this._aiStageR.style.transition = stageTrans; this._aiStageR.style.transform = stageT; }
+    // Mini disc mirrors the main carousel: same angular step, same radius/width ratio, same scaling
+    const miniStep = step;
+    const miniR = 22 * 1.32;
+    for (let i = 0; i < this._aiMinis.length; i++) {
+      const el = this._aiMinis[i]; if (!el) continue;
+      const dist = dimOf(i);
+      const msc = dist < 0.5 ? 1.18 : Math.max(0.7, 0.95 - (dist - 1) * 0.1);
+      el.style.transition = stageTrans;
+      el.style.transform = `rotateY(${i * miniStep}deg) translateZ(${miniR}px) scale(${msc})`;
+      el.style.zIndex = String(200 - Math.round(dist * 10));
+      el.style.filter = `brightness(${Math.max(0.3, 1 - dist * 0.32)})`;
+    }
+    if (this._aiMiniDisc) {
+      this._aiMiniDisc.style.transition = stageTrans;
+      this._aiMiniDisc.style.transform = `translateZ(${-miniR}px) rotateY(${-this._aiRot * miniStep}deg)`;
+    }
+    const d = AI_PROJECTS[this.aiCar];
+    if (this._aiPillTitle && d) this._aiPillTitle.textContent = d.name;
+  }
+
+  // Entrance: cards scale 0 → 1, centre card first, then the two flanking ones.
+  _aiEnterScale(i) {
+    if (this._aiInDone) return 1;
+    const v = this._aiIn && this._aiIn[i];
+    return v == null ? 0 : v;
+  }
+
+  playAiIn() {
+    if (this._aiInPlayed) return;
+    const n = this._aiSlides.length;
+    if (!n || !this._aiStage) { setTimeout(() => this.playAiIn(), 120); return; }
+    this._aiInPlayed = true;
+    const c = Math.round(this.aiCar || 0);
+    const order = [c];
+    for (let d = 1; d < n; d++) {
+      if (c - d >= 0) order.push(c - d);
+      if (c + d < n) order.push(c + d);
+    }
+    // Hand-tweened with rAF: every frame writes the transform directly (no CSS transition,
+    // no WAAPI), so the animation can never be swallowed by jank or left stranded.
+    this._aiIn = order.map(() => 0);
+    this.layoutAiCarousel(false);
+    const dur = 620, stagger = 230, lead = 0;
+    const t0 = performance.now();
+    const backOut = (p) => { const s = 1.9; const q = p - 1; return 1 + q * q * ((s + 1) * q + s); };
+    const settle = () => { this._aiInDone = true; this.layoutAiCarousel(false); };
+    const frame = () => {
+      const now = performance.now();
+      let done = true;
+      order.forEach((idx, k) => {
+        const p = Math.min(1, Math.max(0, (now - t0 - lead - k * stagger) / dur));
+        this._aiIn[idx] = p <= 0 ? 0 : backOut(p);
+        if (p < 1) done = false;
+      });
+      this.layoutAiCarousel(false);
+      if (done) { settle(); return; }
+      this._aiRaf = requestAnimationFrame(frame);
+    };
+    frame();
+    // Hard stop: if rAF is throttled (background tab), settle anyway.
+    clearTimeout(this._aiInSafety);
+    this._aiInSafety = setTimeout(() => { if (!this._aiInDone) { cancelAnimationFrame(this._aiRaf); settle(); } },
+      lead + (order.length - 1) * stagger + dur + 900);
+  }
+
+  _aiLayoutRetry(n) {
+    if ((n || 0) > 40) return;
+    if (this._aiStage && this._aiSlides.length === AI_PROJECTS.length && this._aiSlides.every(Boolean)) {
+      this.layoutAiCarousel(false);
+      return;
+    }
+    requestAnimationFrame(() => this._aiLayoutRetry((n || 0) + 1));
+  }
+
+  moveAi(dir) {
+    const n = this._aiSlides.length; if (!n) return;
+    // Clamped, non-looping: at either end the carousel simply doesn't move.
+    const next = Math.min(n - 1, Math.max(0, this._aiRot + dir));
+    if (next === this._aiRot) return;
+    this._aiRot = next;
+    this.aiCar = next;
+    this.layoutAiCarousel(true);
+  }
+
+  onAiClick(e) {
+    if (this._swipeEndAt && performance.now() - this._swipeEndAt < 360) return;
+    if (!this._aiStage) return;
+    const vp = this._aiStage.parentElement.getBoundingClientRect();
+    const cx = vp.left + vp.width / 2;
+    const touch = this._isTouch();
+    const dead = touch ? Math.min((this._aiSlideW || 280) * 0.44, vp.width * 0.30) : (this._aiSlideW || 280) * 0.44;
+    if (Math.abs(e.clientX - cx) < dead) this.openAi(this.aiCar);
+    else if (e.clientX > cx) this.moveAi(1);
+    else this.moveAi(-1);
+  }
+
   // Touch swipe rotation for the 3D carousels — phone/tablet only (≤1024px).
   // Drag follows the finger; on release it snaps to the nearest card.
   _bindCarouselSwipe(el, kind) {
     if (!el || el._swipeBound) return;
     el._swipeBound = true;
     const isTouch = () => this._isTouch();
-    const rotRef = kind === 'work' ? '_workRot' : '_modelRot';
-    const idxRef = kind === 'work' ? 'workIndex' : 'modelIndex';
-    const relayout = (anim) => (kind === 'work' ? this.layoutCarousel(anim) : this.layoutModelCarousel(anim));
-    const nOf = () => (kind === 'work' ? this._slides.length : this._modelSlides.length);
+    const rotRef = kind === 'work' ? '_workRot' : (kind === 'ai' ? '_aiRot' : '_modelRot');
+    const idxRef = kind === 'work' ? 'workIndex' : (kind === 'ai' ? 'aiCar' : 'modelIndex');
+    const relayout = (anim) => (kind === 'work' ? this.layoutCarousel(anim) : (kind === 'ai' ? this.layoutAiCarousel(anim) : this.layoutModelCarousel(anim)));
+    const nOf = () => (kind === 'work' ? this._slides.length : (kind === 'ai' ? this._aiSlides.length : this._modelSlides.length));
     let sx = 0, sy = 0, startRot = 0, active = false, decided = false, moved = false, pxPer = 90;
     el.addEventListener('touchstart', (e) => {
       if (!isTouch() || e.touches.length !== 1) { active = false; return; }
@@ -2292,6 +2782,7 @@ class Component extends DCLogic {
       moved = true;
       const n = nOf(); if (!n) return;
       this[rotRef] = startRot - dx / pxPer; // content follows the finger
+      if (kind === 'ai') this[rotRef] = Math.min(n - 1, Math.max(0, this[rotRef]));
       this[idxRef] = ((Math.round(this[rotRef]) % n) + n) % n;
       relayout(false);
     }, { passive: false });
@@ -2301,6 +2792,7 @@ class Component extends DCLogic {
       if (!moved) return;
       const n = nOf(); if (!n) return;
       this[rotRef] = Math.round(this[rotRef]);
+      if (kind === 'ai') this[rotRef] = Math.min(n - 1, Math.max(0, this[rotRef]));
       this[idxRef] = ((this[rotRef] % n) + n) % n;
       this._swipeEndAt = performance.now();
       relayout(true);
@@ -2309,28 +2801,7 @@ class Component extends DCLogic {
     el.addEventListener('touchcancel', end, { passive: true });
   }
 
-  playPipeline() {
-    if (this._pipePlayed) return;
-    const sec = this.pipelineEl; if (!sec) return;
-    const cards = Array.from(sec.querySelectorAll('[data-pipe-card]'));
-    if (!cards.length) return;
-    this._pipePlayed = true;
-    cards.forEach((card, k) => {
-      card.style.transition = 'none';
-      card.style.opacity = '0';
-      card.style.transform = 'translateY(22px)';
-      void card.offsetHeight;
-      setTimeout(() => {
-        card.style.transition = 'opacity .5s ease, transform .6s cubic-bezier(.2,.85,.25,1), border-color .25s, box-shadow .25s';
-        card.style.opacity = '1';
-        card.style.transform = 'none';
-      }, 120 + k * 170);
-    });
-  }
-
-  openPipeline(i) { this.setState({ pipelineOpen: true, pipeIndex: i || 0, pipeHot: null }); [80, 320, 900].forEach((t) => setTimeout(() => this._drawPipeLink(), t)); }
-  closePipeline() { this._pipeZoomHide(); this.setState({ pipelineOpen: false }); }
-
+  // Master Panel feature readout: the hovered/tapped module lights up, the rest dim to 50%.
   _syncPipeHot() {
     const act = this.state.pipeHot, anyOn = act != null;
     const paint = (el, on, baseBorder, baseBg) => {
@@ -2461,17 +2932,7 @@ class Component extends DCLogic {
     if (!this._isTouch()) return;
     const inView = (el) => { const r = el.getBoundingClientRect(); return r.top < innerHeight - 40 && r.bottom > 40; };
     const ready = (el) => parseFloat(getComputedStyle(el).opacity) > 0.5;
-    const pulse = (el) => {
-      if (!el || el._pulsing) return;
-      el._pulsing = true;
-      const base = getComputedStyle(el).borderColor;
-      const anim = el.animate([
-        { boxShadow: '0 0 0 rgba(45,215,240,0)', borderColor: base },
-        { boxShadow: '0 0 22px rgba(45,215,240,.55)', borderColor: 'rgba(45,215,240,.9)', offset: 0.5 },
-        { boxShadow: '0 0 0 rgba(45,215,240,0)', borderColor: base },
-      ], { duration: 1150, easing: 'ease-in-out' });
-      anim.onfinish = anim.oncancel = () => { el._pulsing = false; };
-    };
+    const pulse = (el) => this._pulseGlow(el);
     const pick = (arr, n) => {
       const cands = arr.filter((el) => el && inView(el) && ready(el) && !el._pulsing);
       for (let k = 0; k < n && cands.length; k++) pulse(cands.splice(Math.floor(Math.random() * cands.length), 1)[0]);
@@ -2709,11 +3170,14 @@ class Component extends DCLogic {
   }
 
   componentWillUnmount() {
+    if (this._aiPoll) clearInterval(this._aiPoll);
+    if (this._aiScrollCheck) window.removeEventListener('scroll', this._aiScrollCheck);
     window.removeEventListener('scroll', this._onScroll);
     if (this._onResize) window.removeEventListener('resize', this._onResize);
     if (this._raf) cancelAnimationFrame(this._raf);
     if (this._introTimer) clearTimeout(this._introTimer);
     if (this._hintTimer) clearInterval(this._hintTimer);
+    if (this._hotHintTimer) clearInterval(this._hotHintTimer);
     if (this._titleObserver) this._titleObserver.disconnect();
     if (this._onKey) window.removeEventListener('keydown', this._onKey);
     if (this._onWheel) window.removeEventListener('wheel', this._onWheel);
@@ -2729,7 +3193,6 @@ class Component extends DCLogic {
     if (this._snapTimer) clearTimeout(this._snapTimer);
     if (this._faviconT) clearInterval(this._faviconT);
     if (this._skillsToContactT) clearTimeout(this._skillsToContactT);
-    if (this._svcToSkillsT) clearTimeout(this._svcToSkillsT);
     if (this._reelObserver) this._reelObserver.disconnect();
     if (this._onYTMessage) window.removeEventListener('message', this._onYTMessage);
   }
@@ -2870,8 +3333,8 @@ class Component extends DCLogic {
     const copy = lang === 'en' ? EN : VI;
 
     const navItems = lang === 'en'
-      ? [{ label: 'ABOUT', href: '#about' }, { label: 'PROBLEM SOLVING', href: '#pipeline' }, { label: 'ALSO BUILT', href: '#services' }, { label: 'TOOLSET', href: '#skills' }, { label: 'REEL', href: '#reel' }, { label: 'WORK', href: '#work' }, { label: 'CONTACT', href: '#contact' }]
-      : [{ label: 'GIỚI THIỆU', href: '#about' }, { label: 'GIẢI QUYẾT VẤN ĐỀ', href: '#pipeline' }, { label: 'ALSO BUILT', href: '#services' }, { label: 'CÔNG CỤ', href: '#skills' }, { label: 'REEL', href: '#reel' }, { label: 'DỰ ÁN', href: '#work' }, { label: 'LIÊN HỆ', href: '#contact' }];
+      ? [{ label: 'ABOUT', href: '#about' }, { label: 'REEL', href: '#reel' }, { label: 'WORK', href: '#work' }, { label: 'AI PRODUCTION', href: '#aiprod' }, { label: 'PROBLEM SOLVING', href: '#pipeline' }, { label: 'ALSO BUILT', href: '#services' }, { label: 'TOOLSET', href: '#skills' }, { label: 'CONTACT', href: '#contact' }]
+      : [{ label: 'GIỚI THIỆU', href: '#about' }, { label: 'REEL', href: '#reel' }, { label: 'DỰ ÁN', href: '#work' }, { label: 'AI PRODUCTION', href: '#aiprod' }, { label: 'GIẢI QUYẾT VẤN ĐỀ', href: '#pipeline' }, { label: 'ALSO BUILT', href: '#services' }, { label: 'CÔNG CỤ', href: '#skills' }, { label: 'LIÊN HỆ', href: '#contact' }];
 
     const stats = [
       { value: '5+', label: lang === 'en' ? 'YEARS' : 'NĂM' },
@@ -3022,6 +3485,10 @@ class Component extends DCLogic {
       { name: 'CLAUDE', mono: 'Cl', color: '#e6a07c', logo: 'uploads/Claude%20logo.png', en: 'Scripting, workflow / SOP writing & production logic.', vi: 'Viết script, quy trình / SOP & logic sản xuất.' },
       { name: 'GEMINI', mono: 'Gm', color: '#7aa6ff', logo: 'uploads/Gemini%20logo.png', en: 'Research, ideation & asset prompting.', vi: 'Nghiên cứu, lên ý tưởng & prompt tạo asset.' },
       { name: 'ELEVENLABS', mono: '11', color: '#e8eef2', logo: 'uploads/Elevenlabs%20logo.png', en: 'AI voiceover drafts & sound design scratch.', vi: 'Bản nháp VO bằng AI & scratch cho sound design.' },
+      { name: 'SEEDANCE', mono: 'Sd', color: '#4e7cff', logo: 'uploads/bytedance-color.svg', en: 'AI video generation for shot drafts & motion tests.', vi: 'Sinh video AI cho bản nháp shot & test chuyển động.' },
+      { name: 'KLING AI', mono: 'Kl', color: '#9fb4c8', logo: 'uploads/kling-ai-seeklogo.svg', en: 'AI video generation & image-to-motion sequences.', vi: 'Sinh video AI & chuyển ảnh thành chuyển động.' },
+      { name: 'CHATGPT', mono: 'Gp', color: '#74d0b4', logo: 'uploads/chatgpt-white.svg', en: 'Concepting, prompt writing & script iteration.', vi: 'Lên concept, viết prompt & chỉnh script.' },
+      { name: 'SUNO', mono: 'Su', color: '#ff7a3c', logo: 'uploads/Icon.jpeg', en: 'AI music & scratch tracks for edit timing.', vi: 'Nhạc AI & track scratch để canh nhịp dựng.' },
     ];
     const tools = toolDefs.map((t, i) => ({
       name: t.name, mono: t.mono, color: t.color, logo: t.logo, use: lang === 'en' ? t.en : t.vi,
@@ -3045,6 +3512,7 @@ class Component extends DCLogic {
     const detailsLabel = lang === 'en' ? 'DETAILS ›' : 'CHI TIẾT ›';
     const careerEntries = careerBase.map((e, i) => ({ ...e, detailsLabel, open: () => this.openCareer(i) }));
     const careerSel = careerEntries[this.state.careerItem] || careerEntries[0];
+
     const pipeC1Tags = [{ v: 'AFTER EFFECTS' }, { v: 'WINDOWS MAX_PATH' }, { v: 'AI-ASSISTED' }];
     const dcBlocks = (lang === 'en' ? [
       { h: 'THE PROBLEM', ps: ['On a team, everyone opens everyone else\'s project files. And every single time, After Effects greeted us with a wall of missing-asset errors — sometimes one or two files, sometimes an entire morning lost hunting down and relinking assets one by one before any real work could start.'], bullets: [] },
@@ -3115,7 +3583,53 @@ class Component extends DCLogic {
     const pipeCapDemo = pipeCase.capDemo || '';
     const pipeSpotCapA = panel && panel.spot.capA ? panel.spot.capA : '';
     const pipeSpotCapB = panel && panel.spot.capB ? panel.spot.capB : '';
+    const aiAll = AI_PROJECTS.map((p, i) => ({
+      name: p.name,
+      typeLine: p.typeLine,
+      status: p.status === 'shipped' ? copy.aiStatusShipped : copy.aiStatusProgress,
+      hasVideo: !!p.video,
+      noMedia: !p.video,
+      setVideo: (el) => { if (el) { if (p.video && el.src !== p.video) el.src = p.video; el.muted = true; el.loop = true; const go = () => { const q = el.play(); if (q && q.catch) q.catch(() => {}); }; go(); if (!el._aiPlayBound) { el._aiPlayBound = true; el.addEventListener('canplay', go); el.addEventListener('loadeddata', go); } } },
+      setSlide: (el) => { this._aiSlides[i] = el; if (el) requestAnimationFrame(() => this.layoutAiCarousel(false)); },
+      setSlideR: (el) => { this._aiReflects[i] = el; },
+      setMini: (el) => { this._aiMinis[i] = el; if (el) requestAnimationFrame(() => this.layoutAiCarousel(false)); },
+      setPlay: (el) => { this._aiPlays[i] = el; },
+      setImgR: (el) => { const s = (p.stills && p.stills[0]) || (p.deck && p.deck[0]); if (el && s && el.src !== s) el.src = s; },
+      setImgM: (el) => { const s = (p.stills && p.stills[0]) || (p.deck && p.deck[0]); if (el && s && el.src !== s) el.src = s; },
+      open: () => this.openAi(i)
+    }));
+    const aiP = AI_PROJECTS[this.state.aiIndex] || AI_PROJECTS[0];
+    const aiStage = this.state.aiStageSrc;
+    const aiShowStill = (src) => this.setState({ aiStageSrc: src });
+    const aiItem = {
+      name: aiP.name,
+      typeLine: aiP.typeLine,
+      hasVideo: !!aiP.video,
+      showVideo: !!aiP.video && !aiStage,
+      showStill: !!aiStage,
+      showPending: !aiP.video && !aiStage,
+      watchDim: !aiStage,
+      watchOpacity: aiStage ? '1' : '.4',
+      watchVideo: () => { this.setState({ aiStageSrc: null }); setTimeout(() => { if (this._aiVid) { const q = this._aiVid.play(); if (q && q.catch) q.catch(() => {}); } }, 80); },
+      setVideo: (el) => { this._aiVid = el || null; if (el) { el.controls = true; if (aiP.video && el.src !== aiP.video) el.src = aiP.video; } },
+      setStage: (el) => { if (el && aiStage && el.src !== aiStage) el.src = aiStage; },
+      rows: aiP.meta.concat([lang === 'en' ? aiP.disclaimerEn : aiP.disclaimerVi]).map((v) => ({ v })),
+      deck: aiP.deck.map((src) => ({ setImg: (el) => { if (el && el.src !== src) el.src = src; }, open: () => aiShowStill(src) })),
+      hasDeck: aiP.deck.length > 0,
+      stills: aiP.stills.map((src) => ({ setImg: (el) => { if (el && el.src !== src) el.src = src; }, open: () => aiShowStill(src) })),
+      hasStills: aiP.stills.length > 0
+    };
     return {
+      aiCards: aiAll, aiItem,
+      setAiStage: (el) => { this._aiStage = el; if (el) requestAnimationFrame(() => this.layoutAiCarousel(false)); },
+      setAiStageR: (el) => { this._aiStageR = el; if (el) requestAnimationFrame(() => this.layoutAiCarousel(false)); },
+      setAiStageWrap: (el) => { if (el) this._bindCarouselSwipe(el, 'ai'); },
+      setAiMiniDisc: (el) => { this._aiMiniDisc = el; },
+      setAiPillTitle: (el) => { this._aiPillTitle = el; if (el) requestAnimationFrame(() => this.layoutAiCarousel(false)); },
+      aiPrev: () => this.moveAi(-1), aiNext: () => this.moveAi(1),
+      onAiClick: (e) => this.onAiClick(e),
+      aiOpen: this.state.aiOpen, closeAi: () => this.closeAi(),
+      setAiRef: (el) => { this.aiEl = el; if (el && this._armAiObserver) this._armAiObserver(); },
       copy, navItems, stats, services, projects, tools, socials, showDetail, workItems,
       careerEntries, careerSel, careerOpen: this.state.careerOpen,
       closeCareer: () => this.closeCareer(),
