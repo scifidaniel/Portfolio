@@ -1,6 +1,16 @@
 {
   "redirects": [
     {
+      "source": "/Portfolio.dc.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/Portfolio-v2.dc.html",
       "destination": "/",
       "permanent": true
@@ -14,12 +24,6 @@
       "source": "/deploy/Portfolio-v2.dc.html",
       "destination": "/",
       "permanent": true
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/Portfolio.dc.html"
     }
   ],
   "headers": [
