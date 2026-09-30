@@ -190,7 +190,6 @@ a:hover{color:#7fe9f7}
 <meta name="ext-resource-dependency" content="uploads/ai/air6-deck-10.png" data-resource-id="aiasset10" />
 <meta name="ext-resource-dependency" content="uploads/ai/air6-deck-11.png" data-resource-id="aiasset11" />
 <meta name="ext-resource-dependency" content="uploads/ai/air6-deck-12.png" data-resource-id="aiasset12" />
-<meta name="ext-resource-dependency" content="uploads/ai/air6-tvc.mp4" data-resource-id="aiassetvid" />
 <meta name="ext-resource-dependency" content="uploads/ai/sb-deck-01.png" data-resource-id="sbdeck1" />
 <meta name="ext-resource-dependency" content="uploads/ai/sb-deck-02.png" data-resource-id="sbdeck2" />
 <meta name="ext-resource-dependency" content="uploads/ai/sb-deck-03.png" data-resource-id="sbdeck3" />
@@ -407,7 +406,7 @@ a:hover{color:#7fe9f7}
         <div ref="{{ item.setSlide }}" style="position:absolute;left:50%;top:0;width:clamp(230px,30vw,360px);aspect-ratio:16/9;margin:calc(clamp(230px,30vw,360px) * -0.281) 0 0 calc(clamp(230px,30vw,360px) * -0.5);pointer-events:none">
           <div ref="{{ item.setFloat }}" style="position:absolute;inset:0;border:1px solid rgba(45,215,240,.3);background:#070d11;overflow:hidden;box-shadow:0 0 0 1px rgba(45,215,240,.08),0 18px 46px rgba(0,0,0,.55);will-change:transform;backface-visibility:hidden">
             <sc-if value="{{ item.hasVideo }}" hint-placeholder-val="{{ true }}">
-              <video ref="{{ item.setVideo }}" muted playsinline preload="none" style="width:100%;height:100%;object-fit:{{ item.objectFit }};display:block"></video>
+              <img ref="{{ item.setPreview }}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:{{ item.objectFit }};display:block">
             </sc-if>
             <sc-if value="{{ item.noMedia }}" hint-placeholder-val="{{ false }}">
               <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background-image:repeating-linear-gradient(135deg,rgba(45,215,240,.06) 0 10px,transparent 10px 20px)"><span style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.18em;color:rgba(45,215,240,.75)">{{ copy.aiNoMedia }}</span></div>
@@ -467,7 +466,7 @@ a:hover{color:#7fe9f7}
     <div style="display:flex;flex-wrap:wrap;gap:clamp(18px,2.6vw,30px)">
       <div style="flex:1 1 min(100%,540px);min-width:0">
         <sc-if value="{{ aiItem.showVideo }}" hint-placeholder-val="{{ false }}">
-          <video ref="{{ aiItem.setVideo }}" controls playsinline preload="metadata" style="width:{{ aiItem.mediaWidth }};max-width:100%;aspect-ratio:{{ aiItem.mediaRatio }};object-fit:contain;display:block;margin:0 auto;background:#050b0f;border:1px solid rgba(45,215,240,.18);transition:width .3s ease,aspect-ratio .3s ease"></video>
+          <iframe ref="{{ aiItem.setVideo }}" title="{{ aiItem.videoTitle }}" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="{{ true }}" style="width:{{ aiItem.mediaWidth }};max-width:100%;aspect-ratio:{{ aiItem.mediaRatio }};display:block;margin:0 auto;background:#050b0f;border:1px solid rgba(45,215,240,.18);transition:width .3s ease,aspect-ratio .3s ease"></iframe>
         </sc-if>
         <sc-if value="{{ aiItem.showStill }}" hint-placeholder-val="{{ false }}">
           <img ref="{{ aiItem.setStage }}" alt="" style="width:{{ aiItem.mediaWidth }};max-width:100%;aspect-ratio:{{ aiItem.mediaRatio }};object-fit:{{ aiItem.mediaFit }};display:block;margin:0 auto;background:#050b0f;border:1px solid rgba(45,215,240,.18);cursor:zoom-in;transition:width .3s ease,aspect-ratio .3s ease">
@@ -1165,7 +1164,8 @@ const AI_PROJECTS = [
     meta: ['AI-DIRECTED'],
     disclaimerEn: 'PERSONAL PROJECT — ORIGINAL CONCEPT',
     disclaimerVi: 'DỰ ÁN CÁ NHÂN — CONCEPT GỐC',
-    video: 'uploads/ai/seebeyond-tvc.mp4',
+    yt: 'N1wxKC3DsbM',
+    thumb: 'https://i.ytimg.com/vi/N1wxKC3DsbM/hqdefault.jpg',
     deck: ['uploads/ai/sb-deck-01.png','uploads/ai/sb-deck-02.png','uploads/ai/sb-deck-03.png','uploads/ai/sb-deck-04.png','uploads/ai/sb-deck-05.png','uploads/ai/sb-deck-06.png','uploads/ai/sb-deck-07.png','uploads/ai/sb-deck-08.png','uploads/ai/sb-deck-09.png','uploads/ai/sb-deck-10.png','uploads/ai/sb-deck-11.png'],
     stills: ['uploads/ai/sb-still-01.png','uploads/ai/sb-new-02.jpg','uploads/ai/sb-new-03.jpg','uploads/ai/sb-new-04.jpg','uploads/ai/sb-new-05.jpg','uploads/ai/sb-still-06.png','uploads/ai/sb-still-07.png','uploads/ai/sb-new-08.jpg','uploads/ai/sb-new-09.jpg']
   },
@@ -1177,7 +1177,7 @@ const AI_PROJECTS = [
     meta: ['AI PRODUCTION', 'VERTICAL SHORT — 9:16'],
     disclaimerEn: 'PRACTICAL SKILLS ASSESSMENT FOR SUPERCENT\'S AI VIDEO EDITOR ROLE',
     disclaimerVi: 'BÀI ĐÁNH GIÁ KỸ NĂNG THỰC TẾ CHO VỊ TRÍ AI VIDEO EDITOR TẠI SUPERCENT',
-    video: 'uploads/ai/super-big-slime.mp4',
+    yt: '9FHHSnwSZbU',
     thumb: 'uploads/ai/super-big-slime/still-01.webp',
     portrait: true,
     dynamicRatio: true,
@@ -1192,7 +1192,8 @@ const AI_PROJECTS = [
     meta: ['AI-DIRECTED'],
     disclaimerEn: 'PERSONAL PROJECT — NOT COMMISSIONED BY SOUNDPEATS',
     disclaimerVi: 'DỰ ÁN CÁ NHÂN — KHÔNG DO SOUNDPEATS ĐẶT HÀNG',
-    video: 'uploads/ai/air6-tvc.mp4',
+    yt: 'afH7rC4OaDg',
+    thumb: 'https://i.ytimg.com/vi/afH7rC4OaDg/hqdefault.jpg',
     deck: ['uploads/ai/air6-deck-01.png','uploads/ai/air6-deck-02.png','uploads/ai/air6-deck-03.png','uploads/ai/air6-deck-04.png','uploads/ai/air6-deck-05.png','uploads/ai/air6-deck-06.png','uploads/ai/air6-deck-07.png','uploads/ai/air6-deck-08.png','uploads/ai/air6-deck-09.png','uploads/ai/air6-deck-10.png','uploads/ai/air6-deck-11.png','uploads/ai/air6-deck-12.png'],
     stills: ['uploads/S2.jpg','uploads/S3.jpg','uploads/S7.jpg','uploads/S8.jpg','uploads/S9.jpg','uploads/S10.jpg','uploads/S11.jpg','uploads/S12.jpg','uploads/S13.jpg','uploads/S14.jpg','uploads/S15.jpg','uploads/S16.jpg','uploads/S17.jpg','uploads/S18.jpg']
   },
@@ -1204,7 +1205,8 @@ const AI_PROJECTS = [
     meta: ['AI-DIRECTED'],
     disclaimerEn: 'PERSONAL PROJECT — NOT COMMISSIONED BY AYN',
     disclaimerVi: 'DỰ ÁN CÁ NHÂN — KHÔNG DO AYN ĐẶT HÀNG',
-    video: 'uploads/ai/odin3-tvc.mp4',
+    yt: 'fLwegGNoyuY',
+    thumb: 'https://i.ytimg.com/vi/fLwegGNoyuY/hqdefault.jpg',
     deck: ['uploads/ai/odin-deck-01.png','uploads/ai/odin-deck-02.png','uploads/ai/odin-deck-03.png','uploads/ai/odin-deck-04.png','uploads/ai/odin-deck-05.png','uploads/ai/odin-deck-06.png','uploads/ai/odin-deck-07.png','uploads/ai/odin-deck-08.png','uploads/ai/odin-deck-09.png','uploads/ai/odin-deck-10.png','uploads/ai/odin-deck-11.png','uploads/ai/odin-deck-12.png','uploads/ai/odin-deck-13.png','uploads/ai/odin-deck-14.png','uploads/ai/odin-deck-15.png','uploads/ai/odin-deck-16.png'],
     stills: ['uploads/ai/odin-still-01.png','uploads/ai/odin-still-02.jpg','uploads/ai/odin-still-03.png','uploads/ai/odin-still-04.jpg','uploads/ai/odin-new-05.jpg']
   }
@@ -2690,16 +2692,6 @@ class Component extends DCLogic {
         this._aiPlays[i].style.opacity = dist < 0.5 ? '1' : '0';
         this._aiPlays[i].style.transform = dist < 0.5 ? 'translate(-50%,-50%) scale(1)' : 'translate(-50%,-50%) scale(.9)';
       }
-      const vid = this._aiVideos[i];
-      const project = AI_PROJECTS[i];
-      if (vid && project && project.video) {
-        if (dist < 0.5) {
-          if (vid.getAttribute('src') !== project.video) vid.src = project.video;
-          const q = vid.play(); if (q && q.catch) q.catch(() => {});
-        } else {
-          vid.pause();
-        }
-      }
     }
     for (let i = 0; i < this._aiReflects.length; i++) {
       const el = this._aiReflects[i]; if (!el) continue;
@@ -3687,10 +3679,10 @@ class Component extends DCLogic {
       name: p.name,
       typeLine: p.typeLine,
       status: p.status === 'shipped' ? copy.aiStatusShipped : copy.aiStatusProgress,
-      hasVideo: !!p.video,
-      noMedia: !p.video,
+      hasVideo: !!p.yt,
+      noMedia: !p.yt,
       objectFit: p.portrait ? 'contain' : 'cover',
-      setVideo: (el) => { if (el) { this._aiVideos[i] = el; const poster = p.thumb || (p.stills && p.stills[0]) || (p.deck && p.deck[0]); if (poster && el.getAttribute('poster') !== poster) el.poster = poster; el.muted = true; el.loop = true; } },
+      setPreview: (el) => { const preview = p.thumb || (p.stills && p.stills[0]) || (p.deck && p.deck[0]); if (el && preview && el.getAttribute('src') !== preview) el.src = preview; },
       setSlide: (el) => { this._aiSlides[i] = el; if (el) requestAnimationFrame(() => this.layoutAiCarousel(false)); },
       setSlideR: (el) => { this._aiReflects[i] = el; },
       setMini: (el) => { this._aiMinis[i] = el; if (el) requestAnimationFrame(() => this.layoutAiCarousel(false)); },
@@ -3706,17 +3698,18 @@ class Component extends DCLogic {
     const aiItem = {
       name: aiP.name,
       typeLine: aiP.typeLine,
-      hasVideo: !!aiP.video,
-      showVideo: !!aiP.video && !aiStage,
+      hasVideo: !!aiP.yt,
+      showVideo: !!aiP.yt && !aiStage,
       showStill: !!aiStage,
-      showPending: !aiP.video && !aiStage,
+      showPending: !aiP.yt && !aiStage,
       mediaRatio: aiPortraitMedia ? '9 / 16' : '16 / 9',
       mediaWidth: aiPortraitMedia ? 'min(100%,40.5vh)' : '100%',
       mediaFit: aiPortraitMedia ? 'contain' : 'cover',
+      videoTitle: aiP.name + ' video',
       watchDim: !aiStage,
       watchOpacity: aiStage ? '1' : '.4',
-      watchVideo: () => { this._aiZoomHide(); this.setState({ aiStageSrc: null }); setTimeout(() => { if (this._aiVid) { const q = this._aiVid.play(); if (q && q.catch) q.catch(() => {}); } }, 80); },
-      setVideo: (el) => { this._aiVid = el || null; if (el) { el.controls = true; if (aiP.video && el.src !== aiP.video) el.src = aiP.video; } },
+      watchVideo: () => { this._aiZoomHide(); this.setState({ aiStageSrc: null }); },
+      setVideo: (el) => { this._aiVid = el || null; if (el && aiP.yt) { const src = 'https://www.youtube-nocookie.com/embed/' + aiP.yt + '?rel=0&playsinline=1'; if (el.getAttribute('src') !== src) el.src = src; } },
       setStage: (el) => { if (el) { this._setAiZoomBase(el); if (aiStage && el.src !== aiStage) el.src = aiStage; } },
       rows: aiP.meta.concat([lang === 'en' ? aiP.disclaimerEn : aiP.disclaimerVi]).map((v) => ({ v })),
       deck: aiP.deck.map((src) => ({ setImg: (el) => { if (el && el.src !== src) el.src = src; }, open: () => aiShowStill(src) })),
