@@ -467,14 +467,22 @@ a:hover{color:#7fe9f7}
     <div style="display:flex;flex-wrap:wrap;gap:clamp(18px,2.6vw,30px)">
       <div style="flex:1 1 min(100%,540px);min-width:0">
         <sc-if value="{{ aiItem.showVideo }}" hint-placeholder-val="{{ false }}">
-          <video ref="{{ aiItem.setVideo }}" controls playsinline preload="metadata" style="width:100%;aspect-ratio:16/9;display:block;background:#050b0f;border:1px solid rgba(45,215,240,.18)"></video>
+          <video ref="{{ aiItem.setVideo }}" controls playsinline preload="metadata" style="width:{{ aiItem.mediaWidth }};max-width:100%;aspect-ratio:{{ aiItem.mediaRatio }};object-fit:contain;display:block;margin:0 auto;background:#050b0f;border:1px solid rgba(45,215,240,.18);transition:width .3s ease,aspect-ratio .3s ease"></video>
         </sc-if>
         <sc-if value="{{ aiItem.showStill }}" hint-placeholder-val="{{ false }}">
-          <img ref="{{ aiItem.setStage }}" alt="" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#050b0f;border:1px solid rgba(45,215,240,.18)">
+          <img ref="{{ aiItem.setStage }}" alt="" style="width:{{ aiItem.mediaWidth }};max-width:100%;aspect-ratio:{{ aiItem.mediaRatio }};object-fit:{{ aiItem.mediaFit }};display:block;margin:0 auto;background:#050b0f;border:1px solid rgba(45,215,240,.18);cursor:zoom-in;transition:width .3s ease,aspect-ratio .3s ease">
         </sc-if>
         <sc-if value="{{ aiItem.showPending }}" hint-placeholder-val="{{ false }}">
-          <div style="position:relative;width:100%;aspect-ratio:16/9;background:#050b0f;border:1px solid rgba(45,215,240,.18);display:flex;align-items:center;justify-content:center;background-image:repeating-linear-gradient(135deg,rgba(45,215,240,.06) 0 10px,transparent 10px 20px)"><span style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.18em;color:rgba(45,215,240,.75)">{{ copy.aiNoMedia }}</span></div>
+          <div style="position:relative;width:{{ aiItem.mediaWidth }};max-width:100%;aspect-ratio:{{ aiItem.mediaRatio }};margin:0 auto;background:#050b0f;border:1px solid rgba(45,215,240,.18);display:flex;align-items:center;justify-content:center;background-image:repeating-linear-gradient(135deg,rgba(45,215,240,.06) 0 10px,transparent 10px 20px)"><span style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.18em;color:rgba(45,215,240,.75)">{{ copy.aiNoMedia }}</span></div>
         </sc-if>
+      </div>
+      <div ref="{{ setAiZoom }}" aria-hidden="true" style="position:fixed;left:0;top:0;z-index:220;width:min(82vw,420px);aspect-ratio:16/9;pointer-events:none;opacity:0;overflow:hidden;border:1px solid #2dd7f0;background:#070d11;box-shadow:0 0 42px rgba(45,215,240,.36),inset 0 0 30px rgba(45,215,240,.06)">
+        <img ref="{{ setAiZoomImg }}" alt="" style="position:absolute;left:0;top:0;display:none;max-width:none">
+        <div style="position:absolute;top:0;left:0;width:15px;height:15px;border-top:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+        <div style="position:absolute;top:0;right:0;width:15px;height:15px;border-top:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+        <div style="position:absolute;bottom:0;left:0;width:15px;height:15px;border-bottom:2px solid #2dd7f0;border-left:2px solid #2dd7f0"></div>
+        <div style="position:absolute;bottom:0;right:0;width:15px;height:15px;border-bottom:2px solid #2dd7f0;border-right:2px solid #2dd7f0"></div>
+        <div style="position:absolute;left:0;right:0;bottom:0;font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:.16em;color:#2dd7f0;background:rgba(4,7,10,.74);border-top:1px solid rgba(45,215,240,.3);padding:5px 7px;text-align:center">ZOOM 160% · 16:9</div>
       </div>
       <div data-ai-info style="flex:1 1 280px;min-width:0;padding-right:30px">
         <div style="font-family:'Orbitron',sans-serif;font-size:calc(clamp(18px,2.2vw,24px) * var(--type-scale,1));letter-spacing:.03em;color:#eaf6f8;margin-bottom:10px">{{ aiItem.name }}</div>
@@ -1162,10 +1170,25 @@ const AI_PROJECTS = [
     stills: ['uploads/ai/sb-still-01.png','uploads/ai/sb-new-02.jpg','uploads/ai/sb-new-03.jpg','uploads/ai/sb-new-04.jpg','uploads/ai/sb-new-05.jpg','uploads/ai/sb-still-06.png','uploads/ai/sb-still-07.png','uploads/ai/sb-new-08.jpg','uploads/ai/sb-new-09.jpg']
   },
   {
+    name: 'SUPER BIG SLIME',
+    featured: false,
+    status: 'shipped',
+    typeLine: 'TVC · SKILL ASSESSMENT',
+    meta: ['AI PRODUCTION', 'VERTICAL SHORT — 9:16'],
+    disclaimerEn: 'PRACTICAL SKILLS ASSESSMENT FOR SUPERCENT\'S AI VIDEO EDITOR ROLE',
+    disclaimerVi: 'BÀI ĐÁNH GIÁ KỸ NĂNG THỰC TẾ CHO VỊ TRÍ AI VIDEO EDITOR TẠI SUPERCENT',
+    video: 'uploads/ai/super-big-slime.mp4',
+    thumb: 'uploads/ai/super-big-slime/still-01.png',
+    portrait: true,
+    dynamicRatio: true,
+    deck: ['uploads/ai/super-big-slime/deck-01.png','uploads/ai/super-big-slime/deck-02.png','uploads/ai/super-big-slime/deck-03.png','uploads/ai/super-big-slime/deck-04.png','uploads/ai/super-big-slime/deck-05.png','uploads/ai/super-big-slime/deck-06.png','uploads/ai/super-big-slime/deck-07.png','uploads/ai/super-big-slime/deck-08.png'],
+    stills: ['uploads/ai/super-big-slime/still-01.png','uploads/ai/super-big-slime/still-02.png','uploads/ai/super-big-slime/still-03.png','uploads/ai/super-big-slime/still-04.png','uploads/ai/super-big-slime/still-05.png','uploads/ai/super-big-slime/still-06.png','uploads/ai/super-big-slime/still-07.png','uploads/ai/super-big-slime/still-08.png','uploads/ai/super-big-slime/still-09.png','uploads/ai/super-big-slime/still-10.png','uploads/ai/super-big-slime/still-11.png','uploads/ai/super-big-slime/still-12.png','uploads/ai/super-big-slime/still-13.png','uploads/ai/super-big-slime/still-14.png','uploads/ai/super-big-slime/still-15.png','uploads/ai/super-big-slime/still-16.png','uploads/ai/super-big-slime/still-17.png','uploads/ai/super-big-slime/still-18.png','uploads/ai/super-big-slime/still-19.png','uploads/ai/super-big-slime/still-20.png']
+  },
+  {
     name: 'SOUNDPEATS AIR6 HS',
     featured: true,
     status: 'shipped',
-    typeLine: 'TVC 15s · CONCEPT',
+    typeLine: 'TVC · CONCEPT',
     meta: ['AI-DIRECTED'],
     disclaimerEn: 'PERSONAL PROJECT — NOT COMMISSIONED BY SOUNDPEATS',
     disclaimerVi: 'DỰ ÁN CÁ NHÂN — KHÔNG DO SOUNDPEATS ĐẶT HÀNG',
@@ -1184,20 +1207,6 @@ const AI_PROJECTS = [
     video: 'uploads/ai/odin3-tvc.mp4',
     deck: ['uploads/ai/odin-deck-01.png','uploads/ai/odin-deck-02.png','uploads/ai/odin-deck-03.png','uploads/ai/odin-deck-04.png','uploads/ai/odin-deck-05.png','uploads/ai/odin-deck-06.png','uploads/ai/odin-deck-07.png','uploads/ai/odin-deck-08.png','uploads/ai/odin-deck-09.png','uploads/ai/odin-deck-10.png','uploads/ai/odin-deck-11.png','uploads/ai/odin-deck-12.png','uploads/ai/odin-deck-13.png','uploads/ai/odin-deck-14.png','uploads/ai/odin-deck-15.png','uploads/ai/odin-deck-16.png'],
     stills: ['uploads/ai/odin-still-01.png','uploads/ai/odin-still-02.jpg','uploads/ai/odin-still-03.png','uploads/ai/odin-still-04.jpg','uploads/ai/odin-new-05.jpg']
-  },
-  {
-    name: 'SUPER BIG SLIME',
-    featured: false,
-    status: 'progress',
-    typeLine: 'AI SHORT · 28s',
-    meta: ['AI PRODUCTION'],
-    disclaimerEn: 'VERTICAL SHORT — 9:16',
-    disclaimerVi: 'VIDEO DỌC — 9:16',
-    video: 'uploads/ai/super-big-slime.mp4',
-    thumb: 'uploads/ai/super-big-slime-poster.jpg',
-    portrait: true,
-    deck: [],
-    stills: []
   }
 ];
 
@@ -1497,6 +1506,30 @@ class Component extends DCLogic {
   _setPipeSpot = (el) => { this._pipeSpotEl = el; };
   _setPipeZoom = (el) => { this._pipeZoomEl = el; };
   _setPipeZoomVid = (el) => { this._pipeZoomVid = el; };
+  _setAiZoom = (el) => { this._aiZoomEl = el; };
+  _setAiZoomImg = (el) => { this._aiZoomImg = el; };
+  _setAiZoomBase = (el) => {
+    if (!el) return;
+    this._aiZoomBase = el;
+    if (el._aiZoomBound) return;
+    el._aiZoomBound = true;
+    const coarse = () => window.matchMedia('(pointer: coarse)').matches;
+    el.addEventListener('mouseenter', (e) => { if (!coarse()) this._aiZoomMove(e, true); });
+    el.addEventListener('mousemove', (e) => { if (!coarse()) this._aiZoomMove(e, false); });
+    el.addEventListener('mouseleave', () => { if (!coarse()) this._aiZoomHide(); });
+    let sx = 0, sy = 0, moved = false;
+    el.addEventListener('touchstart', (t) => { const p = t.touches[0]; sx = p.clientX; sy = p.clientY; moved = false; }, { passive: true });
+    el.addEventListener('touchmove', (t) => {
+      const p = t.touches[0];
+      if (Math.abs(p.clientX - sx) > 8 || Math.abs(p.clientY - sy) > 8) moved = true;
+      if (this._aiZoomOn) this._aiZoomMove(p, false);
+    }, { passive: true });
+    el.addEventListener('touchend', () => {
+      if (moved) return;
+      if (this._aiZoomOn) this._aiZoomHide();
+      else this._aiZoomMove({ clientX: sx, clientY: sy }, true);
+    });
+  };
   _setPipeZoomBase = (el) => {
     this._pipeZoomBase = el;
     if (!el || el._zoomBound) return;
@@ -1546,7 +1579,7 @@ class Component extends DCLogic {
     this._workIntroSpin = -380;
     requestAnimationFrame(() => this.layoutCarousel(false));
     requestAnimationFrame(() => this._aiLayoutRetry(0));
-    this._onKey = (e) => { if (e.key === 'Escape') { if (this.state.aiStageSrc) this.setState({ aiStageSrc: null }); else if (this.state.aiOpen) this.closeAi(); else if (this.state.model3dOpen) this.closeModel3d(); else if (this.state.bannersOpen) this.closeBanners(); else if (this.state.graphicsOpen) this.closeGraphics(); else if (this.state.pipelineOpen) this.closePipeline(); else if (this.state.emailOpen) this.closeEmail(); else if (this.state.contactOpen) this.closeContact(); else if (this.state.careerOpen) this.closeCareer(); else if (this.state.modalOpen) this.closeModal(); } };
+    this._onKey = (e) => { if (e.key === 'Escape') { if (this.state.aiStageSrc) { this._aiZoomHide(); this.setState({ aiStageSrc: null }); } else if (this.state.aiOpen) this.closeAi(); else if (this.state.model3dOpen) this.closeModel3d(); else if (this.state.bannersOpen) this.closeBanners(); else if (this.state.graphicsOpen) this.closeGraphics(); else if (this.state.pipelineOpen) this.closePipeline(); else if (this.state.emailOpen) this.closeEmail(); else if (this.state.contactOpen) this.closeContact(); else if (this.state.careerOpen) this.closeCareer(); else if (this.state.modalOpen) this.closeModal(); } };
     window.addEventListener('keydown', this._onKey);
     this._sections = [this.aboutEl, this.pipelineEl, this.servicesEl, this.reelEl, this.aiEl, this.workEl, this.skillsEl, this.contactEl].filter(Boolean);
     this._onScroll = () => {
@@ -2381,6 +2414,7 @@ class Component extends DCLogic {
   }
   closeAi() {
     const y = this._aiScrollY || 0;
+    this._aiZoomHide();
     this.setState({ aiOpen: false, aiStageSrc: null });
     try { document.body.style.overflow = ''; } catch (e) {}
     // Locking body scroll can drop the page position on phone/tablet — put it back.
@@ -2928,6 +2962,47 @@ class Component extends DCLogic {
   }
 
   _pipeZoomHide() { this._pipeZoomOn = false; if (this._pipeZoomEl) this._pipeZoomEl.style.opacity = '0'; }
+
+  // AI Production loupe: the popup stays 16:9 while following the selected media crop.
+  _aiZoomMove(e, first) {
+    const pop = this._aiZoomEl, base = this._aiZoomBase;
+    if (!pop || !base || base.tagName !== 'IMG') return;
+    const media = this._aiZoomImg;
+    if (!media) return;
+    const r = base.getBoundingClientRect(), W = pop.offsetWidth, H = pop.offsetHeight, M = 12;
+    if (!r.width || !r.height || !W || !H) return;
+    if (first) {
+      this._aiZoomImg.style.display = 'block';
+      const src = base.currentSrc || base.src;
+      if (src && this._aiZoomImg.src !== src) this._aiZoomImg.src = src;
+    }
+    const Z = Math.max(1.6, W / r.width, H / r.height);
+    const zw = r.width * Z, zh = r.height * Z;
+    media.style.width = zw + 'px';
+    media.style.height = zh + 'px';
+    const px = Math.max(0, Math.min(r.width, e.clientX - r.left));
+    const py = Math.max(0, Math.min(r.height, e.clientY - r.top));
+    const lx = zw > W ? Math.min(0, Math.max(W - zw, W / 2 - px * Z)) : (W - zw) / 2;
+    const ty = zh > H ? Math.min(0, Math.max(H - zh, H / 2 - py * Z)) : (H - zh) / 2;
+    media.style.left = Math.round(lx) + 'px';
+    media.style.top = Math.round(ty) + 'px';
+    let left = e.clientX + 24;
+    if (left + W > innerWidth - M) left = e.clientX - W - 24;
+    left = Math.max(M, Math.min(left, Math.max(M, innerWidth - W - M)));
+    const top = Math.max(M, Math.min(e.clientY - H / 2, Math.max(M, innerHeight - H - M)));
+    pop.style.left = Math.round(left) + 'px';
+    pop.style.top = Math.round(top) + 'px';
+    if (first) {
+      this._aiZoomOn = true;
+      pop.style.opacity = '1';
+      try { pop.animate([{ transform: 'scale(.72)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 260, easing: 'cubic-bezier(.2,.8,.25,1)' }); } catch (err) {}
+    }
+  }
+
+  _aiZoomHide() {
+    this._aiZoomOn = false;
+    if (this._aiZoomEl) this._aiZoomEl.style.opacity = '0';
+  }
 
   _pulseGlow(el) {
     if (!el || el._pulsing) return;
@@ -3626,7 +3701,8 @@ class Component extends DCLogic {
     }));
     const aiP = AI_PROJECTS[this.state.aiIndex] || AI_PROJECTS[0];
     const aiStage = this.state.aiStageSrc;
-    const aiShowStill = (src) => this.setState({ aiStageSrc: src });
+    const aiShowStill = (src) => { this._aiZoomHide(); this.setState({ aiStageSrc: src }); };
+    const aiPortraitMedia = !!(aiP.dynamicRatio && (!aiStage || aiStage.includes('/still-')));
     const aiItem = {
       name: aiP.name,
       typeLine: aiP.typeLine,
@@ -3634,11 +3710,14 @@ class Component extends DCLogic {
       showVideo: !!aiP.video && !aiStage,
       showStill: !!aiStage,
       showPending: !aiP.video && !aiStage,
+      mediaRatio: aiPortraitMedia ? '9 / 16' : '16 / 9',
+      mediaWidth: aiPortraitMedia ? 'min(100%,40.5vh)' : '100%',
+      mediaFit: aiPortraitMedia ? 'contain' : 'cover',
       watchDim: !aiStage,
       watchOpacity: aiStage ? '1' : '.4',
-      watchVideo: () => { this.setState({ aiStageSrc: null }); setTimeout(() => { if (this._aiVid) { const q = this._aiVid.play(); if (q && q.catch) q.catch(() => {}); } }, 80); },
+      watchVideo: () => { this._aiZoomHide(); this.setState({ aiStageSrc: null }); setTimeout(() => { if (this._aiVid) { const q = this._aiVid.play(); if (q && q.catch) q.catch(() => {}); } }, 80); },
       setVideo: (el) => { this._aiVid = el || null; if (el) { el.controls = true; if (aiP.video && el.src !== aiP.video) el.src = aiP.video; } },
-      setStage: (el) => { if (el && aiStage && el.src !== aiStage) el.src = aiStage; },
+      setStage: (el) => { if (el) { this._setAiZoomBase(el); if (aiStage && el.src !== aiStage) el.src = aiStage; } },
       rows: aiP.meta.concat([lang === 'en' ? aiP.disclaimerEn : aiP.disclaimerVi]).map((v) => ({ v })),
       deck: aiP.deck.map((src) => ({ setImg: (el) => { if (el && el.src !== src) el.src = src; }, open: () => aiShowStill(src) })),
       hasDeck: aiP.deck.length > 0,
@@ -3655,6 +3734,7 @@ class Component extends DCLogic {
       aiPrev: () => this.moveAi(-1), aiNext: () => this.moveAi(1),
       onAiClick: (e) => this.onAiClick(e),
       aiOpen: this.state.aiOpen, closeAi: () => this.closeAi(),
+      setAiZoom: this._setAiZoom, setAiZoomImg: this._setAiZoomImg,
       setAiRef: (el) => { this.aiEl = el; if (el && this._armAiObserver) this._armAiObserver(); },
       copy, navItems, stats, services, projects, tools, socials, showDetail, workItems,
       careerEntries, careerSel, careerOpen: this.state.careerOpen,
