@@ -1616,6 +1616,9 @@ class Component extends DCLogic {
     this._curSection = 0;
     this._snapping = false;
     this._cooldownUntil = 0;
+    this._wheelAccum = 0;
+    this._lastWheelAt = 0;
+    this._scrollRun = 0;
     this._snapDelays = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     this._buildSnapTargets = () => {
       this._snapTargets = [null, this.workEl, this.reelEl, this.aiEl, this.aboutEl, this.pipelineEl, this.servicesEl, this.skillsEl, this.contactEl];
@@ -1625,12 +1628,42 @@ class Component extends DCLogic {
     // full-section snap, so tall sections aren't trapped/clipped. Entrance animations
     // are fired by an IntersectionObserver as each section scrolls into view.
     this._isPhoneOrTablet = () => window.innerWidth <= 1024 || window.matchMedia('(pointer:coarse)').matches;
+    this._shouldUseNativeScroll = () => {
+      if (this._isPhoneOrTablet()) return true;
+      const vh = window.innerHeight || 1;
+      const sections = (this._snapTargets || []).filter(Boolean);
+      const tallest = sections.reduce((max, el) => Math.max(max, el.offsetHeight || 0), 0);
+      // A snap is only useful when the complete destination can fit on screen.
+      return vh < 760 || tallest > vh + 32;
+    };
     this._enableSnap = () => {
+      if (this._onWheel) return;
       this._onWheel = (e) => {
         if (this.state.aiOpen || this.state.modalOpen || this.state.careerOpen || this.state.contactOpen || this.state.emailOpen || this.state.pipelineOpen || this.state.graphicsOpen || this.state.bannersOpen || this.state.model3dOpen) return;
+        const rawY = e.deltaY || 0;
+        if (Math.abs(rawY) <= Math.abs(e.deltaX || 0) || Math.abs(rawY) < 0.5) return;
         e.preventDefault();
-        if (this._snapping || performance.now() < this._cooldownUntil) return;
-        this.snap(e.deltaY > 0 ? 1 : -1);
+        const now = performance.now();
+        if (this._snapping) { this._wheelAccum = 0; this._lastWheelAt = now; return; }
+        if (now < this._cooldownUntil) {
+          this._wheelAccum = 0;
+          this._lastWheelAt = now;
+          // Keep inertial trackpad tails inside the cooldown instead of skipping a section.
+          this._cooldownUntil = Math.max(this._cooldownUntil, now + 120);
+          return;
+        }
+        if (now - this._lastWheelAt > 180) this._wheelAccum = 0;
+        let delta = rawY;
+        if (e.deltaMode === 1) delta *= 16;
+        else if (e.deltaMode === 2) delta *= window.innerHeight;
+        this._lastWheelAt = now;
+        this._wheelAccum += delta;
+        clearTimeout(this._wheelResetT);
+        this._wheelResetT = setTimeout(() => { this._wheelAccum = 0; }, 180);
+        if (Math.abs(this._wheelAccum) < 48) return;
+        const dir = this._wheelAccum > 0 ? 1 : -1;
+        this._wheelAccum = 0;
+        this.snap(dir);
       };
       window.addEventListener('wheel', this._onWheel, { passive: false });
       this._onTouchStart = (e) => { this._touchY = e.touches[0].clientY; };
@@ -1648,6 +1681,9 @@ class Component extends DCLogic {
       if (this._onTouchStart) { window.removeEventListener('touchstart', this._onTouchStart); this._onTouchStart = null; }
       if (this._onTouchMove) { window.removeEventListener('touchmove', this._onTouchMove); this._onTouchMove = null; }
       if (this._snapTimer) { clearTimeout(this._snapTimer); this._snapTimer = null; }
+      if (this._wheelResetT) { clearTimeout(this._wheelResetT); this._wheelResetT = null; }
+      this._scrollRun += 1;
+      this._wheelAccum = 0;
       this._snapping = false;
     };
     // Native scroll: reveal each section's entrance animation once as it scrolls into
@@ -1655,6 +1691,7 @@ class Component extends DCLogic {
     const secList = [[this.workEl, 1], [this.reelEl, 2], [this.aiEl, 3], [this.aboutEl, 4], [this.pipelineEl, 5], [this.servicesEl, 6], [this.skillsEl, 7], [this.contactEl, 8]];
     this._nativeTriggered = {};
     this._nativeCheck = () => {
+      if (!this._nativeScroll) return;
       const vh = window.innerHeight;
       secList.forEach((pair) => {
         const el = pair[0], idx = pair[1];
@@ -1671,15 +1708,21 @@ class Component extends DCLogic {
       requestAnimationFrame(() => this._nativeCheck());
       setTimeout(() => this._nativeCheck(), 400);
     };
-    this._nativeScroll = this._isPhoneOrTablet();
+    this._disableNative = () => {
+      if (!this._nativeBound) return;
+      window.removeEventListener('scroll', this._nativeCheck);
+      this._nativeBound = false;
+    };
+    this._nativeScroll = this._shouldUseNativeScroll();
     if (this._nativeScroll) { this._enableNative(); } else { this._enableSnap(); }
     // Re-evaluate on resize: drop scroll-snap the moment the viewport is phone/tablet-sized.
     this._onResizeMode = () => {
-      const wantNative = this._isPhoneOrTablet();
+      this._buildSnapTargets();
+      const wantNative = this._shouldUseNativeScroll();
       if (wantNative === this._nativeScroll) return;
       this._nativeScroll = wantNative;
       if (wantNative) { this._disableSnap(); this._enableNative(); }
-      else { this._enableSnap(); }
+      else { this._disableNative(); this.syncCurSection(); this._enableSnap(); }
     };
     window.addEventListener('resize', this._onResizeMode);
     // Tablet/phone: reproduce the desktop hero exit animation on swipe. While the intro
@@ -1717,8 +1760,8 @@ class Component extends DCLogic {
       if (this.state.graphicsOpen) { if (e.key === 'ArrowLeft') { e.preventDefault(); this.gfxGo(this.state.gfxIndex - 1); } else if (e.key === 'ArrowRight') { e.preventDefault(); this.gfxGo(this.state.gfxIndex + 1); } return; }
       if (this.state.aiOpen || this.state.modalOpen || this.state.careerOpen || this.state.contactOpen || this.state.emailOpen || this.state.pipelineOpen || this.state.graphicsOpen || this.state.bannersOpen || this.state.model3dOpen) return;
       if (this._nativeScroll) return;
-      if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); this.snap(1); }
-      else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); this.snap(-1); }
+      if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); if (!e.repeat) this.snap(1); }
+      else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); if (!e.repeat) this.snap(-1); }
     };
     window.addEventListener('keydown', this._onKeyNav);
     setTimeout(() => this.heroSideIn(), 900);
@@ -2433,12 +2476,16 @@ class Component extends DCLogic {
     const map = { '#hero': 0, '#top': 0, '#work': 1, '#reel': 2, '#aiprod': 3, '#about': 4, '#pipeline': 5, '#services': 6, '#skills': 7, '#contact': 8 };
     const i = map[href];
     if (i == null) return;
-    const el = i === 0 ? null : this._snapTargets[i];
-    const y = el ? Math.round(el.getBoundingClientRect().top + window.scrollY) : 0;
+    if (this._snapTimer) { clearTimeout(this._snapTimer); this._snapTimer = null; }
+    this._scrollRun += 1;
+    this._snapping = true;
     if (i === 0) this.resetHero();
-    this._curSection = i;
-    window.scrollTo({ top: y, behavior: 'smooth' });
-    this.triggerSection(i);
+    this.scrollToSection(i, () => {
+      this._curSection = i;
+      this._snapping = false;
+      this._cooldownUntil = performance.now() + 420;
+      this.triggerSection(i);
+    });
   }
 
   finalizeCareer() {
@@ -2455,12 +2502,15 @@ class Component extends DCLogic {
   }
 
   snap(dir) {
+    const now = performance.now();
+    if (!dir || this._snapping || now < this._cooldownUntil) return;
+    this.syncCurSection();
     const n = this._snapTargets.length;
     const target = this._curSection + dir;
     if (target < 0 || target >= n) return;
     this._snapping = true;
     const cur = this._curSection;
-    const finish = () => { this._curSection = target; this._snapping = false; this._cooldownUntil = performance.now() + 280; this.triggerSection(target); };
+    const finish = () => { this._snapTimer = null; this._curSection = target; this._snapping = false; this._cooldownUntil = performance.now() + 420; this.triggerSection(target); };
     const go = () => this.scrollToSection(target, finish);
     if (cur === 0 && dir > 0) {
       this.playHeroOut(go);
@@ -2479,10 +2529,12 @@ class Component extends DCLogic {
     const targetY = i === 0 ? 0 : (this._snapTargets[i] ? Math.max(0, this._snapTargets[i].offsetTop - headerOffset) : 0);
     const startY = window.scrollY;
     const dist = targetY - startY;
+    const run = ++this._scrollRun;
     if (Math.abs(dist) < 2) { window.scrollTo(0, targetY); if (done) done(); return; }
     const dur = 780, t0 = performance.now();
     const ease = (x) => x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
     const step = (now) => {
+      if (run !== this._scrollRun) return;
       const p = Math.min(1, (now - t0) / dur);
       window.scrollTo(0, startY + dist * ease(p));
       if (p < 1) requestAnimationFrame(step); else if (done) done();
@@ -3275,6 +3327,7 @@ class Component extends DCLogic {
     if (this._onWheel) window.removeEventListener('wheel', this._onWheel);
     if (this._onTouchStart) window.removeEventListener('touchstart', this._onTouchStart);
     if (this._onTouchMove) window.removeEventListener('touchmove', this._onTouchMove);
+    if (this._wheelResetT) clearTimeout(this._wheelResetT);
     if (this._onKeyNav) window.removeEventListener('keydown', this._onKeyNav);
     if (this._onResizeMode) window.removeEventListener('resize', this._onResizeMode);
     if (this._heroWheel) window.removeEventListener('wheel', this._heroWheel);
