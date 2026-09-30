@@ -9,6 +9,7 @@
 <x-dc>
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preload" as="image" href="uploads/khai-tran-portrait.webp" type="image/webp">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Chakra+Petto&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Chakra+Petch:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <style>
@@ -280,7 +281,7 @@ a:hover{color:#7fe9f7}
   <div ref="{{ setHeroPortrait }}" style="position: relative; z-index: 3; height: calc(100vh - 84px); align-self: flex-end; margin: 84px auto 0; display: flex; align-items: flex-end; justify-content: center; overflow: visible" data-om-label="Portray">
     <div style="position:relative;z-index:1;height:100%;display:flex;align-items:flex-end">
       <div ref="{{ setPortraitWrapRef }}" style="position:relative;height:calc(100% - 30vh);max-height:620px;margin-bottom:26vh;overflow:hidden;transform:scale(1.3)">
-        <img ref="{{ setPortraitImgRef }}" crossorigin="anonymous" src="uploads/Hologram_BG remove04.png" alt="Khai Tran portrait" style="height:100%;width:auto;object-fit:contain;object-position:bottom;-webkit-mask-image:linear-gradient(to bottom,black 88%,transparent 100%);mask-image:linear-gradient(to bottom,black 88%,transparent 100%)">
+        <img ref="{{ setPortraitImgRef }}" src="uploads/khai-tran-portrait.webp" alt="Khai Tran portrait" fetchpriority="high" style="height:100%;width:auto;object-fit:contain;object-position:bottom;-webkit-mask-image:linear-gradient(to bottom,black 88%,transparent 100%);mask-image:linear-gradient(to bottom,black 88%,transparent 100%)">
       </div>
     </div>
   </div>
@@ -406,7 +407,7 @@ a:hover{color:#7fe9f7}
         <div ref="{{ item.setSlide }}" style="position:absolute;left:50%;top:0;width:clamp(230px,30vw,360px);aspect-ratio:16/9;margin:calc(clamp(230px,30vw,360px) * -0.281) 0 0 calc(clamp(230px,30vw,360px) * -0.5);pointer-events:none">
           <div ref="{{ item.setFloat }}" style="position:absolute;inset:0;border:1px solid rgba(45,215,240,.3);background:#070d11;overflow:hidden;box-shadow:0 0 0 1px rgba(45,215,240,.08),0 18px 46px rgba(0,0,0,.55);will-change:transform;backface-visibility:hidden">
             <sc-if value="{{ item.hasVideo }}" hint-placeholder-val="{{ true }}">
-              <video ref="{{ item.setVideo }}" muted playsinline preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block"></video>
+              <video ref="{{ item.setVideo }}" muted playsinline preload="none" style="width:100%;height:100%;object-fit:{{ item.objectFit }};display:block"></video>
             </sc-if>
             <sc-if value="{{ item.noMedia }}" hint-placeholder-val="{{ false }}">
               <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background-image:repeating-linear-gradient(135deg,rgba(45,215,240,.06) 0 10px,transparent 10px 20px)"><span style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.18em;color:rgba(45,215,240,.75)">{{ copy.aiNoMedia }}</span></div>
@@ -1183,6 +1184,20 @@ const AI_PROJECTS = [
     video: 'uploads/ai/odin3-tvc.mp4',
     deck: ['uploads/ai/odin-deck-01.png','uploads/ai/odin-deck-02.png','uploads/ai/odin-deck-03.png','uploads/ai/odin-deck-04.png','uploads/ai/odin-deck-05.png','uploads/ai/odin-deck-06.png','uploads/ai/odin-deck-07.png','uploads/ai/odin-deck-08.png','uploads/ai/odin-deck-09.png','uploads/ai/odin-deck-10.png','uploads/ai/odin-deck-11.png','uploads/ai/odin-deck-12.png','uploads/ai/odin-deck-13.png','uploads/ai/odin-deck-14.png','uploads/ai/odin-deck-15.png','uploads/ai/odin-deck-16.png'],
     stills: ['uploads/ai/odin-still-01.png','uploads/ai/odin-still-02.jpg','uploads/ai/odin-still-03.png','uploads/ai/odin-still-04.jpg','uploads/ai/odin-new-05.jpg']
+  },
+  {
+    name: 'SUPER BIG SLIME',
+    featured: false,
+    status: 'progress',
+    typeLine: 'AI SHORT · 28s',
+    meta: ['AI PRODUCTION'],
+    disclaimerEn: 'VERTICAL SHORT — 9:16',
+    disclaimerVi: 'VIDEO DỌC — 9:16',
+    video: 'uploads/ai/super-big-slime.mp4',
+    thumb: 'uploads/ai/super-big-slime-poster.jpg',
+    portrait: true,
+    deck: [],
+    stills: []
   }
 ];
 
@@ -1521,6 +1536,7 @@ class Component extends DCLogic {
   _aiReflects = [];
   _aiMinis = [];
   _aiPlays = [];
+  _aiVideos = [];
 
   componentDidMount() {
     this._setupFavicon();
@@ -2620,11 +2636,11 @@ class Component extends DCLogic {
     const n = this._aiSlides.length; if (!n || !this._aiStage) return;
     // Few projects → a shallow coverflow arc instead of a full 360° ring
     // (with n=2 a 180° step would hide the back card behind the front one).
-    const step = n < 4 ? 52 : 360 / n;
+    const step = n <= 4 ? 52 : 360 / n;
     const stageW = this._aiStage.offsetWidth || 900;
     const slideW = Math.max(230, Math.min(360, stageW * 0.30));
     this._aiSlideW = slideW;
-    const radius = n < 4 ? slideW * 1.32 : (slideW / 2) / Math.tan(Math.PI / n) * 1.18;
+    const radius = n <= 4 ? slideW * 1.32 : (slideW / 2) / Math.tan(Math.PI / n) * 1.18;
     const trans = animate ? 'transform .8s cubic-bezier(.33,.72,.2,1),filter .6s' : 'none';
     const dimOf = (i) => Math.abs(i - this.aiCar);
     for (let i = 0; i < n; i++) {
@@ -2639,6 +2655,16 @@ class Component extends DCLogic {
       if (this._aiPlays[i]) {
         this._aiPlays[i].style.opacity = dist < 0.5 ? '1' : '0';
         this._aiPlays[i].style.transform = dist < 0.5 ? 'translate(-50%,-50%) scale(1)' : 'translate(-50%,-50%) scale(.9)';
+      }
+      const vid = this._aiVideos[i];
+      const project = AI_PROJECTS[i];
+      if (vid && project && project.video) {
+        if (dist < 0.5) {
+          if (vid.getAttribute('src') !== project.video) vid.src = project.video;
+          const q = vid.play(); if (q && q.catch) q.catch(() => {});
+        } else {
+          vid.pause();
+        }
       }
     }
     for (let i = 0; i < this._aiReflects.length; i++) {
@@ -3588,13 +3614,14 @@ class Component extends DCLogic {
       status: p.status === 'shipped' ? copy.aiStatusShipped : copy.aiStatusProgress,
       hasVideo: !!p.video,
       noMedia: !p.video,
-      setVideo: (el) => { if (el) { if (p.video && el.src !== p.video) el.src = p.video; el.muted = true; el.loop = true; const go = () => { const q = el.play(); if (q && q.catch) q.catch(() => {}); }; go(); if (!el._aiPlayBound) { el._aiPlayBound = true; el.addEventListener('canplay', go); el.addEventListener('loadeddata', go); } } },
+      objectFit: p.portrait ? 'contain' : 'cover',
+      setVideo: (el) => { if (el) { this._aiVideos[i] = el; const poster = p.thumb || (p.stills && p.stills[0]) || (p.deck && p.deck[0]); if (poster && el.getAttribute('poster') !== poster) el.poster = poster; el.muted = true; el.loop = true; } },
       setSlide: (el) => { this._aiSlides[i] = el; if (el) requestAnimationFrame(() => this.layoutAiCarousel(false)); },
       setSlideR: (el) => { this._aiReflects[i] = el; },
       setMini: (el) => { this._aiMinis[i] = el; if (el) requestAnimationFrame(() => this.layoutAiCarousel(false)); },
       setPlay: (el) => { this._aiPlays[i] = el; },
-      setImgR: (el) => { const s = (p.stills && p.stills[0]) || (p.deck && p.deck[0]); if (el && s && el.src !== s) el.src = s; },
-      setImgM: (el) => { const s = (p.stills && p.stills[0]) || (p.deck && p.deck[0]); if (el && s && el.src !== s) el.src = s; },
+      setImgR: (el) => { const s = p.thumb || (p.stills && p.stills[0]) || (p.deck && p.deck[0]); if (el && s && el.src !== s) el.src = s; },
+      setImgM: (el) => { const s = p.thumb || (p.stills && p.stills[0]) || (p.deck && p.deck[0]); if (el && s && el.src !== s) el.src = s; },
       open: () => this.openAi(i)
     }));
     const aiP = AI_PROJECTS[this.state.aiIndex] || AI_PROJECTS[0];
