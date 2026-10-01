@@ -6,11 +6,14 @@ await mkdir('dist/.openai', { recursive: true });
 await mkdir('dist/client', { recursive: true });
 await mkdir('dist/server', { recursive: true });
 
-for (const file of ['index.html', 'Portfolio.dc.html', 'support.js']) {
+for (const file of ['Portfolio.dc.html', 'support.js']) {
   await cp(file, `dist/client/${file}`);
 }
 
 const portfolioHtml = await readFile('Portfolio.dc.html', 'utf8');
+// Serve the portfolio directly at the domain root. The named file stays available
+// for old bookmarks, where the page itself cleans the visible URL back to `/`.
+await writeFile('dist/client/index.html', portfolioHtml);
 const assetPaths = new Set(
   [...portfolioHtml.matchAll(/['"](uploads\/[^'"]+)['"]/g)].map((match) =>
     decodeURIComponent(match[1]),

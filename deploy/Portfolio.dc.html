@@ -3,11 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script data-clean-portfolio-url>
+if (location.hostname === 'khaidanieltran.com' || location.hostname === 'www.khaidanieltran.com') {
+  if (location.pathname !== '/' || location.search || location.hash) history.replaceState(null, '', '/');
+}
+</script>
 <script src="./support.js"></script>
 </head>
 <body>
 <x-dc>
 <helmet>
+<link rel="canonical" href="https://khaidanieltran.com/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preload" as="image" href="uploads/khai-tran-portrait.webp" type="image/webp">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&amp;family=Chakra+Petto&amp;display=swap" rel="stylesheet">

@@ -3,6 +3,9 @@
   "framework": null,
   "buildCommand": null,
   "outputDirectory": "deploy",
+  "rewrites": [
+    { "source": "/", "destination": "/Portfolio.dc.html" }
+  ],
   "headers": [
     {
       "source": "/(.*)\\.html",
