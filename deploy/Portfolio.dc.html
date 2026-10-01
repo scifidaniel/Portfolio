@@ -1618,6 +1618,7 @@ class Component extends DCLogic {
     this._cooldownUntil = 0;
     this._wheelAccum = 0;
     this._lastWheelAt = 0;
+    this._lastSnapDir = 0;
     this._scrollRun = 0;
     this._snapDelays = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     this._buildSnapTargets = () => {
@@ -1644,13 +1645,20 @@ class Component extends DCLogic {
         if (Math.abs(rawY) <= Math.abs(e.deltaX || 0) || Math.abs(rawY) < 0.5) return;
         e.preventDefault();
         const now = performance.now();
+        const inputDir = rawY > 0 ? 1 : -1;
         if (this._snapping) { this._wheelAccum = 0; this._lastWheelAt = now; return; }
         if (now < this._cooldownUntil) {
           this._wheelAccum = 0;
           this._lastWheelAt = now;
-          // Keep inertial trackpad tails inside the cooldown instead of skipping a section.
-          this._cooldownUntil = Math.max(this._cooldownUntil, now + 120);
-          return;
+          if (inputDir === this._lastSnapDir) {
+            // Keep same-direction trackpad tails inside the cooldown instead of skipping a section.
+            this._cooldownUntil = Math.max(this._cooldownUntil, now + 120);
+            return;
+          }
+          // A deliberate reverse gesture should work immediately (especially at Contact).
+          // Tiny opposite deltas can be trackpad bounce, so let the existing cooldown absorb them.
+          if (Math.abs(rawY) < 8) return;
+          this._cooldownUntil = 0;
         }
         if (now - this._lastWheelAt > 180) this._wheelAccum = 0;
         let delta = rawY;
@@ -2477,6 +2485,8 @@ class Component extends DCLogic {
     const i = map[href];
     if (i == null) return;
     if (this._snapTimer) { clearTimeout(this._snapTimer); this._snapTimer = null; }
+    const navDir = Math.sign(i - this._curSection);
+    if (navDir) this._lastSnapDir = navDir;
     this._scrollRun += 1;
     this._snapping = true;
     if (i === 0) this.resetHero();
@@ -2506,10 +2516,17 @@ class Component extends DCLogic {
     if (!dir || this._snapping || now < this._cooldownUntil) return;
     this.syncCurSection();
     const n = this._snapTargets.length;
-    const target = this._curSection + dir;
-    if (target < 0 || target >= n) return;
-    this._snapping = true;
     const cur = this._curSection;
+    const maxY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+    const sectionY = (i) => i === 0 ? 0 : Math.min(maxY, Math.max(0, this._snapTargets[i]?.offsetTop || 0));
+    const minTravel = Math.min(96, window.innerHeight * 0.08);
+    let target = cur + dir;
+    // Near the document end, multiple short sections can clamp to the same maximum
+    // scroll position. Skip effectively duplicate points so reverse scrolling visibly moves.
+    while (target >= 0 && target < n && Math.abs(sectionY(target) - window.scrollY) < minTravel) target += dir;
+    if (target < 0 || target >= n) return;
+    this._lastSnapDir = dir;
+    this._snapping = true;
     const finish = () => { this._snapTimer = null; this._curSection = target; this._snapping = false; this._cooldownUntil = performance.now() + 420; this.triggerSection(target); };
     const go = () => this.scrollToSection(target, finish);
     if (cur === 0 && dir > 0) {
