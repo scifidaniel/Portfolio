@@ -3763,6 +3763,8 @@ class Component extends DCLogic {
       setPreview: (el) => { const preview = p.thumb || (p.stills && p.stills[0]) || (p.deck && p.deck[0]); if (el && preview && el.getAttribute('src') !== preview) el.src = preview; },
       setSlide: (el) => { this._aiSlides[i] = el; if (el) requestAnimationFrame(() => this.layoutAiCarousel(false)); },
       setSlideR: (el) => { this._aiReflects[i] = el; },
+      setFloat: (el) => { if (el) el.style.animation = 'cardfloat ' + (4.4 + (i % 3) * 0.7) + 's ease-in-out ' + (-i * 0.85) + 's infinite'; },
+      setFloatR: (el) => { if (el) el.style.animation = 'cardfloat ' + (4.4 + (i % 3) * 0.7) + 's ease-in-out ' + (-i * 0.85) + 's infinite'; },
       setMini: (el) => { this._aiMinis[i] = el; if (el) requestAnimationFrame(() => this.layoutAiCarousel(false)); },
       setPlay: (el) => { this._aiPlays[i] = el; },
       setImgR: (el) => { const s = p.thumb || (p.stills && p.stills[0]) || (p.deck && p.deck[0]); if (el && s && el.src !== s) el.src = s; },
